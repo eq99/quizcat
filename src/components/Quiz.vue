@@ -129,14 +129,14 @@ export default {
 .q-box {
 	display: flex;
 	align-items: flex-start;
-	padding-top: 8px;
+	padding: 8px 0 16px;
 }
 
 .q-side {
 	flex-shrink: 0;
 	width: 300px;
 	background-color: var(--bg-primary);
-	margin: 0 8px;
+	margin: 0 8px 0 16px;
 	padding: 1rem 1rem 3rem 1rem;
 }
 
@@ -191,7 +191,7 @@ export default {
 }
 
 .q-body {
-	background-color: var(--bg-primary);
+	background-color: #fafafa;
 	padding: 1rem .5rem 1rem 2rem;
 }
 

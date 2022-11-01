@@ -1,12 +1,15 @@
 <script setup lang="ts">
-import Quiz from './components/Quiz.vue';
+
 </script>
 
 <template>
   <header>
-    <h1 class="logo">练习喵</h1>
+    <h1 class="logo">
+      <router-link to="/">练习喵</router-link>
+    </h1>
   </header>
-  <Quiz></Quiz>
+
+  <RouterView></RouterView>
 </template>
 
 <style scoped>
