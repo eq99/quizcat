@@ -1,3 +1,11 @@
+const API_BASE = "http://127.0.0.1:8000/api/quizcat"
+
+export const getQuizzesByExerciseID = async (url: string) => {
+    const resp = await fetch(`${API_BASE}${url}`);
+    return await resp.json();
+}
+
+
 export const quizs = [
     {
         kind: 0,
@@ -67,3 +75,4 @@ console.log(num);
         solution: "true"
     },
 ]
+

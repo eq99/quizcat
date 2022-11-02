@@ -42,3 +42,7 @@ export function renderMarkdown(doc: string = ""): string {
 
     return String(file);
 }
+
+export function formatTime(utcTime: string): string {
+    return utcTime.split("T")[0];
+}

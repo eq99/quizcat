@@ -1,8 +1,14 @@
-<script lang="ts">
-export default {
-    name: 'DataPill',
-    props: ["text", "data"],
-}
+<script lang="ts" setup>
+const props = defineProps({
+    text: {
+        type: String,
+        default: "",
+    },
+    data: {
+        type: Number,
+        default: 0,
+    },
+});
 </script>
 
 <template>
