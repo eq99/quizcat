@@ -1,4 +1,4 @@
-const API_BASE = "http://127.0.0.1:8000/api/quizcat"
+import { API_BASE } from "@/lib/config";
 
 export const getExcercises = async () => {
     const resp = await fetch(`${API_BASE}/exercises`);

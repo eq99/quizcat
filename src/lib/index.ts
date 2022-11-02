@@ -35,7 +35,7 @@ export function renderMarkdown(doc: string = ""): string {
         .use(remarkGfm)
         .use(remarkMath)
         .use(remarkRehype)
-        .use(rehypeHighlight)
+        // .use(rehypeHighlight)
         .use(rehypeKatex)
         .use(rehypeStringify)
         .processSync(doc)

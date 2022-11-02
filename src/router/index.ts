@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '@/views/Home.vue'
-
 const Quiz = () => import("@/views/Quiz.vue")
 
 const router = createRouter({
