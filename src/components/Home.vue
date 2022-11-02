@@ -1,19 +1,67 @@
 <script lang="ts">
+// @ts-nocheck
+import DataPill from './DataPill.vue';
+import { exercises } from "@/apis/exercise"
+
 export default {
     name: 'Home',
-    props: [],
+    components: {
+        DataPill
+    },
     data() {
         return {
+            exercises: [],
         }
     },
+    methods: {
+        getExercises() {
+            this.exercises = exercises;
+        }
+
+    },
+    mounted() {
+        this.getExercises();
+    }
 }
 </script>
 
 <template>
-    <h1>主页</h1>
-    <router-link to="/quiz/2">Go to About</router-link>
+    <div class="q-list">
+        <router-link :to="'/quiz/' + ex?.id" v-for="(ex, idx) in exercises" class="q-item">
+            <h3 class="title">{{ ex?.title }}</h3>
+            <div class="foot">
+                <DataPill text="练习数" :data="ex?.quiz_num"></DataPill>
+                <time class="time"> {{ ex?.updated_at }} </time>
+            </div>
+        </router-link>
+    </div>
 </template>
 
 <style scoped>
+.q-list {
+    width: 50%;
+    margin: 0 auto;
 
+}
+
+.q-item {
+    display: block;
+    background-color: var(--bg-primary);
+    padding: 8px 16px;
+    margin: 12px 0;
+}
+
+.q-item .title {
+    color: var(--fg-primary);
+    margin-bottom: 8px;
+}
+
+.q-item .foot {
+    display: flex;
+    align-items: center;
+}
+
+.q-item .foot .time {
+    margin-left: auto;
+}
 </style>
