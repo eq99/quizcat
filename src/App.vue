@@ -23,7 +23,6 @@ header {
 }
 
 header .logo {
-  margin-left: 2rem;
   color: var(--fg-primary);
 }
 </style>
