@@ -1,7 +1,7 @@
 <script lang="ts">
 // @ts-nocheck
 import DataPill from './DataPill.vue';
-import { exercises } from "@/apis/exercise"
+import { getExcercises } from "@/apis/exercise"
 
 export default {
     name: 'Home',
@@ -14,13 +14,11 @@ export default {
         }
     },
     methods: {
-        getExercises() {
-            this.exercises = exercises;
-        }
-
     },
     mounted() {
-        this.getExercises();
+        getExcercises("/exercises").then(data => {
+            this.exercises = data;
+        });
     }
 }
 </script>
@@ -41,7 +39,6 @@ export default {
 .q-list {
     width: 50%;
     margin: 0 auto;
-
 }
 
 .q-item {

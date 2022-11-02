@@ -12,3 +12,10 @@ export const exercises = [
         updated_at: "2022-11-03",
     },
 ]
+
+const API_BASE = "http://127.0.0.1:8000/api/quizcat"
+
+export const getExcercises = async (url: string) => {
+    const resp = await fetch(`${API_BASE}${url}`);
+    return await resp.json();
+}
