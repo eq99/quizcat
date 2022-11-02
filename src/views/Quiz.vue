@@ -1,6 +1,7 @@
 <script setup lang="ts">
 // @ts-nocheck
 import { getQuizzesByExerciseID } from '@/apis/quiz';
+import { getExcerciseByID } from "@/apis/exercise";
 import { debounce, renderMarkdown } from '@/lib';
 import { reactive, computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
@@ -14,6 +15,7 @@ const route = useRoute()
 // state
 const state = reactive({
   quizzes: [],
+  exercise: null,
   curIndex: 0,
   isSolutionShow: false,
   answer: "",
@@ -23,7 +25,7 @@ const state = reactive({
 // methods
 function nextQuiz() {
   if (state.curIndex + 1 < state.quizzes.length) {
-    state.gotoQuiz(state.curIndex + 1)
+    gotoQuiz(state.curIndex + 1);
   } else {
     alert("题目做完啦")
   }
@@ -31,7 +33,7 @@ function nextQuiz() {
 
 function prevQuiz() {
   if (state.curIndex > 0) {
-    state.gotoQuiz(state.curIndex - 1);
+    gotoQuiz(state.curIndex - 1);
   } else {
     alert("已经是第一个啦");
   }
@@ -42,11 +44,11 @@ function showSolution() {
 }
 
 function gotoQuiz(idx: number) {
-  // 隐藏解析区
+  // hide solution
   state.isSolutionShow = false;
-  // 更新题号
+  // update current index
   state.curIndex = idx;
-  // 加载我的答案
+  // load my answer
   state.answer = state.quizzes[state.curIndex].answer || "";
 }
 
@@ -76,14 +78,15 @@ const htmlSolution = computed(() => {
 
 // life ciclef
 onMounted(async () => {
-  state.quizzes = await getQuizzesByExerciseID(`/quizzes?exid=${route.params.exid}`);
+  state.quizzes = await getQuizzesByExerciseID(route.params.exid);
+  state.exercise = await getExcerciseByID(route.params.exid);
 });
 </script>
 
 <template>
   <div class="q-box">
     <div class="q-side">
-      <h3 class="q-tips">练习喵为你准备了 {{ state.quizzes.length }} 道练习</h3>
+      <h3 class="q-tips">{{ state.exercise?.title }}</h3>
       <nav class="q-nav">
         <div class="nav-item " :class="{ active: quiz.answer }" v-for="(quiz, idx) in state.quizzes"
           @click="gotoQuiz(idx)">

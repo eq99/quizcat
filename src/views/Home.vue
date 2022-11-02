@@ -5,12 +5,14 @@ import { getExcercises } from "@/apis/exercise"
 import { formatTime } from "@/lib"
 import { onMounted, reactive } from 'vue';
 
+// state
 const state = reactive({
   exercises: [],
 });
 
+// life cicle
 onMounted(async () => {
-  state.exercises = await getExcercises("/exercises");
+  state.exercises = await getExcercises();
 });
 </script>
 
