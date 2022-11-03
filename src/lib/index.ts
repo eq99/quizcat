@@ -6,7 +6,7 @@ import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
 import remarkRehype from 'remark-rehype'
 import rehypeKatex from 'rehype-katex'
-import rehypeHighlight from 'rehype-highlight'
+import rehypePrism from 'rehype-prism-plus'
 import rehypeStringify from 'rehype-stringify'
 
 
@@ -35,7 +35,7 @@ export function renderMarkdown(doc: string = ""): string {
         .use(remarkGfm)
         .use(remarkMath)
         .use(remarkRehype)
-        // .use(rehypeHighlight)
+        .use(rehypePrism)
         .use(rehypeKatex)
         .use(rehypeStringify)
         .processSync(doc)
