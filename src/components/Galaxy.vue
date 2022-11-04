@@ -6,7 +6,7 @@ defineProps<{
 
 <template>
   <div class="galaxy">
-    <div class="head">{{ name }}</div>
+    <!-- <div class="head">{{ name }}</div> -->
     <div class="body-wrapper">
       <div class="body">
         <slot />
@@ -20,7 +20,7 @@ defineProps<{
   margin: 0 auto 16px;
 
   .head {
-    background-color: var(--winter3);
+    background-color: var(--winter2);
     height: 36px;
     padding: 8px 12px;
     font-size: 24px;
@@ -29,7 +29,7 @@ defineProps<{
   }
 
   .body-wrapper {
-    background-color: var(--winter2);
+    background-color: var(--winter1);
     padding-left: 80px;
 
     .body {
