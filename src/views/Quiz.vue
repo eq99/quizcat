@@ -1,5 +1,6 @@
 <script setup lang="ts">
 // @ts-nocheck
+import ExHeader from '@/components/ExHeader.vue';
 import { getQuizzesByExerciseID } from '@/apis/quiz';
 import { getExcerciseByID } from "@/apis/exercise";
 import { debounce, renderMarkdown } from '@/lib';
@@ -84,6 +85,7 @@ onMounted(async () => {
 </script>
 
 <template>
+  <ExHeader></ExHeader>
   <div class="q-box">
     <div class="q-side">
       <h3 class="q-tips">{{ state.exercise?.title }}</h3>

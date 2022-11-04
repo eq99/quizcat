@@ -2,6 +2,7 @@
 // @ts-nocheck
 import DataPill from '@/components/DataPill.vue';
 import { getExcercises } from "@/apis/exercise"
+import ExHeader from '@/components/ExHeader.vue';
 import { formatTime } from "@/lib"
 import { onMounted, reactive } from 'vue';
 
@@ -17,6 +18,7 @@ onMounted(async () => {
 </script>
 
 <template>
+  <ExHeader></ExHeader>
   <div class="q-list">
     <router-link :to="'/ex/' + ex?.id" v-for="(ex, idx) in state.exercises" class="q-item">
       <h3 class="title">{{ ex?.title }}</h3>
