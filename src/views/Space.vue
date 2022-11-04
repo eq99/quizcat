@@ -6,7 +6,7 @@
 <script setup lang="ts">
 import Star from '@/components/Star.vue';
 import Galaxy from '@/components/Galaxy.vue';
-import HeaderSpace from "@/components/HeaderSpace.vue"
+import HeaderSpace from "@/components/SpaceHeader.vue"
 </script>
 
 

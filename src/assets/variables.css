@@ -28,6 +28,12 @@
   --winter2: #e8e8e8;
   --winter3: #bbbfca;
   --winter4: #495464;
+
+  /* https://www.colorhunt.co/palette/fee3ecf9c5d5f999b7f2789f */
+  --pink1: #fee3ec;
+  --pink2: #f9c5d5;
+  --pink3: #f999b7;
+  --pink4: #f16592;
 }
 
 :root {
