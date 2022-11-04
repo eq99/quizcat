@@ -6,14 +6,13 @@ defineProps<{
 
 <template>
   <div class="word-card col-5">
-    <RouterLink to="/word/2">
+    <RouterLink to="/words/2">
       <div class="cover"><img :src="cover" alt="">
       </div>
       <div class="title s1">函数你需要知道的单词</div>
     </RouterLink>
   </div>
 </template>
-
 
 <style scoped lang="scss">
 .word-card {

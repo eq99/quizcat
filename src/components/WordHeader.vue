@@ -16,6 +16,7 @@
 <style scoped lang="scss">
 header {
   background-color: var(--pink1);
+  height: var(--header-height);
 
   .logo {
     font-size: 36px;

@@ -34,6 +34,9 @@
   --pink2: #f9c5d5;
   --pink3: #f999b7;
   --pink4: #f16592;
+
+  /* 距离 */
+  --header-height: 74px;
 }
 
 :root {
