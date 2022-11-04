@@ -22,6 +22,12 @@
   --color9: #f0a500;
   --color10: #c8dbbe;
   --color11: #61764b;
+
+  /* https://www.colorhunt.co/palette/f4f4f2e8e8e8bbbfca495464 */
+  --winter1: #f4f4f2;
+  --winter2: #e8e8e8;
+  --winter3: #bbbfca;
+  --winter4: #495464;
 }
 
 :root {
