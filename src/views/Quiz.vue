@@ -1,5 +1,6 @@
 <script setup lang="ts">
-// @ts-nocheck
+import type { Quiz, Exercise } from '@/types';
+
 import ExHeader from '@/components/ExHeader.vue';
 import { getQuizzesByExerciseID } from '@/apis/quiz';
 import { getExcerciseByID } from "@/apis/exercise";
@@ -7,19 +8,30 @@ import { debounce, renderMarkdown } from '@/lib';
 import { reactive, computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
+// types
+interface State {
+  quizzes: Quiz[],
+  exercise: Exercise | null,
+  curIndex: number,
+  isSolutionShow: boolean,
+  answer: string,
+  answers: string[],
+}
+
 // constant
-const QuizKinds: [string] = ["简答题"];
+const QuizKinds: string[] = ["简答题"];
 
 // variables
 const route = useRoute()
 
 // state
-const state = reactive({
+const state: State = reactive({
   quizzes: [],
   exercise: null,
   curIndex: 0,
   isSolutionShow: false,
   answer: "",
+  answers: [],
 });
 
 
@@ -50,12 +62,12 @@ function gotoQuiz(idx: number) {
   // update current index
   state.curIndex = idx;
   // load my answer
-  state.answer = state.quizzes[state.curIndex].answer || "";
+  state.answer = state.answers[idx];
 }
 
 function handleInput() {
   // save answer to quiz object
-  state.quizzes[state.curIndex]["answer"] = state.answer;
+  state.answers[state.curIndex] = state.answer;
 }
 
 const debounceInput = debounce(handleInput, 1000);
@@ -79,8 +91,8 @@ const htmlSolution = computed(() => {
 
 // life ciclef
 onMounted(async () => {
-  state.quizzes = await getQuizzesByExerciseID(route.params.exid);
-  state.exercise = await getExcerciseByID(route.params.exid);
+  state.quizzes = await getQuizzesByExerciseID(route.params.exid as string);
+  state.exercise = await getExcerciseByID(route.params.exid as string);
 });
 </script>
 
@@ -90,8 +102,8 @@ onMounted(async () => {
     <div class="q-side">
       <h3 class="q-tips">{{ state.exercise?.title }}</h3>
       <nav class="q-nav">
-        <div class="nav-item " :class="{ active: quiz.answer }" v-for="(quiz, idx) in state.quizzes"
-          @click="gotoQuiz(idx)">
+        <div class="nav-item " v-for="(quiz, idx) in state.quizzes" :key="quiz.id"
+          :class="{ active: state.answers[idx] }" @click="gotoQuiz(idx)">
           {{ idx + 1 }}
         </div>
       </nav>

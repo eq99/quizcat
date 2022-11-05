@@ -1,13 +1,19 @@
 <script lang="ts" setup>
-// @ts-nocheck
+import type { Exercise } from "@/types";
+
 import DataPill from '@/components/DataPill.vue';
 import { getExcercises } from "@/apis/exercise"
 import ExHeader from '@/components/ExHeader.vue';
 import { formatTime } from "@/lib"
 import { onMounted, reactive } from 'vue';
 
+// types
+interface State {
+  exercises: Exercise[],
+}
+
 // state
-const state = reactive({
+const state: State = reactive({
   exercises: [],
 });
 
@@ -20,11 +26,11 @@ onMounted(async () => {
 <template>
   <ExHeader></ExHeader>
   <div class="q-list">
-    <router-link :to="'/ex/' + ex?.id" v-for="(ex, idx) in state.exercises" class="q-item">
-      <h3 class="title">{{ ex?.title }}</h3>
+    <router-link :to="'/ex/' + ex.id" v-for="ex in state.exercises" :key="ex.id" class="q-item">
+      <h3 class="title">{{ ex.title }}</h3>
       <div class="foot">
-        <DataPill text="练习数" :data="ex?.quiz_num"></DataPill>
-        <time class="time"> {{ formatTime(ex?.updated_at) }} </time>
+        <DataPill text="练习数" :data="ex.quizNum"></DataPill>
+        <time class="time"> {{ formatTime(ex.updatedAt) }} </time>
       </div>
     </router-link>
   </div>

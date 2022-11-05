@@ -1,11 +1,11 @@
 import { API_BASE } from "@/lib/config";
 
-export const getExcercises = async () => {
+export async function getExcercises<T>(): Promise<T> {
     const resp = await fetch(`${API_BASE}/exercises`);
     return await resp.json();
 }
 
-export const getExcerciseByID = async (id: string) => {
+export async function getExcerciseByID<T>(id: string): Promise<T> {
     const resp = await fetch(`${API_BASE}/exercises/${id}`);
     return await resp.json();
 }

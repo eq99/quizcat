@@ -1,6 +1,6 @@
 import { API_BASE } from "@/lib/config";
 
-export const getQuizzesByExerciseID = async (exid: string) => {
+export async function getQuizzesByExerciseID<T>(exid: string): Promise<T> {
     const resp = await fetch(`${API_BASE}/quizzes?exid=${exid}`);
     return await resp.json();
 }
