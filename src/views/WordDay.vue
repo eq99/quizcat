@@ -1,15 +1,13 @@
 <script setup lang="ts">
 import WordHeader from '@/components/WordHeader.vue';
 import Switch from '@/components/Switch.vue';
-
 import { onMounted, reactive, ref } from 'vue';
-// types
-interface Word {
-  id: string | number,
-  en: string,
-  cn: string,
-}
+import { getWordSet } from "@/apis/words";
+import { useRoute } from 'vue-router';
 
+import type { Word } from "@/types";
+
+// types
 interface State {
   word: Word,
   freshWords: Word[],
@@ -29,6 +27,8 @@ const colors = [
   "#ffb61e"
 ]
 
+const route = useRoute();
+
 // states
 const isAnswerHide = ref<boolean>(true);
 const input = ref<string>("");
@@ -37,7 +37,7 @@ const answerKey = ref<string>("cn");
 const wordColor = ref<string>("#000");
 
 const state: State = reactive({
-  word: { id: 0, en: "Press any key to continue...", cn: "按任意键继续!" },
+  word: { id: 0, en: "Press any key to continue...", cn: "按任意键继续!", wordSetID: 0 },
   freshWords: [],
   cookedWords: [],
 });
@@ -67,7 +67,7 @@ function loadWord() {
     setRandomWordColor();
     state.word = state.freshWords.shift()!;
   } else {
-    state.word = { id: -1, en: "Congratulations!!!", cn: "单词背完啦!" };
+    state.word = { id: -1, en: "Congratulations!!!", cn: "单词背完啦!", wordSetID: 0 };
   }
 }
 
@@ -100,18 +100,7 @@ function changeMode(mode: boolean) {
 
 // life cicle
 onMounted(async () => {
-  state.freshWords = [
-    {
-      id: 1,
-      en: "justify-content",
-      cn: "弹性盒子主轴对齐属性",
-    },
-    {
-      id: 2,
-      en: "flex",
-      cn: "弹性盒子属性值或弹性元素属性弹性盒子属性值或弹性元素属性",
-    }
-  ]
+  state.freshWords = await getWordSet(route.params.setid as string)
 
   document.addEventListener("keyup", getStarted);
 })
@@ -126,7 +115,6 @@ onMounted(async () => {
         <!-- 单词列表 -->
         <li class="w-item" v-for="(word) in state.freshWords" :key="word.id">
           <span>{{ word[modeKey as keyof Word] }}</span>
-          <i class="iconfont icon-question text-lg"></i>
         </li>
       </ul>
     </aside>
@@ -181,7 +169,7 @@ onMounted(async () => {
 
   // 一些工具样式
   .text-lg {
-    font-size: 24px;
+    font-size: 20px;
   }
 
   .hide {
@@ -203,18 +191,17 @@ onMounted(async () => {
     padding: 2rem 1rem 0;
 
     font-family: Consolas, "Courier New", Courier, FreeMono, monospace, YouYuan;
-    text-align: right;
-    line-height: 1.5;
+    line-height: 1.25;
     color: #bb5548;
 
     overflow-y: auto;
 
     .w-item {
       display: flex;
-      justify-content: flex-end;
       align-items: center;
-
-      transition: .3s;
+      border: 1px solid;
+      padding: 0 4px;
+      margin-bottom: 4px;
     }
   }
 
@@ -227,7 +214,7 @@ onMounted(async () => {
     height: calc(100vh - var(--header-height));
     background-color: #e7e7eb;
     padding: 2rem 1rem 0;
-    line-height: 1.5;
+    line-height: 1.25;
 
     font-family: Consolas, "Courier New", Courier, FreeMono, monospace, YouYuan;
     color: #38b48b;
@@ -236,7 +223,9 @@ onMounted(async () => {
     .w-item {
       display: flex;
       align-items: center;
-      transition: .3s;
+      border: 1px solid;
+      padding: 0 4px;
+      margin-bottom: 4px;
     }
   }
 

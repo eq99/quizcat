@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Space from "@/views/Space.vue"
 const Quiz = () => import("@/views/Quiz.vue")
 const Exercises = () => import('@/views/Exercises.vue')
-const Word = () => import("@/views/Words.vue")
+const WordSet = () => import("@/views/WordSet.vue")
 const WordDay = () => import("@/views/WordDay.vue")
 
 const router = createRouter({
@@ -12,8 +12,8 @@ const router = createRouter({
     { path: '/', component: Space },
     { path: "/exs", component: Exercises },
     { path: '/ex/:exid', component: Quiz },
-    { path: "/words", component: Word },
-    { path: "/words/:wid", component: WordDay },
+    { path: "/words", component: WordSet },
+    { path: "/words/:setid", component: WordDay },
   ]
 })
 

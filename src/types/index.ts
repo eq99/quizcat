@@ -17,4 +17,19 @@ export interface Quiz {
     updatedAt: string,
     exerciseID: number,
 }
+
 // words ---------------
+export interface WordSet {
+    id: number,
+    title: string,
+    cover: string,
+    createdAt: string,
+    updatedAt: string,
+}
+
+export interface Word {
+    id: number,
+    en: string,
+    cn: string,
+    wordSetID: number,
+}

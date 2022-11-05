@@ -2,7 +2,7 @@
 import type { Quiz, Exercise } from '@/types';
 
 import ExHeader from '@/components/ExHeader.vue';
-import { getQuizzesByExerciseID } from '@/apis/quiz';
+import { getQuizzesByExerciseID } from '@/apis/exercise';
 import { getExcerciseByID } from "@/apis/exercise";
 import { debounce, renderMarkdown } from '@/lib';
 import { reactive, computed, onMounted, ref } from 'vue';

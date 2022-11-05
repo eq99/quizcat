@@ -1,15 +1,17 @@
 <script setup lang="ts">
 defineProps<{
+  setid: number,
   cover: string,
+  title: string,
 }>()
 </script>
 
 <template>
   <div class="word-card col-5">
-    <RouterLink to="/words/2">
+    <RouterLink :to="`/words/${setid}`">
       <div class="cover"><img :src="cover" alt="">
       </div>
-      <div class="title s1">函数你需要知道的单词</div>
+      <div class="title s1">{{ title }}</div>
     </RouterLink>
   </div>
 </template>
