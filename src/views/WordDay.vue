@@ -16,11 +16,25 @@ interface State {
   cookedWords: Word[],
 }
 
+// variables 
+const colors = [
+  "#bf242a",
+  "#96514d",
+  "#8d6449",
+  "#7a4171",
+  "#f08300",
+  "#00552e",
+  "#1e50a2",
+  "#00a3af",
+  "#ffb61e"
+]
+
 // states
 const isAnswerHide = ref<boolean>(true);
 const input = ref<string>("");
 const modeKey = ref<string>("en");
 const answerKey = ref<string>("cn");
+const wordColor = ref<string>("#000");
 
 const state: State = reactive({
   word: { id: 0, en: "Press any key to continue...", cn: "按任意键继续!" },
@@ -34,6 +48,10 @@ function getStarted() {
   loadWord();
 }
 
+function setRandomWordColor() {
+  wordColor.value = colors[Math.floor(Math.random() * colors.length)];
+}
+
 function showAnswer() {
   isAnswerHide.value = !isAnswerHide.value;
 }
@@ -45,8 +63,9 @@ function clearInput() {
 function loadWord() {
   if (state.freshWords.length > 0) {
     isAnswerHide.value = true;
-    state.word = state.freshWords.shift()!;
     clearInput();
+    setRandomWordColor();
+    state.word = state.freshWords.shift()!;
   } else {
     state.word = { id: -1, en: "Congratulations!!!", cn: "单词背完啦!" };
   }
@@ -114,7 +133,7 @@ onMounted(async () => {
     <main class="main">
       <Switch @change="changeMode" class="switch"></Switch>
       <!-- 单词 -->
-      <h1 class="word-box s1 text-xl">
+      <h1 class="word-box s1 text-xl" :style="{ color: wordColor }">
         {{ state.word[modeKey as keyof Word] }}
       </h1>
       <!-- 答案 -->
@@ -170,7 +189,7 @@ onMounted(async () => {
   }
 
   .text-xl {
-    font-size: 32px;
+    font-size: 36px;
   }
 
   // 左边栏
