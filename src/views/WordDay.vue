@@ -107,13 +107,13 @@ onMounted(async () => {
     <Switch class="switch" @change="changeMode"></Switch>
     <Flip class="word">
       <template #front>
-        <div class="content front" :style="{ color: frontColor, backgroundColor: frontBGColor }">
+        <div class="content" :style="{ color: frontColor, backgroundColor: frontBGColor }">
           {{ frontWord }}
         </div>
       </template>
 
       <template #back>
-        <div class="content back" :style="{ color: backColor, backgroundColor: backBGColor }">
+        <div class="content" :style="{ color: backColor, backgroundColor: backBGColor }">
           {{ backWord }}
         </div>
       </template>
@@ -138,7 +138,6 @@ onMounted(async () => {
   right: calc(50% - 400px);
 }
 
-
 .word {
   width: 500px;
   height: 300px;
@@ -150,18 +149,11 @@ onMounted(async () => {
     border-radius: 12px;
     padding: 16px 20px;
     font-size: 28px;
+    font-family: "Comic Sans MS";
 
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-
-  .front {
-    background-color: #006e54;
-  }
-
-  .back {
-    background-color: #96514d;
   }
 }
 
