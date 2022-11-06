@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import WordCard from '@/components/WordCard.vue';
+import WordCard from '@/components/WordSetCard.vue';
 import WordHeader from '@/components/WordHeader.vue';
 import { getWordSets } from '@/apis/words';
 import { onMounted, reactive } from 'vue';
