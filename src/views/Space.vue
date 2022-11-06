@@ -15,8 +15,8 @@ import HeaderSpace from "@/components/SpaceHeader.vue"
   <div class="space-box">
     <div class="container space">
       <Galaxy name="温柔地球">
-        <Star icon="/icons/yang.webp" name="练习咩" bgColor="bg-grey" href="/exs"></Star>
-        <Star icon="/icons/gou.webp" name="单词汪" bgColor="bg-brown" href="/words"></Star>
+        <Star icon="/icons/yang.webp" name="作业喵" bgColor="bg-grey" href="/exs"></Star>
+        <Star icon="/icons/gou.webp" name="单词喵" bgColor="bg-brown" href="/words"></Star>
       </Galaxy>
     </div>
   </div>

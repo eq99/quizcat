@@ -6,7 +6,7 @@
   <header>
     <div class="container">
       <h1 class="logo">
-        单词汪
+        单词喵
       </h1>
     </div>
   </header>

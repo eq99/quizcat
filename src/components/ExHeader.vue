@@ -6,7 +6,7 @@
   <header>
     <div class="container">
       <h1 class="logo">
-        <RouterLink to="/exs"> 练习咩</RouterLink>
+        <RouterLink to="/exs"> 练习喵</RouterLink>
       </h1>
     </div>
   </header>
