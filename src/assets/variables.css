@@ -35,6 +35,12 @@
   --pink3: #f999b7;
   --pink4: #f16592;
 
+  /* https://www.colorhunt.co/palette/6c4ab68d72e18d9effb9e0ff */
+  --purple1: #b9e0ff;
+  --purple2: #8d9eff;
+  --purple3: #8d72e1;
+  --purple4: #6c4ab6;
+
   /* 距离 */
   --header-height: 74px;
 }

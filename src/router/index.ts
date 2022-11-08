@@ -6,6 +6,7 @@ const Quiz = () => import("@/views/Quiz.vue");
 const Exercises = () => import('@/views/Exercises.vue');
 const WordSet = () => import("@/views/WordSet.vue");
 const WordDay = () => import("@/views/WordDay.vue");
+const Play = () => import('@/views/Play.vue');
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -16,6 +17,7 @@ const router = createRouter({
     { path: '/ex/:exid', component: Quiz },
     { path: "/words", component: WordSet },
     { path: "/words/:setid", component: WordDay },
+    { path: "/play", component: Play },
   ]
 })
 

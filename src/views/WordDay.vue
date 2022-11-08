@@ -128,7 +128,7 @@ onMounted(async () => {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 .main {
   position: relative;
 }
