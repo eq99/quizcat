@@ -1,9 +1,11 @@
 <script  lang="ts" setup>
-import { EditorView, basicSetup } from "codemirror"
-import { javascript } from "@codemirror/lang-javascript"
+import { EditorView, basicSetup } from "codemirror";
+import { indentWithTab } from "@codemirror/commands";
+import { keymap } from "@codemirror/view";
+import { javascript } from "@codemirror/lang-javascript";
 // import { html } from "@codemirror/lang-html"
 // import { oneDark } from "@codemirror/theme-one-dark";
-import { onMounted, ref, shallowRef, watch, type ShallowRef } from "vue";
+import { onMounted, ref, shallowRef, type ShallowRef } from "vue";
 
 // types
 import type {
@@ -31,34 +33,57 @@ const customStyle = EditorView.theme({
 });
 
 // states
-const doc = ref(props.code);
+// const doc = ref(props.code);
 const editorEle = ref<HTMLElement>();
 const view: ShallowRef<EditorView> = shallowRef(new EditorView());
+const formatWorker = ref<Worker>();
 
-// watchs
-watch(
-  () => props.code,
-  value => {
-    if (view.value.composing) {
-      // IME fix
-      return;
-    }
-    // Update
-    view.value.dispatch({
-      changes: { from: 0, to: view.value.state.doc.length, insert: value },
-      selection: view.value.state.selection,
-      scrollIntoView: true,
+function formatCode() {
+  formatWorker.value?.postMessage({ code: view.value.state.doc.toString() })
+}
+
+function updateFormatedCode(formatedCode: string) {
+  if (view.value.composing) {
+    // IME fix
+    return;
+  }
+  // Update
+  view.value.dispatch({
+    changes: { from: 0, to: view.value.state.doc.length, insert: formatedCode },
+    // selection: view.value.state.selection,
+    // scrollIntoView: true,
+  });
+}
+
+function initFormatWorkder() {
+  if (window.Worker) {
+    formatWorker.value = new Worker('/workers/format.js');
+
+    formatWorker.value?.addEventListener("message", function (e) {
+      updateFormatedCode(e.data.code);
     });
-  },
-  { immediate: true }
-);
 
+    formatWorker.value?.addEventListener('error', function (errEvent) {
+      console.error(errEvent.message)
+    });
+  }
+}
+
+// expose
+defineExpose({
+  formatCode
+})
 
 // life cicle
 onMounted(() => {
   view.value = new EditorView({
-    doc: doc.value,
-    extensions: [basicSetup, customStyle, javascript()],
+    doc: props.code,
+    extensions: [
+      basicSetup,
+      customStyle,
+      keymap.of([indentWithTab]),
+      javascript()
+    ],
     parent: editorEle.value,
     dispatch: (tr: Transaction) => {
       view.value.update([tr]);
@@ -70,6 +95,9 @@ onMounted(() => {
       emit('change', v);
     },
   });
+
+  // init web woker
+  initFormatWorkder();
 });
 </script>
 

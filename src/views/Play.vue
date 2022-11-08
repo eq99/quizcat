@@ -3,14 +3,10 @@ import Split from '@/components/Split.vue';
 import CMEditor from '@/components/CMEditor.vue';
 import { onMounted, onUnmounted, ref } from 'vue';
 
-// types
-
-// variables
-
 // states
 const code = ref(`console.log("hello world");`);
 const output = ref('');
-const formatWorker = ref<Worker>();
+const editor = ref<InstanceType<typeof CMEditor>>();
 
 // methods
 function evalJavaScript(code: string) {
@@ -22,13 +18,14 @@ function evalJavaScript(code: string) {
   }
 }
 
-function handleOutput(out: string, mtype: string = 'info') {
-  out = out.replace(/\n/g, "<br>"); //line break
-  out = out.replace(/\s/g, "&nbsp;"); //hold blanks
+function handleOutput(out: any, mtype: string = 'info') {
+  let outStr = typeof out === 'string' ? out : JSON.stringify(out);
+  outStr = outStr?.replace(/\n/g, "<br>").replace(/\s/g, "&nbsp;"); //line break and hold blanks
+
   if (mtype === "error") {
-    output.value += `<div class='msg err'>${out}</div>`;
+    output.value += `<div class='msg err'>${outStr}</div>`;
   } else {
-    output.value += `<div class='msg'>${out}</div>`;
+    output.value += `<div class='msg'>${outStr}</div>`;
   }
 }
 
@@ -74,38 +71,13 @@ function handleChange(newCode: string) {
   code.value = newCode;
 }
 
-function formatCode() {
-  formatWorker.value?.postMessage({ code: code.value })
-}
-
-function updateFormatedCode(newCode: string) {
-  // console.log(newCode)
-  code.value = newCode;
-}
-
-function initFormatWorkder() {
-  if (window.Worker) {
-    formatWorker.value = new Worker('/workers/format.js');
-
-    formatWorker.value?.addEventListener("message", function (e) {
-      updateFormatedCode(e.data.code);
-    });
-
-    formatWorker.value?.addEventListener('error', function (errEvent) {
-      console.error(errEvent.message)
-    });
-  }
-}
-
 // life cicle
 onMounted(async () => {
   hackOutput();
-  // init web woker
-  initFormatWorkder();
 });
 
 onUnmounted(async () => {
-  
+
 });
 </script>
 
@@ -115,13 +87,13 @@ onUnmounted(async () => {
       <div class="logo">代码喵</div>
       <div class="actions">
         <div class="btn" @click="runCode">运行</div>
-        <div class="btn" @click="formatCode">美化</div>
+        <div class="btn" @click="editor?.formatCode">美化</div>
       </div>
     </div>
   </header>
   <Split class="page">
     <template #one>
-      <CMEditor :code="code" class="editor" @change="handleChange"></CMEditor>
+      <CMEditor :code="code" class="editor" @change="handleChange" ref="editor"></CMEditor>
     </template>
 
     <template #two>
@@ -158,6 +130,7 @@ header {
         margin-right: 20px;
         padding: 4px 16px;
         border: 1px solid var(--purple4);
+        border-radius: 6px;
         font-size: 20px;
         cursor: pointer;
 
