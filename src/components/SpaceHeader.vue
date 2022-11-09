@@ -6,7 +6,7 @@
   <header>
     <div class="container">
       <h1 class="logo">
-        <RouterLink to="/">卷宇宙</RouterLink>
+        <RouterLink to="/">学习喵の窝</RouterLink>
       </h1>
     </div>
   </header>
