@@ -31,6 +31,10 @@ defineProps<{
     background-color: rgba(140, 98, 57, 0.5);
   }
 
+  .bg-pink {
+    background-color: #fad1ea;
+  }
+
   .icon {
     width: 64px;
     height: 64px;

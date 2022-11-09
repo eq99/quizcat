@@ -84,7 +84,7 @@ onUnmounted(async () => {
 <template>
   <header>
     <div class="container">
-      <div class="logo">代码喵</div>
+      <div class="logo">编程喵</div>
       <div class="actions">
         <div class="btn" @click="runCode">运行</div>
         <div class="btn" @click="editor?.formatCode">美化</div>
