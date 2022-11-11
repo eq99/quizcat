@@ -17,6 +17,14 @@ const state: State = reactive({
   exercises: [],
 });
 
+//methods
+function isNew(createdAt: string) {
+  const d = new Date(createdAt);
+  const today = new Date()
+
+  return today.getTime() - d.getTime() < 2 * 24 * 3600000;
+}
+
 // life cicle
 onMounted(async () => {
   state.exercises = await getExcercises();
@@ -27,6 +35,7 @@ onMounted(async () => {
   <ExHeader></ExHeader>
   <div class="q-list">
     <router-link :to="'/ex/' + ex.id" v-for="ex in state.exercises" :key="ex.id" class="q-item">
+      <div class="mark" v-if="isNew(ex.createdAt)">new</div>
       <h3 class="title">{{ ex.title }}</h3>
       <div class="foot">
         <DataPill text="练习数" :data="ex.quizNum"></DataPill>
@@ -36,17 +45,56 @@ onMounted(async () => {
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .q-list {
-  width: 50%;
-  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 60px;
 }
 
 .q-item {
-  display: block;
+  width: 20%;
   background-color: var(--bg-primary);
   padding: 8px 16px;
-  margin: 12px 0;
+  margin: 12px 8px;
+
+  position: relative;
+
+  .mark {
+    width: 30px;
+    height: 20px;
+    padding: 0 4px;
+    background-color: #B2DE34;
+    color: #e60033;
+    font-size: small;
+    text-align: center;
+    position: absolute;
+    top: 0px;
+    right: -10px;
+  }
+
+  .mark:before {
+    content: '';
+
+    border: 10px solid;
+    border-color: transparent #B2DE34 transparent transparent;
+    position: absolute;
+    right: 38px;
+    top: 0px;
+  }
+
+
+
+  .mark:after {
+    content: '';
+    width: 10px;
+    border: 10px solid;
+    border-color: transparent transparent transparent #58661C;
+    border-top: 0;
+    right: -20px;
+    position: absolute;
+    top: 20px;
+  }
 }
 
 .q-item .title {
