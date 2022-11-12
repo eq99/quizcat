@@ -1,50 +1,29 @@
 <script  lang="ts" setup>
-import Split from '@/components/Split.vue';
-import CMEditor from '@/components/CMEditor.vue';
-import { ref } from 'vue';
-
-
-const code = ref(`
-export interface Props {
-  horizontal?: boolean,
-  ratio?: string,
-}
-
-// varibles
-const props = withDefaults(defineProps<Props>(), {
-  horizontal: false,
-});
-
-const one = ref<HTMLElement>();
-const two = ref<HTMLElement>();
-const [initGrow1, initGrow2] = parseRatio(props.ratio as string);
-`)
+import DropdownVue from '@/components/Dropdown.vue';
+import AvatarVue from '@/components/Avatar.vue';
 </script>
 
 <template>
-  <Split class="page">
-    <template #one>
-      <CMEditor :code="code" class="editor"></CMEditor>
-    </template>
-
-    <template #two>
-      <div class="right"></div>
-    </template>
-  </Split>
+  <div class="wrapper">
+    <DropdownVue position="bottom-center">
+      <template #head>
+        <AvatarVue></AvatarVue>
+      </template>
+      <template #body>
+        <div class="content"></div>
+      </template>
+    </DropdownVue>
+  </div>
 </template>
 
 <style lang="scss" scoped>
-.page {
-  width: 100vw;
-  height: 100vh;
+.wrapper {
+  margin-left: 500px;
+}
 
-  .left {
-    height: 100%;
-    background-color: pink;
-  }
-
-  .right {
-    height: 100%;
-  }
+.content {
+  width: 300px;
+  height: 200px;
+  background-color: cyan;
 }
 </style>
