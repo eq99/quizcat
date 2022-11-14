@@ -1,26 +1,21 @@
 <script  lang="ts" setup>
-import DropdownVue from '@/components/Dropdown.vue';
-import AvatarVue from '@/components/Avatar.vue';
+import Modal from '@/components/Modal.vue';
+import { ref } from 'vue';
+
+// variables
+const modalEle = ref<InstanceType<typeof Modal>>();
 </script>
 
 <template>
-  <div class="wrapper">
-    <DropdownVue position="bottom-center">
-      <template #head>
-        <AvatarVue></AvatarVue>
-      </template>
-      <template #body>
-        <div class="content"></div>
-      </template>
-    </DropdownVue>
-  </div>
+  <button @click="modalEle?.show">open</button>
+  <Modal ref="modalEle">
+    <div class="content">
+      <button @click="modalEle?.hide">close</button>
+    </div>
+  </Modal>
 </template>
 
 <style lang="scss" scoped>
-.wrapper {
-  margin-left: 500px;
-}
-
 .content {
   width: 300px;
   height: 200px;
