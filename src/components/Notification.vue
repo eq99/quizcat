@@ -1,13 +1,12 @@
 <script  lang="ts" setup>
-import { reactive } from 'vue';
-import type { Notification } from '@/types'
 import { useNotificationStore } from '@/stores/notification'
-import { computed } from '@vue/reactivity';
+
 // types
 interface NotiClass {
   error: string,
   success: string,
 }
+
 // vars
 const { notifications } = useNotificationStore();
 
