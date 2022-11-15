@@ -46,7 +46,6 @@ defineExpose({
   </TransitionFade>
 </template>
 
-
 <style lang="scss" scoped>
 .modal {
   position: fixed;
@@ -58,7 +57,6 @@ defineExpose({
   display: flex;
   align-items: center;
   justify-content: center;
-
-  background-color: rgba(0, 0, 0, .4);
+  background-color: rgb(0 0 0 /0.4);
 }
 </style>

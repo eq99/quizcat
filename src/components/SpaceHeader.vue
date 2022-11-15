@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import Dropdown from '@/components/Dropdown.vue';
-import Avatar from '@/components/Avatar.vue';
+import UserCut from './UserCut.vue';
 </script>
 
 <template>
@@ -10,14 +9,7 @@ import Avatar from '@/components/Avatar.vue';
         <RouterLink to="/">学习喵の窝</RouterLink>
       </h1>
       <div class="info">
-        <Dropdown position="bottom-center">
-          <template #head>
-            <Avatar></Avatar>
-          </template>
-          <template #body>
-            <div class="content"></div>
-          </template>
-        </Dropdown>
+        <UserCut></UserCut>
       </div>
     </div>
   </header>

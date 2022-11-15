@@ -1,4 +1,6 @@
 <script  lang="ts" setup>
+import { ref } from 'vue';
+import TransitionFade from '@/components/transitions/Fade.vue';
 
 // types
 export type Position = "bottom-center" | 'bottom-right' | 'bottom-left';
@@ -13,18 +15,29 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 // states
+const isHidden = ref(true);
 
+// methods
+function hide() {
+  isHidden.value = true;
+}
+
+function show() {
+  isHidden.value = false;
+}
 </script>
 
 <template>
-  <div class="drop">
+  <div class="drop" @mouseenter="show" @mouseleave="hide">
     <div class="hd-box">
       <slot name='head'>
       </slot>
     </div>
-    <div class="bd-box" :class="position">
-      <slot name="body"></slot>
-    </div>
+    <TransitionFade>
+      <div class="bd-box" v-show="!isHidden" :class="position">
+        <slot name="body"></slot>
+      </div>
+    </TransitionFade>
   </div>
 </template>
 
@@ -33,17 +46,8 @@ const props = withDefaults(defineProps<Props>(), {
   display: inline-block;
   position: relative;
 
-  &:hover,
-  &.hover {
-    .bd-box {
-      visibility: visible;
-    }
-  }
-
   .bd-box {
     position: absolute;
-    visibility: hidden;
-    transition: .3s;
 
     &.bottom-center {
       top: 100%;

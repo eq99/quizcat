@@ -1,3 +1,10 @@
+// 通知组件
+export interface Notification {
+    title?: string,
+    type?: string,
+    detail: string,
+}
+
 // exercise -------------------
 export interface Exercise {
     id: number,

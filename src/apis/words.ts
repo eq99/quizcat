@@ -1,4 +1,4 @@
-import { API_BASE } from "@/lib/config";
+const API_BASE = import.meta.env.VITE_API_BASE;
 
 export async function getWordSets<T>(): Promise<T> {
     const resp = await fetch(`${API_BASE}/wordsets`);
