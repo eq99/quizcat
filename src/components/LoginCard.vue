@@ -1,7 +1,11 @@
 <script  lang="ts" setup>
 import { computed, ref } from 'vue';
 import { useNotificationStore } from '@/stores/notification';
-
+import { useUserStore } from '@/stores/user';
+import { useTokenStore } from '@/stores/token';
+import { sendCaptcha, signin } from '@/apis/user';
+import { validateEmail } from '@/lib'
+import type { Token } from '@/types';
 
 //vars
 const MAX_SECOND = 61;
@@ -10,10 +14,14 @@ const emit = defineEmits<{
 }>();
 
 const { pushNoti } = useNotificationStore();
+const { saveUser } = useUserStore();
+const { saveToken } = useTokenStore();
 
 // states
 const countDown = ref(MAX_SECOND);
 let intervalId = ref(0);
+const email = ref('');
+const captcha = ref('');
 
 // computed
 const captText = computed(() => {
@@ -25,7 +33,32 @@ const disabled = computed(() => {
 });
 
 // methods
-function sendCaptcha() {
+function handleSendCaptcha() {
+  const msg = validateEmail(email.value);
+
+  if (msg) {
+    pushNoti({
+      title: '邮箱验证错误',
+      detail: msg,
+      type: 'error',
+    });
+
+    return;
+  }
+
+  sendCaptcha(email.value).then(data => {
+    pushNoti({
+      title: '获取验证码成功',
+      detail: '验证码已成功发送到邮箱'
+    });
+  }).catch(err => {
+    pushNoti({
+      title: '验证码发送失败',
+      detail: '验证码发送失败, 请稍后重试',
+      type: 'error',
+    });
+  });
+
   intervalId.value = setInterval(() => {
     countDown.value -= 1;
     if (countDown.value === 0) {
@@ -40,10 +73,38 @@ function close() {
 }
 
 function handleSubmit() {
-  pushNoti({
-    title: "标题",
-    detail: "登录成功",
-    type: 'error',
+  if (captcha.value.length !== 4) {
+    pushNoti({
+      title: '验证码格式错误',
+      detail: '验证码格式错误，请输入正确的四位验证码',
+      type: 'error',
+    });
+
+    return;
+  }
+
+  signin(email.value, captcha.value).then((data) => {
+    const token: Token = {
+      value: data.value,
+      updatedAt: data.updatedAt
+    }
+
+    saveToken(token);
+    saveUser(data.user);
+
+    pushNoti({
+      title: "登录成功",
+      detail: "登录成功，开启喵喵之家",
+    });
+
+    //close modal
+    emit('close');
+  }).catch(err => {
+    pushNoti({
+      title: '登录失败',
+      detail: '登录失败，请联系管理员',
+      type: 'error',
+    });
   });
 }
 </script>
@@ -55,14 +116,14 @@ function handleSubmit() {
     <fieldset>
       <label>请使用邮箱注册</label>
       <div class="input-wrapper">
-        <input type="text" placeholder="miao@miao.com">
+        <input type="text" placeholder="miao@miao.com" v-model="email">
       </div>
     </fieldset>
     <fieldset>
       <label for="">请填写邮箱验证码</label>
       <div class="input-wrapper">
-        <input type="text" placeholder="1234" class="cpat-input">
-        <button class="capt-btn" :class="{ disabled }" @click="sendCaptcha" :disabled="disabled">{{ captText
+        <input type="text" placeholder="1234" class="cpat-input" v-model="captcha">
+        <button class="capt-btn" :class="{ disabled }" @click="handleSendCaptcha" :disabled="disabled">{{ captText
         }}</button>
       </div>
     </fieldset>

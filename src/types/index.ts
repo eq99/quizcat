@@ -5,6 +5,35 @@ export interface Notification {
     detail: string,
 }
 
+// token
+export interface Token {
+    value: string,
+    updatedAt: string,
+}
+
+// user
+export interface User {
+    id: number,
+    name: string,
+    avatar: string,
+    email: string,
+    isAdmin: boolean,
+    status: number,
+    createdAt: string,
+    updatedAt: string,
+}
+
+//
+export interface AuthToken {
+    id: number,
+    value: string,
+    client: string,
+    userId: number,
+    user: User,
+    createdAt: string,
+    updatedAt: string
+}
+
 // exercise -------------------
 export interface Exercise {
     id: number,

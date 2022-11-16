@@ -7,23 +7,33 @@ import Dropdown from '@/components/Dropdown.vue';
 import Avatar from '@/components/Avatar.vue';
 import Modal from '@/components/Modal.vue';
 import LoginCard from '@/components/LoginCard.vue';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
+import { storeToRefs } from 'pinia'
+import { useUserStore } from '@/stores/user';
 
 // vars
 const modalEle = ref<InstanceType<typeof Modal>>();
+const { user } = storeToRefs(useUserStore());
+
 
 //states
-const isLogin = ref(false)
+const isLogin = ref(false);
+
+// computed
+
 </script>
 
 <template>
   <Dropdown position="bottom-right">
     <template #head>
-      <Avatar></Avatar>
+      <Avatar :link="user?.avatar"></Avatar>
     </template>
     <template #body>
       <div class="content">
-        <div class="login-box">
+        <div class="user-box" v-if="user">
+          {{ user }}
+        </div>
+        <div class="login-box" v-else>
           <div class="note">登录发现新天地</div>
           <div class="login-btn" @click="modalEle?.show">立即登录</div>
         </div>
