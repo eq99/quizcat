@@ -20,7 +20,6 @@ defineProps<{
   margin: 0 auto 16px;
 
   .head {
-    background-color: var(--winter2);
     height: 36px;
     padding: 8px 12px;
     font-size: 24px;
@@ -29,7 +28,6 @@ defineProps<{
   }
 
   .body-wrapper {
-    background-color: var(--winter1);
     padding-left: 80px;
 
     .body {

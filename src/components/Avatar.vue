@@ -16,7 +16,7 @@ const props = defineProps({
 
 <template>
   <div class="avatar">
-    <img v-if="link" :src="link" alt="">
+    <img v-if="link" :src="link" alt="头像">
     <div v-else class="text">{{ text }}</div>
   </div>
 </template>
@@ -38,8 +38,8 @@ const props = defineProps({
   .text {
     width: 100%;
     height: 100%;
-    background-color: #fff;
-
+    background-color: var(--bg21);
+    color: var(--fg4);
     display: flex;
     justify-content: center;
     align-items: center;

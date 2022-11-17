@@ -24,5 +24,10 @@ export const useTokenStore = defineStore('token', {
             this._token = token;
             localStorage.setItem('token', JSON.stringify(token))
         },
+        
+        clearToken() {
+            this._token = null;
+            localStorage.removeItem('token')
+        }
     },
 })

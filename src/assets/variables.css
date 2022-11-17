@@ -23,12 +23,6 @@
   --color10: #c8dbbe;
   --color11: #61764b;
 
-  /* https://www.colorhunt.co/palette/f4f4f2e8e8e8bbbfca495464 */
-  --winter1: #f4f4f2;
-  --winter2: #e8e8e8;
-  --winter3: #bbbfca;
-  --winter4: #495464;
-
   /* https://www.colorhunt.co/palette/fee3ecf9c5d5f999b7f2789f */
   --pink1: #fee3ec;
   --pink2: #f9c5d5;
@@ -41,23 +35,34 @@
   --purple3: #8d72e1;
   --purple4: #6c4ab6;
 
+  /* https://www.colorhunt.co/palette/f4f4f2e8e8e8bbbfca495464 */
+  --winter1: #f4f4f2;
+  --winter2: #bbbfca;
+  --winter3: #495464;
+  --winter4: #332119;
+  --winter11: rgb(238, 114, 29); /*#ee721d*/
+  --winter12: #e31da2;
+  --winter13: #f61d08;
+
   /* 距离 */
   --header-height: 74px;
 }
 
 :root {
-  /* semantic color variables for this project */
-  --bg-white: var(--white);
-  --bg-white-soft: var(--white-soft);
-  --bg-white-mute: var(--white-mute);
-  --bg-black-mute: var(--black-mute);
+  /* semantic colors */
+  --bg1: var(--winter1);
+  --bg2: var(--winter2);
+  --bg3: var(--winter3);
+  --bg4: var(--winter4);
+  --bg11: var(--winter11);
+  --bg21: var(--winter12);
+  --bg31: var(--winter13);
 
-  --bg-primary: var(--color5);
-  --bg-secondary: var(--color6);
-  --bg-green: var(--color10);
-
-  --fg-primary: var(--color8);
-  --fg-secondary: var(--color7);
-  --fg-gold: var(--color9);
-  --fg-green: var(--color11);
+  --fg1: var(--winter4);
+  --fg2: var(--winter3);
+  --fg3: var(--winter2);
+  --fg4: var(--winter1);
+  --fg11: var(--winter11);
+  --fg21: var(--winter12);
+  --fg31: var(--winter13);
 }

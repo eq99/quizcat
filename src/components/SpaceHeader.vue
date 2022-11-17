@@ -18,7 +18,7 @@ import UserCut from './UserCut.vue';
 
 <style scoped lang="scss">
 header {
-  background-color: var(--winter3);
+  background-color: var(--bg2);
 
   .container {
     display: flex;
@@ -29,7 +29,7 @@ header {
     font-size: 36px;
     margin: 0 0 0 40px;
     padding: 8px 0 12px;
-    color: var(--winter4);
+    color: var(--fg11);
     text-align: center;
   }
 

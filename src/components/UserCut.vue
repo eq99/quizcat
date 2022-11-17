@@ -6,6 +6,7 @@
 import Dropdown from '@/components/Dropdown.vue';
 import Avatar from '@/components/Avatar.vue';
 import Modal from '@/components/Modal.vue';
+import UserInfo from '@/components/UserInfo.vue';
 import LoginCard from '@/components/LoginCard.vue';
 import { computed, ref } from 'vue';
 import { storeToRefs } from 'pinia'
@@ -31,7 +32,7 @@ const isLogin = ref(false);
     <template #body>
       <div class="content">
         <div class="user-box" v-if="user">
-          {{ user }}
+          <UserInfo :user="user"></UserInfo>
         </div>
         <div class="login-box" v-else>
           <div class="note">登录发现新天地</div>
@@ -53,7 +54,7 @@ const isLogin = ref(false);
   padding: 20px 16px;
   border-radius: 8px;
   border: 1px solid #eee;
-  background-color: #fff;
+  background-color: var(--bg1);
 
   .login-box {
     text-align: center;

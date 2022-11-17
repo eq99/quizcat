@@ -6,12 +6,12 @@
 <script setup lang="ts">
 import Star from '@/components/Star.vue';
 import Galaxy from '@/components/Galaxy.vue';
-import HeaderSpace from "@/components/SpaceHeader.vue"
+import SpaceHeader from "@/components/SpaceHeader.vue"
 </script>
 
 
 <template>
-  <HeaderSpace></HeaderSpace>
+  <SpaceHeader></SpaceHeader>
   <div class="space-box">
     <div class="container space">
       <Galaxy name="温柔地球">
@@ -26,6 +26,6 @@ import HeaderSpace from "@/components/SpaceHeader.vue"
 
 <style lang="scss" scoped>
 body {
-  background-color: var(--winter1);
+  background-color: var(--bg1);
 }
 </style>

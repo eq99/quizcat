@@ -38,3 +38,18 @@ export async function signin(email: string, captcha: string): Promise<AuthToken>
 
     throw new Error(resp.statusText)
 }
+
+
+export async function signout<T>(token: string): Promise<T> {
+    const resp = await fetch(`${API_BASE}/signout`, {
+        headers: {
+            'Authorization': token,
+        },
+    });
+
+    if (resp.status >= 200 && resp.status < 300) {
+        return resp.json()
+    }
+
+    throw new Error(resp.statusText)
+}
