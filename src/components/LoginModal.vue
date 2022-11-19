@@ -81,7 +81,7 @@ function handleSendCaptcha() {
     });
   });
 
-  intervalId.value = setInterval(() => {
+  intervalId.value = window.setInterval(() => {
     countDown.value -= 1;
     if (countDown.value === 0) {
       clearInterval(intervalId.value);
