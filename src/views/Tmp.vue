@@ -1,18 +1,14 @@
 <script  lang="ts" setup>
-import Modal from '@/components/Modal.vue';
 import { ref } from 'vue';
+import { useSigninStore } from '@/stores/token';
 
-// variables
-const modalEle = ref<InstanceType<typeof Modal>>();
+
+const { openSignin, closeSignin } = useSigninStore();
 </script>
 
 <template>
-  <button @click="modalEle?.show">open</button>
-  <Modal ref="modalEle">
-    <div class="content">
-      <button @click="modalEle?.hide">close</button>
-    </div>
-  </Modal>
+  <button @click="openSignin">开启</button>
+  <button @click="closeSignin">关闭</button>
 </template>
 
 <style lang="scss" scoped>

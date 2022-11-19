@@ -48,6 +48,7 @@ function show() {
 
   .bd-box {
     position: absolute;
+    z-index: 1;
 
     &.bottom-center {
       top: 100%;

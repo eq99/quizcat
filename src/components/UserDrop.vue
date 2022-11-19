@@ -1,27 +1,15 @@
-<!--
-  short cut info for user, mainly used at header nav
- -->
-
 <script  lang="ts" setup>
 import Dropdown from '@/components/Dropdown.vue';
 import Avatar from '@/components/Avatar.vue';
-import Modal from '@/components/Modal.vue';
 import UserInfo from '@/components/UserInfo.vue';
-import LoginCard from '@/components/LoginCard.vue';
-import { computed, ref } from 'vue';
+
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '@/stores/user';
+import { useSigninStore } from '@/stores/token';
 
 // vars
-const modalEle = ref<InstanceType<typeof Modal>>();
 const { user } = storeToRefs(useUserStore());
-
-
-//states
-const isLogin = ref(false);
-
-// computed
-
+const { openSignin } = useSigninStore();
 </script>
 
 <template>
@@ -36,16 +24,11 @@ const isLogin = ref(false);
         </div>
         <div class="login-box" v-else>
           <div class="note">登录发现新天地</div>
-          <div class="login-btn" @click="modalEle?.show">立即登录</div>
+          <div class="login-btn" @click="openSignin">立即登录</div>
         </div>
       </div>
     </template>
   </Dropdown>
-  <Modal ref="modalEle">
-    <div class="login-card">
-      <LoginCard @close="modalEle?.hide"></LoginCard>
-    </div>
-  </Modal>
 </template>
 
 <style lang="scss" scoped>
@@ -54,7 +37,7 @@ const isLogin = ref(false);
   padding: 20px 16px;
   border-radius: 8px;
   border: 1px solid #eee;
-  background-color: var(--bg1);
+  background-color: var(--bg-base1);
 
   .login-box {
     text-align: center;
@@ -73,6 +56,5 @@ const isLogin = ref(false);
       cursor: pointer;
     }
   }
-
 }
 </style>

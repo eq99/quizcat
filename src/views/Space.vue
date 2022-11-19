@@ -22,10 +22,3 @@ import SpaceHeader from "@/components/SpaceHeader.vue"
     </div>
   </div>
 </template>
-
-
-<style lang="scss" scoped>
-body {
-  background-color: var(--bg1);
-}
-</style>

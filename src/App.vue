@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Notification from '@/components/Notification.vue';
+import LoginModal from './components/LoginModal.vue';
 import Fab from '@/components/Fab.vue';
 </script>
 
@@ -7,8 +8,5 @@ import Fab from '@/components/Fab.vue';
   <Notification></Notification>
   <RouterView></RouterView>
   <Fab></Fab>
+  <LoginModal></LoginModal>
 </template>
-
-<style scoped>
-
-</style>

@@ -54,18 +54,24 @@ onMounted(async () => {
 
 .q-item {
   width: 20%;
-  background-color: var(--bg-primary);
+  background-color: var(--bg-base1);
   padding: 8px 16px;
   margin: 12px 8px;
 
   position: relative;
+  transition: .3s;
+
+  &:hover {
+    box-shadow: 1px 4px 8px var(--bg-base2);
+    transform: scale(1.01);
+  }
 
   .mark {
     width: 30px;
     height: 20px;
     padding: 0 4px;
-    background-color: #B2DE34;
-    color: #e60033;
+    background-color: var(--bg-ok-light);
+    color: var(--fg-danger);
     font-size: small;
     text-align: center;
     position: absolute;
@@ -77,13 +83,11 @@ onMounted(async () => {
     content: '';
 
     border: 10px solid;
-    border-color: transparent #B2DE34 transparent transparent;
+    border-color: transparent var(--bg-ok-light) transparent transparent;
     position: absolute;
     right: 38px;
     top: 0px;
   }
-
-
 
   .mark:after {
     content: '';

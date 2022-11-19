@@ -23,7 +23,12 @@ export interface User {
     updatedAt: string,
 }
 
-//
+export interface UserBar {
+    id: number,
+    name: string,
+    avatar: string,
+}
+
 export interface AuthToken {
     id: number,
     value: string,
@@ -52,6 +57,17 @@ export interface Quiz {
     createdAt: string,
     updatedAt: string,
     exerciseID: number,
+}
+
+export interface Solution {
+    id: number,
+    score: number,
+    content: string,
+    quizID: number,
+    updatedAt: string,
+    userid: number,
+    username: string,
+    avatar: string
 }
 
 // words ---------------

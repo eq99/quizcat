@@ -1,21 +1,43 @@
 <script  lang="ts" setup>
+import { storeToRefs } from 'pinia';
 import { computed, ref } from 'vue';
+
+import Modal from '@/components/Modal.vue';
+
 import { useNotificationStore } from '@/stores/notification';
 import { useUserStore } from '@/stores/user';
+import { useSigninStore } from '@/stores/token';
 import { useTokenStore } from '@/stores/token';
+
 import { sendCaptcha, signin } from '@/apis/user';
 import { validateEmail } from '@/lib'
 import type { Token } from '@/types';
 
 //vars
-const MAX_SECOND = 61;
-const emit = defineEmits<{
-  (e: 'close'): void,
-}>();
+const modalEle = ref<InstanceType<typeof Modal>>();
 
+const signinStore = useSigninStore();
+const tokenStore = useTokenStore();
 const { pushNoti } = useNotificationStore();
 const { saveUser } = useUserStore();
-const { saveToken } = useTokenStore();
+const { closeSignin } = signinStore;
+const { token } = storeToRefs(tokenStore);
+const { saveToken } = tokenStore;
+
+const MAX_SECOND = 61;
+
+// subscribs
+signinStore.$subscribe((mutation, state) => {
+  // 未登录并且收到登录请求时打开
+  if (state.isOpen && !token.value) {
+    modalEle.value?.show();
+  }
+
+  // 收到关闭请求时关闭
+  if (!state.isOpen) {
+    modalEle.value?.hide();
+  }
+})
 
 // states
 const countDown = ref(MAX_SECOND);
@@ -68,10 +90,6 @@ function handleSendCaptcha() {
   }, 1000);
 }
 
-function close() {
-  emit('close');
-}
-
 function handleSubmit() {
   if (captcha.value.length !== 4) {
     pushNoti({
@@ -98,7 +116,7 @@ function handleSubmit() {
     });
 
     //close modal
-    emit('close');
+    closeSignin();
   }).catch(err => {
     pushNoti({
       title: '登录失败',
@@ -110,25 +128,27 @@ function handleSubmit() {
 </script>
 
 <template>
-  <div class="login-card">
-    <div class="logo">学习喵</div>
-    <div class="close" @click="close"><i class="iconfont icon-close-bold"></i> </div>
-    <fieldset>
-      <label>请使用邮箱注册</label>
-      <div class="input-wrapper">
-        <input type="text" placeholder="miao@miao.com" v-model="email">
-      </div>
-    </fieldset>
-    <fieldset>
-      <label for="">请填写邮箱验证码</label>
-      <div class="input-wrapper">
-        <input type="text" placeholder="1234" class="cpat-input" v-model="captcha">
-        <button class="capt-btn" :class="{ disabled }" @click="handleSendCaptcha" :disabled="disabled">{{ captText
-        }}</button>
-      </div>
-    </fieldset>
-    <button class="submit-btn" @click="handleSubmit">登录/注册</button>
-  </div>
+  <Modal ref="modalEle">
+    <div class="login-card">
+      <div class="logo">学习喵</div>
+      <div class="close" @click="closeSignin"><i class="iconfont icon-close-bold"></i> </div>
+      <fieldset>
+        <label>请使用邮箱注册</label>
+        <div class="input-wrapper">
+          <input type="text" placeholder="miao@miao.com" v-model="email">
+        </div>
+      </fieldset>
+      <fieldset>
+        <label for="">请填写邮箱验证码</label>
+        <div class="input-wrapper">
+          <input type="text" placeholder="1234" class="cpat-input" v-model="captcha">
+          <button class="capt-btn" :class="{ disabled }" @click="handleSendCaptcha" :disabled="disabled">{{ captText
+          }}</button>
+        </div>
+      </fieldset>
+      <button class="submit-btn" @click="handleSubmit">登录/注册</button>
+    </div>
+  </Modal>
 </template>
 
 <style lang="scss" scoped>

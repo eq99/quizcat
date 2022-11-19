@@ -53,6 +53,7 @@ defineExpose({
   bottom: 0;
   left: 0;
   right: 0;
+  z-index: 5;
 
   display: flex;
   align-items: center;

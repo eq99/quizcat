@@ -43,6 +43,7 @@
   --winter11: rgb(238, 114, 29); /*#ee721d*/
   --winter12: #e31da2;
   --winter13: #f61d08;
+  --winter14: #464c05;
 
   /* 距离 */
   --header-height: 74px;
@@ -50,19 +51,22 @@
 
 :root {
   /* semantic colors */
-  --bg1: var(--winter1);
-  --bg2: var(--winter2);
-  --bg3: var(--winter3);
-  --bg4: var(--winter4);
-  --bg11: var(--winter11);
-  --bg21: var(--winter12);
-  --bg31: var(--winter13);
+  --bg-base1: var(--winter1);
+  --bg-base2: var(--winter2);
+  --bg-base3: var(--winter3);
+  --bg-base4: var(--winter4);
+  --bg-primary: var(--winter11); /*primary*/
+  --bg-helper: var(--winter12); /* helper color */
+  --bg-danger: var(--winter13);
+  --bg-ok: var(--winter14);
+  --bg-ok-light: #b2de34;
 
-  --fg1: var(--winter4);
-  --fg2: var(--winter3);
-  --fg3: var(--winter2);
-  --fg4: var(--winter1);
-  --fg11: var(--winter11);
-  --fg21: var(--winter12);
-  --fg31: var(--winter13);
+  --fg-base1: var(--winter1);
+  --fg-base2: var(--winter2);
+  --fg-base3: var(--winter3);
+  --fg-base4: var(--winter4);
+  --fg-primary: var(--winter11); /*primary*/
+  --fg-helper: var(--winter12); /* helper color */
+  --fg-danger: var(--winter13);
+  --fg-ok: var(--winter14);
 }

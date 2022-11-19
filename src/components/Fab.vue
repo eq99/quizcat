@@ -29,10 +29,10 @@ const fabEle = ref<HTMLElement>();
   height: 100%;
   border-radius: 50%;
   overflow: hide;
-  background-color: var(--bg11);
+  background-color: var(--bg-primary);
 
   .iconfont {
-    color: var(--fg4);
+    color: var(--fg-base1);
     font-size: 28px;
   }
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import UserCut from './UserCut.vue';
+import UserCut from './UserDrop.vue';
 </script>
 
 <template>
@@ -18,7 +18,7 @@ import UserCut from './UserCut.vue';
 
 <style scoped lang="scss">
 header {
-  background-color: var(--bg2);
+  background-color: var(--bg-base2);
 
   .container {
     display: flex;
@@ -29,7 +29,7 @@ header {
     font-size: 36px;
     margin: 0 0 0 40px;
     padding: 8px 0 12px;
-    color: var(--fg11);
+    color: var(--fg-primary);
     text-align: center;
   }
 

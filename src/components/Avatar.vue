@@ -38,8 +38,8 @@ const props = defineProps({
   .text {
     width: 100%;
     height: 100%;
-    background-color: var(--bg21);
-    color: var(--fg4);
+    background-color: var(--bg-helper);
+    color: var(--fg-base1);
     display: flex;
     justify-content: center;
     align-items: center;

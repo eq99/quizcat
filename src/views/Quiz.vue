@@ -1,12 +1,24 @@
 <script setup lang="ts">
-import type { Quiz, Exercise } from '@/types';
+import type { Quiz, Exercise, Solution } from '@/types';
+import { reactive, computed, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+import { debounce, renderMarkdown } from '@/lib';
 
 import ExHeader from '@/components/ExHeader.vue';
-import { getQuizzesByExerciseID } from '@/apis/exercise';
-import { getExcerciseByID } from "@/apis/exercise";
-import { debounce, renderMarkdown } from '@/lib';
-import { reactive, computed, onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import Button from '@/components/buttons/Button.vue';
+import SolutionCard from '@/components/SolutionCard.vue';
+
+import { useSigninStore, useTokenStore } from "@/stores/token";
+import { useUserStore } from '@/stores/user';
+import { storeToRefs } from "pinia";
+
+import {
+  getQuizzesByExerciseID,
+  getExcerciseByID,
+  saveSolution,
+  getSolutionsByQuizId,
+} from '@/apis/exercise';
+
 
 // types
 interface State {
@@ -16,13 +28,17 @@ interface State {
   isSolutionShow: boolean,
   answer: string,
   answers: string[],
+  solutions: Solution[][],
 }
 
 // constant
 const QuizKinds: string[] = ["简答题"];
 
 // variables
-const route = useRoute()
+const route = useRoute();
+const { token } = storeToRefs(useTokenStore());
+const { user } = storeToRefs(useUserStore());
+const { openSignin } = useSigninStore();
 
 // state
 const state: State = reactive({
@@ -31,9 +47,9 @@ const state: State = reactive({
   curIndex: 0,
   isSolutionShow: false,
   answer: "",
-  answers: [],
+  answers: [], // 保存用户每个题答案, 采用自然数组序号，而不是 quizid
+  solutions: [],// 保存每个题所有用户答案, 采用自然数组序号
 });
-
 
 // methods
 function nextQuiz() {
@@ -53,6 +69,21 @@ function prevQuiz() {
 }
 
 function showSolution() {
+  let solutions = state.solutions[state.curIndex];
+  if (!solutions) {
+    getSolutionsByQuizId(state.quizzes[state.curIndex].id).then(data => {
+      state.solutions[state.curIndex] = data;
+
+      // find answer to user
+      if (!user.value) return;
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].userid === user.value.id) {
+          state.answer = data[i].content;
+          return;
+        }
+      }
+    });
+  }
   state.isSolutionShow = !state.isSolutionShow;
 }
 
@@ -62,7 +93,7 @@ function gotoQuiz(idx: number) {
   // update current index
   state.curIndex = idx;
   // load my answer
-  state.answer = state.answers[idx];
+  state.answer = state.answers[idx] || '';
 }
 
 function handleInput() {
@@ -71,6 +102,24 @@ function handleInput() {
 }
 
 const debounceInput = debounce(handleInput, 1000);
+
+function saveAnswer() {
+  if (!token.value) {
+    openSignin();
+    return;
+  }
+
+  if (state.answer.length < 1 || state.answer.length > 4000) {
+    alert('回答长度：1~4000字');
+    return;
+  }
+
+  saveSolution(state.answer, state.quizzes[state.curIndex].id, token.value.value).then((data => {
+    alert('保存成功');
+  })).catch(err => {
+    alert('保存失败,请稍后再试');
+  })
+}
 
 // computed
 const quizKind = computed(() => {
@@ -100,7 +149,7 @@ onMounted(async () => {
   <ExHeader></ExHeader>
   <div class="q-box">
     <div class="q-side">
-      <h3 class="q-tips">{{ state.exercise?.title }}</h3>
+      <h3 class="q-title">{{ state.exercise?.title }}</h3>
       <nav class="q-nav">
         <div class="nav-item " v-for="(quiz, idx) in state.quizzes" :key="quiz.id"
           :class="{ active: state.answers[idx] }" @click="gotoQuiz(idx)">
@@ -119,15 +168,18 @@ onMounted(async () => {
         <div class="markdown" v-html='htmlContent'></div>
       </div>
       <div class="q-input-box">
-        <textarea class="q-input" rows="10" placeholder="随便写写" v-model="state.answer" @input="debounceInput"></textarea>
+        <textarea class="q-input" rows="10" placeholder="将答案复制到这里可以分享哦" v-model="state.answer"
+          @input="debounceInput"></textarea>
       </div>
       <div class="q-action">
-        <button class="btn" @click="showSolution">查看解析</button>
-        <button class="btn ms-auto" @click="prevQuiz">上一题</button>
-        <button class="btn " @click="nextQuiz">下一题</button>
+        <Button @click="showSolution">查看解析</Button>
+        <Button class="ms-auto" kind="base3" @click="saveAnswer">保存答案</Button>
+        <Button @click="prevQuiz">上一题</Button>
+        <Button @click="nextQuiz">下一题</Button>
       </div>
       <div class="q-solution" v-show="state.isSolutionShow">
-        <div class="markdown" v-html="htmlSolution"></div>
+        <SolutionCard v-for="solution in state.solutions[state.curIndex]" :solution="solution" :key="solution.id">
+        </SolutionCard>
       </div>
     </div>
   </div>
@@ -143,12 +195,12 @@ onMounted(async () => {
 .q-side {
   flex-shrink: 0;
   width: 300px;
-  background-color: var(--bg-primary);
+  background-color: var(--bg-base1);
   margin: 0 8px 0 16px;
   padding: 1rem 1rem 3rem 1rem;
 }
 
-.q-side .q-tips {
+.q-side .q-title {
   color: var(--fg-primary);
   margin-bottom: 3rem;
 }
@@ -159,7 +211,7 @@ onMounted(async () => {
 }
 
 .q-side .q-nav .nav-item {
-  background-color: var(--bg-secondary);
+  background-color: var(--bg-base2);
   padding: 1rem 1.5rem;
   margin-right: 1rem;
   margin-bottom: 1rem;
@@ -167,8 +219,8 @@ onMounted(async () => {
 }
 
 .q-side .q-nav .nav-item.active {
-  background-color: var(--bg-green);
-  color: var(--fg-green);
+  background-color: var(--bg-ok-light);
+  color: var(--fg-base4);
 }
 
 .q-card {
@@ -177,7 +229,8 @@ onMounted(async () => {
 
 .q-head {
   padding: 8px 16px;
-  background-color: var(--bg-secondary);
+  background-color: var(--bg-base3);
+  color: var(--fg-base1);
 
   display: flex;
   align-items: center;
@@ -185,7 +238,6 @@ onMounted(async () => {
 
 .q-head .q-id {
   font-size: 24px;
-  color: var(--fg-primary);
 }
 
 .q-head .q-id::after {
@@ -194,12 +246,12 @@ onMounted(async () => {
 }
 
 .q-head .q-level {
-  color: var(--fg-gold);
+  color: gold;
   margin: 0 8px;
 }
 
 .q-body {
-  background-color: #fafafa;
+  background-color: var(--bg-base1);
   padding: 1rem .5rem 1rem 2rem;
 }
 
@@ -220,17 +272,7 @@ onMounted(async () => {
   display: flex;
 }
 
-.btn {
-  cursor: pointer;
-  padding: 1rem 2rem;
-  margin-right: 1rem;
-  background-color: var(--bg-primary);
-  color: var(--fg-primary);
-}
-
 .q-solution {
-  border: 1px solid var(--fg-primary);
   margin-top: 1rem;
-  padding: 1rem;
 }
 </style>

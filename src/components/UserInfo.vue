@@ -64,7 +64,7 @@ function handleLogout() {
     text-align: center;
     font-size: 24px;
     margin-bottom: 12px;
-    color: var(--fg21)
+    color: var(--fg-helper)
   }
 }
 </style>
