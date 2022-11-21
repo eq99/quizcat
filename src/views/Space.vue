@@ -1,8 +1,3 @@
-<!-- 应用中心词语：
-    space: 宇宙空间
-    star : 星球, 就是单个APP
--->
-
 <script setup lang="ts">
 import Star from '@/components/Star.vue';
 import Galaxy from '@/components/Galaxy.vue';
