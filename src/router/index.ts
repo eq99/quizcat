@@ -4,6 +4,7 @@ import Space from "@/views/Space.vue";
 const Tmp = () => import('@/views/Tmp.vue');
 const Quiz = () => import("@/views/Quiz.vue");
 const Exercises = () => import('@/views/Exercises.vue');
+const InterViewList = () => import('@/views/InterviewList.vue');
 const WordSet = () => import("@/views/WordSet.vue");
 const WordDay = () => import("@/views/WordDay.vue");
 const Play = () => import('@/views/Play.vue');
@@ -18,9 +19,13 @@ const router = createRouter({
         title: '练习喵',
       }
     },
-
     { path: '/ex/:exid', component: Quiz },
     { path: "/words", component: WordSet },
+    {
+      path: "/interviews", component: InterViewList, meta: {
+        title: '面试喵',
+      }
+    },
     { path: "/words/:setid", component: WordDay },
     { path: "/play", component: Play },
   ]

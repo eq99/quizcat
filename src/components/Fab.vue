@@ -6,7 +6,7 @@ const fabEle = ref<HTMLElement>();
 </script>
 
 <template>
-  <div class="fab-box" ref="fabEle">
+  <div class="fab-box" ref="fabEle" title="回到首页">
     <div class="fab-icon">
       <RouterLink to="/" class="fab-link"><i class="iconfont icon-homefill"></i></RouterLink>
     </div>
