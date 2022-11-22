@@ -44,6 +44,7 @@
   --winter12: #e31da2;
   --winter13: #f61d08;
   --winter14: #464c05;
+  --winter15: #379237;
 
   /* 距离 */
   --header-height: 74px;
@@ -59,7 +60,7 @@
   --bg-helper: var(--winter12); /* helper color */
   --bg-danger: var(--winter13);
   --bg-ok: var(--winter14);
-  --bg-ok-light: #b2de34;
+  --bg-ok-light: #379237;
 
   --fg-base1: var(--winter1);
   --fg-base2: var(--winter2);
@@ -69,4 +70,5 @@
   --fg-helper: var(--winter12); /* helper color */
   --fg-danger: var(--winter13);
   --fg-ok: var(--winter14);
+  --fg-ok-light: var(--winter15);
 }

@@ -18,6 +18,11 @@ const { loadQuestions, loadComments, getIBookById } = interviewStore;
 const route = useRoute();
 const { token } = storeToRefs(useTokenStore());
 
+// methods
+function answered(qid: number): boolean {
+  return comments.value.findIndex(c => c.iQuestionID === qid) > -1
+}
+
 // life cicle
 onMounted(async () => {
   loadQuestions(await getIQuestionsByBookId(route.params.bookId as string));
@@ -33,7 +38,8 @@ onMounted(async () => {
         <RouterLink :to="`/interviews/${book?.id}`">{{ book?.name }}</RouterLink>
       </dt>
       <dd v-for="(question, idx) in iquestions" :key="question.id">
-        <RouterLink :to="`/interviews/${question.bookID}/${question.id}`" class="c-link">
+        <RouterLink :to="`/interviews/${question.bookID}/${question.id}`" class="c-link"
+          :class="{ success: answered(question.id) }">
           <span class="order">{{ idx + 1 }}. </span>
           <span class="s1">{{ question.body }}</span>
         </RouterLink>
@@ -71,15 +77,21 @@ onMounted(async () => {
       display: flex;
       align-items: center;
 
+      &.success {
+        color: var(--fg-ok-light);
+      }
+
+      &.router-link-exact-active {
+        color: var(--fg-primary);
+      }
+
       .order {
         flex-shrink: 0;
         margin: 0 6px;
       }
     }
 
-    .router-link-exact-active {
-      color: var(--fg-primary);
-    }
+
   }
 
   .detail {
