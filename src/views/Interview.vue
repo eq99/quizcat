@@ -95,8 +95,10 @@ onBeforeRouteUpdate(async (to, from) => {
 <style lang="scss" scoped>
 .question {
   padding: 12px 0;
-  color: var(--fg-base4);
-  font-size: 28px;
+  color: var(--fg-base1);
+  font-size: 24px;
+  background-color: var(--bg-base3);
+  padding: 12px;
 }
 
 .solution {

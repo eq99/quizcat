@@ -90,8 +90,6 @@ onMounted(async () => {
         margin: 0 6px;
       }
     }
-
-
   }
 
   .detail {
