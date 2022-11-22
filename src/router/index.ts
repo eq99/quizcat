@@ -37,7 +37,7 @@ const router = createRouter({
           path: ":bookId", component: InterViewNav,
           children: [
             { path: "", component: InterViewLand },
-            { path: ":interId", component: InterView }
+            { path: ":questionId", component: InterView }
           ]
         },
       ]

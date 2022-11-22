@@ -1,3 +1,5 @@
+import type { IQuestion, IComment } from '@/types';
+
 const API_BASE = import.meta.env.VITE_API_BASE;
 
 export async function getInterviewBooks<T>(): Promise<T> {
@@ -12,6 +14,16 @@ export async function getInterviewBooks<T>(): Promise<T> {
 
 export async function getIQuestionsByBookId<T>(bookid: string | number): Promise<T> {
     const resp = await fetch(`${API_BASE}/iquestions?bookid=${bookid}`);
+
+    if (resp.status >= 200 && resp.status < 300) {
+        return await resp.json()
+    }
+
+    throw new Error(resp.statusText)
+}
+
+export async function getICommentsByQestionId<T>(qid: string | number): Promise<T> {
+    const resp = await fetch(`${API_BASE}/icomments?questionid=${qid}`);
 
     if (resp.status >= 200 && resp.status < 300) {
         return await resp.json()
