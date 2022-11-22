@@ -15,7 +15,7 @@ const username = computed(() => {
 
 <template>
   <div class="userbar">
-    <Avatar :link="userbar.avatar" :text="userbar.name.slice(0, 2)"></Avatar>
+    <Avatar :link="userbar.avatar" :text="userbar.name.slice(0, 2)" small></Avatar>
     <div class="detail">
       <div class="name">{{ username }}</div>
     </div>
@@ -29,7 +29,7 @@ const username = computed(() => {
   padding: 4px;
 
   .detail {
-    margin-left: 4px;
+    margin-left: 12px;
   }
 }
 </style>

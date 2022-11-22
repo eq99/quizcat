@@ -1,117 +1,73 @@
 <script lang="ts" setup>
-import type { Exercise } from "@/types";
-
-import DataPill from '@/components/DataPill.vue';
-import { getExcercises } from "@/apis/exercise"
-import Header from '@/components/Header.vue';
-import { formatTime } from "@/lib"
 import { onMounted, reactive } from 'vue';
+import { formatTime } from "@/lib";
 
-// types
-interface State {
-  exercises: Exercise[],
-}
+import InterviewBook from '@/components/InterviewBook.vue';
 
-// state
-const state: State = reactive({
-  exercises: [],
-});
 
-//methods
-function isNew(createdAt: string) {
-  const d = new Date(createdAt);
-  const today = new Date()
+import { getExcercises } from "@/apis/exercise";
 
-  return today.getTime() - d.getTime() < 2 * 24 * 3600000;
-}
+// states
+
+const books = [{
+  id: 1,
+  name: "JavaScript JavaScript JavaScript",
+  cover: "https://cdn.pixabay.com/photo/2022/10/28/11/14/leaves-7552915_1280.png",
+  createdAt: "'2022-11-21T06:07:39.833Z'",
+  updatedAt: "'2022-11-21T06:07:39.833Z'",
+},
+{
+  id: 2,
+  name: "你好",
+  cover: "https://cdn.pixabay.com/photo/2022/10/28/11/14/leaves-7552915_1280.png",
+  createdAt: "'2022-11-21T06:07:39.833Z'",
+  updatedAt: "'2022-11-21T06:07:39.833Z'",
+},
+{
+  id: 3,
+  name: "你好",
+  cover: "https://cdn.pixabay.com/photo/2022/10/28/11/14/leaves-7552915_1280.png",
+  createdAt: "'2022-11-21T06:07:39.833Z'",
+  updatedAt: "'2022-11-21T06:07:39.833Z'",
+},
+{
+  id: 4,
+  name: "你好",
+  cover: "https://cdn.pixabay.com/photo/2022/10/28/11/14/leaves-7552915_1280.png",
+  createdAt: "'2022-11-21T06:07:39.833Z'",
+  updatedAt: "'2022-11-21T06:07:39.833Z'",
+},
+{
+  id: 4,
+  name: "你好",
+  cover: "https://cdn.pixabay.com/photo/2022/10/28/11/14/leaves-7552915_1280.png",
+  createdAt: "'2022-11-21T06:07:39.833Z'",
+  updatedAt: "'2022-11-21T06:07:39.833Z'",
+},
+{
+  id: 5,
+  name: "你好",
+  cover: "https://cdn.pixabay.com/photo/2022/10/28/11/14/leaves-7552915_1280.png",
+  createdAt: "'2022-11-21T06:07:39.833Z'",
+  updatedAt: "'2022-11-21T06:07:39.833Z'",
+}]
 
 // life cicle
 onMounted(async () => {
-  state.exercises = await getExcercises();
+
 });
 </script>
 
 <template>
-  <Header name="面试喵" homenav="/interviews"></Header>
-  <div class="q-list">
-    <router-link :to="'/ex/' + ex.id" v-for="ex in state.exercises" :key="ex.id" class="q-item">
-      <div class="mark" v-if="isNew(ex.createdAt)">new</div>
-      <h3 class="title">{{ ex.title }}</h3>
-      <div class="foot">
-        <DataPill text="练习数" :data="ex.quizNum"></DataPill>
-        <time class="time"> {{ formatTime(ex.updatedAt) }} </time>
-      </div>
-    </router-link>
+  <div class="b-list">
+    <InterviewBook v-for="book in books" :key="book.id" :book="book"></InterviewBook>
   </div>
 </template>
 
 <style scoped lang="scss">
-.q-list {
+.b-list {
   display: flex;
   flex-wrap: wrap;
-  padding: 0 60px;
-}
-
-.q-item {
-  width: 20%;
-  background-color: var(--bg-base1);
-  padding: 8px 16px;
-  margin: 12px 8px;
-
-  position: relative;
-  transition: .3s;
-
-  &:hover {
-    box-shadow: 1px 4px 8px var(--bg-base2);
-    transform: scale(1.01);
-  }
-
-  .mark {
-    width: 30px;
-    height: 20px;
-    padding: 0 4px;
-    background-color: var(--bg-ok-light);
-    color: var(--fg-danger);
-    font-size: small;
-    text-align: center;
-    position: absolute;
-    top: 0px;
-    right: -10px;
-  }
-
-  .mark:before {
-    content: '';
-
-    border: 10px solid;
-    border-color: transparent var(--bg-ok-light) transparent transparent;
-    position: absolute;
-    right: 38px;
-    top: 0px;
-  }
-
-  .mark:after {
-    content: '';
-    width: 10px;
-    border: 10px solid;
-    border-color: transparent transparent transparent #58661C;
-    border-top: 0;
-    right: -20px;
-    position: absolute;
-    top: 20px;
-  }
-}
-
-.q-item .title {
-  color: var(--fg-primary);
-  margin-bottom: 8px;
-}
-
-.q-item .foot {
-  display: flex;
-  align-items: center;
-}
-
-.q-item .foot .time {
-  margin-left: auto;
+  padding: 20px 60px;
 }
 </style>

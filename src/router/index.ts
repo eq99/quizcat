@@ -4,7 +4,11 @@ import Space from "@/views/Space.vue";
 const Tmp = () => import('@/views/Tmp.vue');
 const Quiz = () => import("@/views/Quiz.vue");
 const Exercises = () => import('@/views/Exercises.vue');
+const InterViewApp = () => import('@/views/InterviewApp.vue');
 const InterViewList = () => import('@/views/InterviewList.vue');
+const InterViewNav = () => import('@/views/InterviewNav.vue');
+const InterViewLand = () => import('@/views/InterviewLand.vue');
+const InterView = () => import('@/views/Interview.vue');
 const WordSet = () => import("@/views/WordSet.vue");
 const WordDay = () => import("@/views/WordDay.vue");
 const Play = () => import('@/views/Play.vue');
@@ -21,11 +25,24 @@ const router = createRouter({
     },
     { path: '/ex/:exid', component: Quiz },
     { path: "/words", component: WordSet },
+
+    // 面试喵
     {
-      path: "/interviews", component: InterViewList, meta: {
+      path: "/interviews", component: InterViewApp, meta: {
         title: '面试喵',
-      }
+      },
+      children: [
+        { path: "", component: InterViewList },
+        {
+          path: ":bookId", component: InterViewNav,
+          children: [
+            { path: "", component: InterViewLand },
+            { path: ":interId", component: InterView }
+          ]
+        },
+      ]
     },
+
     { path: "/words/:setid", component: WordDay },
     { path: "/play", component: Play },
   ]

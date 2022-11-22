@@ -70,6 +70,26 @@ export interface Solution {
     avatar: string
 }
 
+// interview
+export interface InterviewBook {
+    id: number,
+    name: string,
+    cover: string,
+    createdAt: string,
+    updatedAt: string,
+}
+
+export interface ISolution {
+    id: number,
+    score: number,
+    content: string,
+    IQestionID: number,
+    updatedAt: string,
+    userid: number,
+    username: string,
+    avatar: string
+}
+
 // words ---------------
 export interface WordSet {
     id: number,

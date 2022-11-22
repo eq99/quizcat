@@ -10,12 +10,16 @@ const props = defineProps({
   text: {
     type: String,
     default: '登录'
+  },
+  small: {
+    type: Boolean,
+    default: false,
   }
-})
+});
 </script>
 
 <template>
-  <div class="avatar">
+  <div class="avatar" :class="{ small: props.small }">
     <img v-if="link" :src="link" alt="头像">
     <div v-else class="text">{{ text }}</div>
   </div>
@@ -27,6 +31,11 @@ const props = defineProps({
   width: 48px;
   height: 48px;
   cursor: pointer;
+
+  &.small {
+    width: 32px;
+    height: 32px;
+  }
 
   border-radius: 50%;
   overflow: hidden;
