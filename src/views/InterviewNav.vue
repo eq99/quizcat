@@ -1,25 +1,25 @@
 <script  lang="ts" setup>
-import { onMounted, reactive } from 'vue';
+import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-
-import { getIQuestionsByBookId } from '@/apis/interviews'
-import { useInterviewStore } from '@/stores/interview'
-
-
 import { storeToRefs } from 'pinia';
+
+import { getICommentsByUserId, getIQuestionsByBookId } from '@/apis/interviews'
+import { useInterviewStore } from '@/stores/interview'
+import { useTokenStore } from '@/stores/token';
 
 // states
 const interviewStore = useInterviewStore();
 const { iquestions } = storeToRefs(interviewStore);
-const { loadQuestions } = interviewStore;
+const { loadQuestions, loadComments } = interviewStore;
 
 const route = useRoute();
+const { token } = storeToRefs(useTokenStore());
 
 // life cicle
 onMounted(async () => {
-  loadQuestions(await getIQuestionsByBookId(route.params.bookId as string))
+  loadQuestions(await getIQuestionsByBookId(route.params.bookId as string));
+  loadComments(await getICommentsByUserId(route.params.bookId as string, token.value?.value || ""))
 });
-
 </script>
 
 <template>

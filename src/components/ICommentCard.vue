@@ -1,12 +1,12 @@
 <script  lang="ts" setup>
 import UserBar from '@/components/UserBar.vue';
 import { renderMarkdown, formatTime } from '@/lib';
-import type { IComment } from '@/types';
+import type { ICommentWithUser } from '@/types';
 import { computed } from 'vue';
 
 // vars
 const props = defineProps<{
-  comment: IComment
+  comment: ICommentWithUser
 }>();
 
 // computed

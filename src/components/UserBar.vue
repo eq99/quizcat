@@ -31,5 +31,9 @@ const username = computed(() => {
   .detail {
     margin-left: 12px;
   }
+
+  .name {
+    color: var(--fg-helper);
+  }
 }
 </style>

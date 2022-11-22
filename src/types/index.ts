@@ -86,15 +86,23 @@ export interface IQuestion {
     updatedAt: string,
 }
 
-export interface IComment {
+export interface ICommentWithUser {
     id: number,
     voteNum: number,
     content: string,
-    IQuestionID: number,
+    iQuestionID: number,
     updatedAt: string,
     userid: number,
     username: string,
     avatar: string
+}
+
+export interface IComment {
+    id: number,
+    voteNum: number,
+    content: string,
+    iQuestionID: number,
+    updatedAt: string,
 }
 
 // words ---------------
