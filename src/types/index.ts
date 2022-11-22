@@ -70,7 +70,7 @@ export interface Solution {
     avatar: string
 }
 
-// interview
+// interview--面试喵
 export interface InterviewBook {
     id: number,
     name: string,
@@ -81,14 +81,8 @@ export interface InterviewBook {
 export interface IQuestion {
     id: number,
     body: string,
-    bookID: number,
-    updatedAt: string,
-}
-
-export interface IQuestionDetail {
-    id: number,
     solution: string,
-    IQuestionID: number,
+    bookID: number,
     updatedAt: string,
 }
 

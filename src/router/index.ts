@@ -5,7 +5,7 @@ const Tmp = () => import('@/views/Tmp.vue');
 const Quiz = () => import("@/views/Quiz.vue");
 const Exercises = () => import('@/views/Exercises.vue');
 const InterViewApp = () => import('@/views/InterviewApp.vue');
-const InterViewList = () => import('@/views/InterviewList.vue');
+const InterViewBooks = () => import('@/views/InterviewBooks.vue');
 const InterViewNav = () => import('@/views/InterviewNav.vue');
 const InterViewLand = () => import('@/views/InterviewLand.vue');
 const InterView = () => import('@/views/Interview.vue');
@@ -32,7 +32,7 @@ const router = createRouter({
         title: '面试喵',
       },
       children: [
-        { path: "", component: InterViewList },
+        { path: "", component: InterViewBooks },
         {
           path: ":bookId", component: InterViewNav,
           children: [

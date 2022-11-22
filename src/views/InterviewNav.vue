@@ -1,21 +1,25 @@
 <script  lang="ts" setup>
+import { onMounted, reactive } from 'vue';
+import { useRoute } from 'vue-router';
+
+import { getIQuestionsByBookId } from '@/apis/interviews'
+import { useInterviewStore } from '@/stores/interview'
+
+
+import { storeToRefs } from 'pinia';
 
 // states
-const iquestions = [{
-  id: 1,
-  bookID: 1,
-  body: 'CAD设计中零部件序号、标注及明细表的自动生成',
-}, {
-  id: 2,
-  bookID: 1,
-  body: '说一说cookie sessionStorage localStorage 区别？',
-},
-{
-  id: 3,
-  bookID: 1,
-  body: 'CSS颜色设置',
-},
-]
+const interviewStore = useInterviewStore();
+const { iquestions } = storeToRefs(interviewStore);
+const { loadQuestions } = interviewStore;
+
+const route = useRoute();
+
+// life cicle
+onMounted(async () => {
+  loadQuestions(await getIQuestionsByBookId(route.params.bookId as string))
+});
+
 </script>
 
 <template>
