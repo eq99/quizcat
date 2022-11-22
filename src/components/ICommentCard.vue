@@ -1,25 +1,24 @@
 <script  lang="ts" setup>
 import UserBar from '@/components/UserBar.vue';
 import { renderMarkdown, formatTime } from '@/lib';
-import type { ISolution } from '@/types';
+import type { IComment } from '@/types';
 import { computed } from 'vue';
-
 
 // vars
 const props = defineProps<{
-  solution: ISolution
-}>()
+  comment: IComment
+}>();
 
 // computed
-const htmlSolution = computed(() => {
-  return renderMarkdown(props.solution.content);
+const htmlContent = computed(() => {
+  return renderMarkdown(props.comment.content);
 });
 
 const userbar = computed(() => {
   return {
-    id: props.solution.userid,
-    name: props.solution.username,
-    avatar: props.solution.avatar,
+    id: props.comment.userid,
+    name: props.comment.username,
+    avatar: props.comment.avatar,
   }
 });
 </script>
@@ -28,10 +27,10 @@ const userbar = computed(() => {
   <div class="s-card">
     <div class="s-hd">
       <UserBar :userbar="userbar"></UserBar>
-      <div class="time">{{ formatTime(solution.updatedAt) }}</div>
+      <div class="time">{{ formatTime(comment.updatedAt) }}</div>
     </div>
     <div class="s-body">
-      <div class="markdown" v-html="htmlSolution"></div>
+      <div class="markdown" v-html="htmlContent"></div>
     </div>
   </div>
 </template>

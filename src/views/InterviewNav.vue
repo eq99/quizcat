@@ -1,5 +1,21 @@
 <script  lang="ts" setup>
 
+// states
+const iquestions = [{
+  id: 1,
+  bookID: 1,
+  body: 'CAD设计中零部件序号、标注及明细表的自动生成',
+}, {
+  id: 2,
+  bookID: 1,
+  body: '说一说cookie sessionStorage localStorage 区别？',
+},
+{
+  id: 3,
+  bookID: 1,
+  body: 'CSS颜色设置',
+},
+]
 </script>
 
 <template>
@@ -8,22 +24,10 @@
       <dt>
         <RouterLink to="/interviews/1">JavaScript</RouterLink>
       </dt>
-      <dd>
-        <RouterLink to="/interviews/1/1" class="c-link">
-          <span class="order">1. </span>
-          <span class="s1">{{ 'CAD设计中零部件序号、标注及明细表的自动生成' }}</span>
-        </RouterLink>
-      </dd>
-      <dd>
-        <RouterLink to="/interviews/1/2" class="c-link s1">
-          <span class="order">2. </span>
-          <span>{{ 'CSS颜色设置' }}</span>
-        </RouterLink>
-      </dd>
-      <dd>
-        <RouterLink to="/interviews/1/3" class="c-link">
-          <span class="order">3. </span>
-          <span class="s1">{{ '说一说cookie sessionStorage localStorage 区别？' }}</span>
+      <dd v-for="(question, idx) in iquestions" :key="question.id">
+        <RouterLink :to="`/interviews/${question.bookID}/${question.id}`" class="c-link">
+          <span class="order">{{ idx + 1 }}. </span>
+          <span class="s1">{{ question.body }}</span>
         </RouterLink>
       </dd>
     </dl>
@@ -34,7 +38,6 @@
     </div>
   </div>
 </template>
-
 
 <style lang="scss" scoped>
 .container {

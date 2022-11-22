@@ -75,15 +75,28 @@ export interface InterviewBook {
     id: number,
     name: string,
     cover: string,
-    createdAt: string,
     updatedAt: string,
 }
 
-export interface ISolution {
+export interface IQuestion {
     id: number,
-    score: number,
+    body: string,
+    bookID: number,
+    updatedAt: string,
+}
+
+export interface IQuestionDetail {
+    id: number,
+    solution: string,
+    IQuestionID: number,
+    updatedAt: string,
+}
+
+export interface IComment {
+    id: number,
+    voteNum: number,
     content: string,
-    IQestionID: number,
+    IQuestionID: number,
     updatedAt: string,
     userid: number,
     username: string,
