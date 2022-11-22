@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { onMounted, reactive } from 'vue';
-import { useRoute } from 'vue-router';
 
 import InterviewBook from '@/components/InterviewBook.vue';
 
@@ -19,14 +18,14 @@ interface States {
 const states: States = reactive({
   books: [],
 });
-const interviewStore = useInterviewStore();
-const { iquestions, loadQuestions,  } = interviewStore;
 
-const route = useRoute();
+const interviewStore = useInterviewStore();
+const { loadBooks } = interviewStore;
 
 // life cicle
 onMounted(async () => {
   states.books = await getInterviewBooks()
+  loadBooks(states.books);
 });
 </script>
 
