@@ -12,6 +12,7 @@ const InterView = () => import('@/views/Interview.vue');
 const WordSet = () => import("@/views/WordSet.vue");
 const WordDay = () => import("@/views/WordDay.vue");
 const Play = () => import('@/views/Play.vue');
+const Schools = () => import('@/views/Schools.vue');
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -41,6 +42,11 @@ const router = createRouter({
           ]
         },
       ]
+    },
+
+    // 学院
+    {
+      path: '/schools', component: Schools,
     },
 
     { path: "/words/:setid", component: WordDay },
