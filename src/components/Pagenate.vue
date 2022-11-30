@@ -1,5 +1,5 @@
 <script  lang="ts" setup>
-import { computed, reactive, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 
 // types
@@ -94,9 +94,7 @@ function handleLess(e: Event) {
       <div class="page-item" @click="handleLess"><i class="iconfont icon-arrow-left"></i></div>
       <div class="page-item" v-show="showFirst" :class="{ active: currentPage == 1 }">{{ 1 }}</div>
       <div class="page-item" v-show="showLessDots"><i class="iconfont icon-threedots"></i></div>
-      <div class="page-item" v-for="page in pages" :class="{ active: currentPage == page }">{{
-          page
-      }}
+      <div class="page-item" v-for="page in pages" :class="{ active: currentPage == page }">{{ page }}
       </div>
       <div class="page-item" v-show="showMoreDots"><i class="iconfont icon-threedots"></i></div>
       <div class="page-item" v-show="showLast" :class="{ active: currentPage == pageCount }">{{ pageCount }}</div>
