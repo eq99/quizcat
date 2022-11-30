@@ -6,7 +6,7 @@ import Pagenate from '@/components/Pagenate.vue'
 
 const { openSignin, closeSignin } = useSigninStore();
 
-function handleChange(data) {
+function handleChange(data: number | string) {
   console.log("goto", data)
 }
 </script>

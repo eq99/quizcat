@@ -91,16 +91,16 @@ function handleLess(e: Event) {
 <template>
   <div class="pagenate">
     <div class="pages" @click="handleClick">
-      <div class="page-item" @click="handleLess">&lt;</div>
+      <div class="page-item" @click="handleLess"><i class="iconfont icon-arrow-left"></i></div>
       <div class="page-item" v-show="showFirst" :class="{ active: currentPage == 1 }">{{ 1 }}</div>
-      <div class="page-item" v-show="showLessDots">...</div>
+      <div class="page-item" v-show="showLessDots"><i class="iconfont icon-threedots"></i></div>
       <div class="page-item" v-for="page in pages" :class="{ active: currentPage == page }">{{
           page
       }}
       </div>
-      <div class="page-item" v-show="showMoreDots">...</div>
+      <div class="page-item" v-show="showMoreDots"><i class="iconfont icon-threedots"></i></div>
       <div class="page-item" v-show="showLast" :class="{ active: currentPage == pageCount }">{{ pageCount }}</div>
-      <div class="page-item" @click="handleMore">&gt;</div>
+      <div class="page-item" @click="handleMore"><i class="iconfont icon-arrow-right"></i></div>
     </div>
   </div>
 </template>
