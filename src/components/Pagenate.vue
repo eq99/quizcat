@@ -116,7 +116,7 @@ function handleLess(e: Event) {
     .page-item {
       line-height: 32px;
       font-size: 14px;
-      min-width: 32px;
+      min-width: 28px;
       padding: 0 4px;
       background-color: var(--bg-base1);
       border-radius: 4px;
