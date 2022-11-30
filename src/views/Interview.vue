@@ -13,7 +13,7 @@ import { useSigninStore, useTokenStore } from '@/stores/token';
 
 import type { IQuestion, ICommentWithUser } from '@/types';
 
-// states:
+// states
 const isHidden = ref(true);
 const iQuestion = ref<IQuestion>();
 const comments = ref<ICommentWithUser[]>();
