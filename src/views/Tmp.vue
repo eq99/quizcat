@@ -1,27 +1,20 @@
 <script  lang="ts" setup>
-import { ref } from 'vue';
-import { useSigninStore } from '@/stores/token';
-import Pagenate from '@/components/Pagenate.vue'
+import MagnifierVue from '@/components/Zoom.vue';
 
-
-const { openSignin, closeSignin } = useSigninStore();
-
-function handleChange(data: number | string) {
-  console.log("goto", data)
-}
 </script>
 
 <template>
-  <Pagenate pageSize="10" total="12000" @change="handleChange"></Pagenate>
-  <Pagenate pageSize="10" total="80"></Pagenate>
-  <Pagenate pageSize="10" total="70"></Pagenate>
-  <Pagenate pageSize="10" total="50"></Pagenate>
+  <div class="box">
+    <MagnifierVue
+      smallImg="//img13.360buyimg.com/n1/s350x467_jfs/t1/218810/22/23762/218396/637f20d4Eb088c1e6/c45ffbf83bdb9059.jpg!cc_350x467.avif"
+      bigImg="//img13.360buyimg.com/n1/s750x1000_jfs/t1/218810/22/23762/218396/637f20d4Eb088c1e6/c45ffbf83bdb9059.jpg!cc_750x1000.avif">
+    </MagnifierVue>
+  </div>
 </template>
 
 <style lang="scss" scoped>
-.content {
-  width: 300px;
-  height: 200px;
-  background-color: cyan;
+.box {
+  margin-top: 100px;
+  margin-left: 30px;
 }
 </style>
