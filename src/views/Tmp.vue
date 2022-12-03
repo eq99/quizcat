@@ -1,14 +1,30 @@
 <script  lang="ts" setup>
-import MagnifierVue from '@/components/Zoom.vue';
+import CarouselVue from '@/components/Carousel.vue';
 
+const data = [
+  {
+    href: "",
+    imgLink: 'https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/454c1da2c5b64a3f2c07c5a4c01aa9c4.jpg?thumb=1&w=2452&h=920&f=webp&q=90'
+  },
+  {
+    href: '',
+    imgLink: 'https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/6d90fda69e63bf93ae62120901bafc0e.jpg?thumb=1&w=2452&h=920&f=webp&q=90'
+  },
+  {
+    href: '',
+    imgLink: 'https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/dce8b00fb3b4ebecbcf72353bff8a030.jpg?thumb=1&w=2452&h=920&f=webp&q=90'
+  },
+  {
+    href: '',
+    imgLink: 'https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/b836faf5402e8c14b626507b5c2e0ed5.jpeg?w=2452&h=920'
+  }
+];
 </script>
 
 <template>
   <div class="box">
-    <MagnifierVue
-      smallImg="//img13.360buyimg.com/n1/s350x467_jfs/t1/218810/22/23762/218396/637f20d4Eb088c1e6/c45ffbf83bdb9059.jpg!cc_350x467.avif"
-      bigImg="//img13.360buyimg.com/n1/s750x1000_jfs/t1/218810/22/23762/218396/637f20d4Eb088c1e6/c45ffbf83bdb9059.jpg!cc_750x1000.avif">
-    </MagnifierVue>
+    <CarouselVue :data="data" width="900" height="340">
+    </CarouselVue>
   </div>
 </template>
 
