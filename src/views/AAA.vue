@@ -1,5 +1,5 @@
 <script  lang="ts" setup>
-import CarouselVue from '@/components/Carousel.vue';
+import { Carousel } from 'xiaui';
 
 const data = [
   {

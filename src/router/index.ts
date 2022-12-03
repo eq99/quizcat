@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 import Space from "@/views/Space.vue";
-const Tmp = () => import('@/views/Tmp.vue');
+const Tmp = () => import('@/views/AAA.vue');
 const Quiz = () => import("@/views/Quiz.vue");
 const Exercises = () => import('@/views/Exercises.vue');
 const InterViewApp = () => import('@/views/InterviewApp.vue');
