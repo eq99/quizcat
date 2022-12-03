@@ -1,5 +1,4 @@
 <script  lang="ts" setup>
-import { computed } from '@vue/reactivity';
 import { onMounted, ref } from 'vue';
 
 // types
