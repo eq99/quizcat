@@ -29,11 +29,11 @@ function goto(indx: number) {
   current.value = indx
 }
 
-function goRight() {
+function forward() {
   current.value = (current.value + 1) % props.data.length;
 }
 
-function goLeft() {
+function back() {
   current.value = (current.value - 1 + props.data.length) % props.data.length;
 }
 
@@ -44,7 +44,7 @@ function active(idx: number) {
 function start() {
   clearTimeout(timer.value as number);
   timer.value = window.setInterval(() => {
-    goRight();
+    forward();
   }, props.delay);
 }
 
@@ -59,10 +59,9 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="carousel" :style="{ width: width + 'px', height: height + 'px' }">
+  <div class="carousel" :style="{ width: width + 'px', height: height + 'px' }" @mouseenter="stop" @mouseleave="start">
     <div class="img-list">
-      <div class="img-wrapper" v-for="(item, idx) in data" :class="{ active: active(idx) }" @mouseenter="stop"
-        @mouseleave="start">
+      <div class="img-wrapper" v-for="(item, idx) in data" :class="{ active: active(idx) }">
         <a :href="item.href">
           <img :src="item.imgLink" alt="图片">
         </a>
@@ -70,8 +69,8 @@ onMounted(async () => {
     </div>
 
     <div class="arrow">
-      <div class="left" @click="goLeft"><i class="iconfont icon-arrow-left"></i></div>
-      <div class="right" @click="goRight"><i class="iconfont icon-arrow-right"></i></div>
+      <div class="left" @click="back"><i class="iconfont icon-arrow-left"></i></div>
+      <div class="right" @click="forward"><i class="iconfont icon-arrow-right"></i></div>
     </div>
 
     <ul class="circle-list">
@@ -80,7 +79,6 @@ onMounted(async () => {
     </ul>
   </div>
 </template>
-
 
 <style lang="scss" scoped>
 .carousel {
