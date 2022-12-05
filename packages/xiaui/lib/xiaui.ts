@@ -1,7 +1,7 @@
-import Casousel from './Carousel.vue';
+import Carousel from './Carousel.vue';
 import type { App } from 'vue';
 
-const components = [Casousel];
+const components = [Carousel];
 
 const install = (app: App) => {
     components.forEach(c => {
@@ -12,7 +12,7 @@ const install = (app: App) => {
 }
 
 export {
-    Casousel
+    Carousel
 }
 
 export default install;

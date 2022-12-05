@@ -23,8 +23,8 @@ const data = [
 
 <template>
   <div class="box">
-    <CarouselVue :data="data" width="900" height="340">
-    </CarouselVue>
+    <Carousel :data="data" width="900" height="340">
+    </Carousel>
   </div>
 </template>
 
