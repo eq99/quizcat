@@ -1,6 +1,5 @@
 <script  lang="ts" setup>
-import { Dropdown } from 'xiaui';
-import Avatar from '@/components/Avatar.vue';
+import { Dropdown, Avatar } from 'xiaui';
 import UserInfo from '@/components/UserInfo.vue';
 
 import { storeToRefs } from 'pinia'

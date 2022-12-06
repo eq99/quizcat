@@ -1,8 +1,8 @@
 <!-- 用户动态组件 -->
 <script  lang="ts" setup>
-import Avatar from './Avatar.vue';
-import PostArticle from "@/components/PostArticle.vue"
-import { Abuse, Report } from 'xiaui';
+import PostArticle from "@/components/PostArticle.vue";
+import Comment from '@/components/Comment.vue';
+import { Abuse, Report, Avatar } from 'xiaui';
 import { formatTime } from '@/lib';
 import type { Post, PostDetail } from '@/types';
 
@@ -49,6 +49,8 @@ function selectComponent(detail: PostDetail) {
       </div>
     </div>
   </div>
+
+  <Comment></Comment>
 </template>
 
 <style lang="scss" scoped>

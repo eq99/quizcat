@@ -5,6 +5,7 @@ import Pagenate from './Pagenate.vue';
 import Dropdown from './Dropdown.vue';
 import Abuse from './abuse/Abuse.vue';
 import Report from "./abuse/Report.vue";
+import Avatar from './Avatar.vue';
 
 const components = [
     Carousel,
@@ -13,6 +14,7 @@ const components = [
     Dropdown,
     Abuse,
     Report,
+    Avatar
 ];
 
 const install = (app: App) => {
@@ -29,7 +31,8 @@ export {
     Pagenate,
     Dropdown,
     Abuse,
-    Report
+    Report,
+    Avatar
 }
 
 export default install;
