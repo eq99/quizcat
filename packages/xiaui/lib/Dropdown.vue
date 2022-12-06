@@ -1,6 +1,6 @@
 <script  lang="ts" setup>
 import { ref } from 'vue';
-import TransitionFade from '@/components/transitions/Fade.vue';
+import TransitionFade from './transitions/Fade.vue';
 
 // types
 export type Position = "bottom-center" | 'bottom-right' | 'bottom-left';

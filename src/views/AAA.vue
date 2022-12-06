@@ -1,5 +1,5 @@
 <script  lang="ts" setup>
-import { Carousel } from 'xiaui';
+import { Carousel, Zoom } from 'xiaui';
 
 const data = [
   {
@@ -25,8 +25,11 @@ const data = [
   <div class="box">
     <Carousel :data="data" width="900" height="340">
     </Carousel>
+
+    <Zoom small-img="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/b836faf5402e8c14b626507b5c2e0ed5.jpeg?w=2452&h=920"
+      big-img="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/b836faf5402e8c14b626507b5c2e0ed5.jpeg?w=2452&h=920"></Zoom>
   </div>
-</template>
+</template> 
 
 <style lang="scss" scoped>
 .box {

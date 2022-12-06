@@ -1,5 +1,5 @@
 <script  lang="ts" setup>
-import Dropdown from '@/components/Dropdown.vue';
+import { Dropdown } from 'xiaui';
 import Avatar from '@/components/Avatar.vue';
 import UserInfo from '@/components/UserInfo.vue';
 

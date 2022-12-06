@@ -13,6 +13,10 @@ const WordSet = () => import("@/views/WordSet.vue");
 const WordDay = () => import("@/views/WordDay.vue");
 const Play = () => import('@/views/Play.vue');
 const Schools = () => import('@/views/Schools.vue');
+const Profile = () => import("@/views/Profile.vue");
+const UserLand = () => import("@/views/UserLand.vue");
+const Posts = () => import("@/views/Posts.vue");
+const Collect = () => import("@/views/Collection.vue");
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,6 +30,23 @@ const router = createRouter({
     },
     { path: '/ex/:exid', component: Quiz },
     { path: "/words", component: WordSet },
+
+    // 用户信息
+    {
+      path: "/user/:userId", component: UserLand,
+      children: [
+        {
+          path: "", component: Posts,
+        },
+        {
+          path: "collect", component: Collect
+        }
+      ]
+    },
+    // 我的信息
+    {
+      path: "/profile", component: Profile
+    },
 
     // 面试喵
     {

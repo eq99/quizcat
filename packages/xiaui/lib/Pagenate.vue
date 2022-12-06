@@ -22,7 +22,7 @@ const pageCount = computed(() => {
 });
 
 const pages = computed(() => {
-  const arr = [];
+  const arr: number[] = [];
   if (pageCount.value < 8) {
     for (let i = 0; i < pageCount.value; i++) {
       arr.push(i + 1);

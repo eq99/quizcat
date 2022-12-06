@@ -97,6 +97,25 @@ export interface ICommentWithUser {
     avatar: string
 }
 
+export interface PostArticle {
+    kind: string,
+    content: string,
+    link: string,
+}
+
+export type PostDetail = PostArticle;
+
+export interface Post {
+    id: number,
+    likeNum: number,
+    detail: PostDetail,
+    updatedAt: string,
+    userid: number,
+    username: string,
+    avatar: string
+}
+
+
 export interface IComment {
     id: number,
     voteNum: number,

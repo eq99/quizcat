@@ -3,6 +3,14 @@
   flex-wrap: wrap;
 }
 
+.grow {
+  flex-grow: 1;
+}
+
+.ms-auto {
+  margin-left: auto;
+}
+
 .col-5 {
   flex: 0 0 20%;
   max-width: 20%;
