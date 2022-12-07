@@ -11,7 +11,7 @@ const content = `记得这个梗没火之前，虽然坤坤的路人缘不是很
     <Avatar size="32" link="https://api.multiavatar.com/f2d85385.png" class="r-avatar"></Avatar>
     <div class="r-main">
       <div class="r-hd">
-        <a href="" class="username">{{ '甜心森' }}</a> 回复 <a href="/user/2" class="link">@萝卜头</a> {{ content }}
+        <a href="" class="username">{{ '甜心菜' }}</a> 回复 <a href="/user/2" class="link">@萝卜头</a> {{ content }}
       </div>
       <div class="r-bd"></div>
       <div class="r-ft">

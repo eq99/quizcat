@@ -15,7 +15,6 @@ const posts = [
     username: "甜心森",
     avatar: "https://api.multiavatar.com/f2d85385.png"
   },
-
   {
     id: 1,
     likeNum: 1,

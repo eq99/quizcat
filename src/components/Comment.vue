@@ -13,7 +13,7 @@ const content = `记得这个梗没火之前，虽然坤坤的路人缘不是很
     <Avatar link="https://api.multiavatar.com/f2d85385.png" class="c-avatar"></Avatar>
     <div class="c-main">
       <div class="c-hd">
-        <div class="username">{{ '甜心森' }}</div>
+        <div class="username">{{ '甜心菜' }}</div>
       </div>
       <div class="c-bd">{{ content }}</div>
       <div class="c-ft">
@@ -32,7 +32,6 @@ const content = `记得这个梗没火之前，虽然坤坤的路人缘不是很
       </div>
     </div>
   </div>
-
 </template>
 
 

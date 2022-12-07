@@ -2,7 +2,7 @@
 <script  lang="ts" setup>
 import PostArticle from "@/components/PostArticle.vue";
 import Comment from '@/components/Comment.vue';
-import { Abuse, Report, Avatar } from 'xiaui';
+import { Abuse, Report, Avatar, CommentEditor } from 'xiaui';
 import { formatTime } from '@/lib';
 import type { Post, PostDetail } from '@/types';
 
@@ -22,6 +22,8 @@ function selectComponent(detail: PostDetail) {
 </script>
 
 <template>
+  <CommentEditor></CommentEditor>
+
   <div class="s-card">
     <div class="left">
       <Avatar :link="post.avatar"></Avatar>
