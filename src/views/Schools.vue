@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import HeaderVue from '@/components/Header.vue';
+import HeaderVue from '@/components/site/Header.vue';
 import SchoolVue from '@/components/School.vue';
 import CourseVue from '@/components/Course.vue';
 

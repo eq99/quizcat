@@ -39,6 +39,29 @@ export interface AuthToken {
     updatedAt: string
 }
 
+// 评论与动态
+export interface Reply {
+    id: number,
+    likeNum: number,
+    content: string,
+    commentId: number,
+    updatedAt: string,
+    userId: number,
+    username: string,
+    avatar: string
+}
+
+export interface Comment {
+    id: number,
+    likeNum: number,
+    content: string,
+    articleId: number,
+    updatedAt: string,
+    userId: number,
+    username: string,
+    avatar: string
+}
+
 // exercise -------------------
 export interface Exercise {
     id: number,

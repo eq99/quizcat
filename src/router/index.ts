@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-import Space from "@/views/Space.vue";
+const Home = () => import("@/views/site/Home.vue");
 const Tmp = () => import('@/views/AAA.vue');
 const Quiz = () => import("@/views/Quiz.vue");
 const Exercises = () => import('@/views/Exercises.vue');
@@ -21,7 +21,7 @@ const Collect = () => import("@/views/Collection.vue");
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    { path: '/', component: Space },
+    { path: '/', component: Home },
     { path: '/tmp', component: Tmp },
     {
       path: "/exs", component: Exercises, meta: {

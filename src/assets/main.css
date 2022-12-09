@@ -5,6 +5,7 @@
 body {
   min-height: 100vh;
   transition: color 0.5s, background-color 0.5s;
+  background-color: var(--bg-base1);
   line-height: 1.5;
   font-family: PingFang SC, HarmonyOS_Regular, Helvetica Neue, Microsoft YaHei,
     sans-serif;

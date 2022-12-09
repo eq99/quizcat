@@ -4,7 +4,7 @@ import { storeToRefs } from 'pinia';
 import { onBeforeRouteUpdate, useRoute } from 'vue-router';
 import { renderMarkdown } from '@/lib';
 
-import Button from '@/components/buttons/Button.vue';
+import { Button } from 'xiaui';
 import ICommentCard from '@/components/ICommentCard.vue';
 
 import { useInterviewStore } from '@/stores/interview';

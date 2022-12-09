@@ -1,11 +1,11 @@
 <!-- 用户动态组件 -->
 <script  lang="ts" setup>
-import PostArticle from "@/components/PostArticle.vue";
-import Comment from '@/components/Comment.vue';
+import { ref } from "vue";
 import { Abuse, Report, Avatar, CommentEditor } from 'xiaui';
+import PostArticle from "@/components/PostArticle.vue";
+import CommentList from "@/components/comments/CommentList.vue";
 import { formatTime } from '@/lib';
 import type { Post, PostDetail } from '@/types';
-
 
 // vars
 const props = defineProps<{
@@ -15,15 +15,20 @@ const props = defineProps<{
 const comp = new Map(); // register components here
 comp.set("article", PostArticle);
 
-// mehtods
+// states
+const isCommentsLoaded = ref(false);
+
+// methods
 function selectComponent(detail: PostDetail) {
   return comp.get(detail.kind);
+}
+
+function loadComments() {
+  isCommentsLoaded.value = !isCommentsLoaded.value;
 }
 </script>
 
 <template>
-  <CommentEditor></CommentEditor>
-
   <div class="s-card">
     <div class="left">
       <Avatar :link="post.avatar"></Avatar>
@@ -45,14 +50,17 @@ function selectComponent(detail: PostDetail) {
         <component :is="selectComponent(post.detail)" :detail="post.detail"></component>
       </div>
       <div class="s-actions">
-        <div class="action"><i class="iconfont icon-like1"></i>{{ 123 }}</div>
-        <div class="action"><i class="iconfont icon-reply"></i>{{ 2342 }}</div>
+        <div class="action"><i class="iconfont icon-like1"></i>{{ post.likeNum }}</div>
+        <div class="action" @click="loadComments"><i class="iconfont icon-reply"></i>{{ 2342 }}</div>
         <div class="action"><i class="iconfont icon-fenxiang"></i>{{ 2345 }}</div>
       </div>
     </div>
   </div>
 
-  <Comment></Comment>
+  <div class="comment" v-if="isCommentsLoaded">
+    <CommentEditor></CommentEditor>
+    <component :is="CommentList" article-id="11"></component>
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -92,6 +100,7 @@ function selectComponent(detail: PostDetail) {
         cursor: pointer;
         display: flex;
         align-items: center;
+        user-select: none;
 
         .iconfont {
           font-size: 24px;

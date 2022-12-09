@@ -63,3 +63,33 @@ export function validateEmail(email: string): string {
 
     return '';
 }
+
+
+export function getImageColor(img: HTMLImageElement) {
+    const canvas = document.createElement('canvas')
+    canvas.width = img.width;
+    canvas.height = img.height;
+
+    const context = canvas.getContext("2d");
+    img.crossOrigin = "Anonymous"
+    context.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+    // 获取像素数据
+    const data = context.getImageData(0, 0, img.width, img.height).data;
+
+    const colors = new Map();
+
+    for (let i = 0; i < data.length; i++) {
+        const r = data[i];
+        const g = data[i + 1];
+        const b = data[i + 2];
+        const a = data[i + 3];
+        i = i + 4;
+
+        const color = `${r},${g},${b},${a}`
+        const cnt = colors.get(color);
+        cnt ? colors.set(color, cnt + 1) : colors.set(color, 1);
+    }
+
+    console.log(colors)
+}

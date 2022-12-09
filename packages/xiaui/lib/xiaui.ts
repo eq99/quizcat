@@ -7,6 +7,7 @@ import Abuse from './abuse/Abuse.vue';
 import Report from "./abuse/Report.vue";
 import Avatar from './Avatar.vue';
 import CommentEditor from './editor/Comment.vue';
+import Button from './buttons/Button.vue'
 
 const components = [
     Carousel,
@@ -16,7 +17,8 @@ const components = [
     Abuse,
     Report,
     Avatar,
-    CommentEditor
+    CommentEditor,
+    Button,
 ];
 
 const install = (app: App) => {
@@ -35,7 +37,8 @@ export {
     Abuse,
     Report,
     Avatar,
-    CommentEditor
+    CommentEditor,
+    Button
 }
 
 export default install;

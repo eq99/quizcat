@@ -4,7 +4,7 @@ import PostVue from '@/components/Post.vue';
 const posts = [
   {
     id: 1,
-    likeNum: 1,
+    likeNum: 234,
     detail: {
       kind: "article",
       content: "这几天试着做了科目三睡觉这个素材，但感觉做的质量不太行，所以还是不打算发了。不好意思啊各位，可能又要鸽一会了...[保卫萝卜_哭哭]这几天试着做了科目三睡觉这个素材，但感觉做的质量不太行，所以还是不打算发了。不好意思啊各位，可能又要鸽一会了...[保卫萝卜_哭哭]",
@@ -17,7 +17,7 @@ const posts = [
   },
   {
     id: 1,
-    likeNum: 1,
+    likeNum: 155,
     detail: {
       kind: "article",
       content: "hahahha",
@@ -30,7 +30,7 @@ const posts = [
   },
   {
     id: 1,
-    likeNum: 1,
+    likeNum: 252525,
     detail: {
       kind: "article",
       content: "hahahha",
@@ -48,7 +48,6 @@ const posts = [
 <template>
   <PostVue v-for="post in posts" :post="post"></PostVue>
 </template>
-
 
 <style lang="scss" scoped>
 
