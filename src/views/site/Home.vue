@@ -21,12 +21,10 @@ const stars = [
 ]
 </script>
 
-
 <template>
   <Header title="我的桌面"></Header>
   <div class="container space">
     <Star v-for="star in stars" :icon="star.imgUrl" :name="star.name" bgColor="bg-grey" href="/exs"></Star>
-
   </div>
 </template>
 

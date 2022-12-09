@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Logo from '@/components/site/Logo.vue';
 import UserCut from '../UserDrop.vue';
+import ChatBadge from '@/components/chat/Badge.vue';
 
 // vars
 const props = defineProps<{
@@ -18,6 +19,7 @@ const props = defineProps<{
       </div>
       <div class="title">{{ title }}</div>
       <div class="info">
+        <ChatBadge></ChatBadge>
         <UserCut></UserCut>
       </div>
     </div>
@@ -38,16 +40,10 @@ header {
     font-size: 24px;
   }
 
-  .logo-box {
-    height: 72px;
-  }
-
-  .logo {
-    transform: scale(.5);
-  }
-
   .info {
     margin: 0 40px;
+    display: flex;
+    align-items: center;
   }
 }
 </style>
