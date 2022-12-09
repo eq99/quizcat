@@ -10,7 +10,7 @@ export interface Props {
 //vars
 const props = withDefaults(defineProps<Props>(), {
   fontSize: '16px',
-  color: "#333",
+  color: "",
   pointer: false
 })
 </script>
