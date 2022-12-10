@@ -1,13 +1,22 @@
 <script  lang="ts" setup>
 import { Avatar } from 'xiaui';
+import type { OneChat } from '@/types';
+
+// types
+export interface Props {
+  onechat: OneChat
+}
+
+// vars
+const props = defineProps<Props>();
 </script>
 
 <template>
   <div class="useritem">
-    <Avatar link="https://api.multiavatar.com/f2d85385.png" class="avatar" size="32"></Avatar>
+    <Avatar :link="onechat.avatar" class="avatar" size="32"></Avatar>
     <div class="detail">
-      <div class="username s1">甜心森</div>
-      <div class="lastmsg s1">你今天中午吃什么？你今天中午吃什么你今天中午吃什么</div>
+      <div class="username s1">{{ onechat.username }}</div>
+      <div class="lastmsg s1">{{ onechat.last }}</div>
     </div>
   </div>
 </template>
