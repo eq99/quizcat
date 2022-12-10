@@ -7,6 +7,7 @@ import Abuse from './abuse/Abuse.vue';
 import Report from "./abuse/Report.vue";
 import Avatar from './Avatar.vue';
 import CommentEditor from './editor/Comment.vue';
+import ChatEditor from './editor/Chat.vue';
 import Button from './buttons/Button.vue';
 import Tooltip from './box/Tootip.vue';
 import Icon from './Icon.vue';
@@ -20,6 +21,7 @@ const components = [
     Report,
     Avatar,
     CommentEditor,
+    ChatEditor,
     Button,
     Tooltip,
     Icon,
@@ -42,6 +44,7 @@ export {
     Report,
     Avatar,
     CommentEditor,
+    ChatEditor,
     Button,
     Tooltip,
     Icon,

@@ -25,7 +25,7 @@ import Header from '@/components/site/Header.vue';
           <Icon name="icon-settings" font-size="24px" color="#999"></Icon>
         </Tooltip>
       </div>
-
+      <RouterView></RouterView>
     </div>
   </div>
 </template>

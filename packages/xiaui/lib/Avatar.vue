@@ -22,6 +22,7 @@ const props = withDefaults(defineProps<Props>(), {
   cursor: pointer;
   border-radius: 50%;
   overflow: hidden;
+  flex-shrink: 0;
 
   img {
     width: 100%;
