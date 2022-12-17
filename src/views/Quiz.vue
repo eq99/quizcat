@@ -5,7 +5,7 @@ import { useRoute } from 'vue-router';
 import { debounce, renderMarkdown } from '@/lib';
 
 import ExHeader from '@/components/ExHeader.vue';
-import Button from '@/components/buttons/Button.vue';
+import { Button } from 'xiaui';
 import SolutionCard from '@/components/SolutionCard.vue';
 
 import { useSigninStore, useTokenStore } from "@/stores/token";

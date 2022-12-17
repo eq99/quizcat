@@ -11,8 +11,6 @@ const InterViewBooks = () => import('@/views/InterviewBooks.vue');
 const InterViewNav = () => import('@/views/InterviewNav.vue');
 const InterViewLand = () => import('@/views/InterviewLand.vue');
 const InterView = () => import('@/views/Interview.vue');
-const WordSet = () => import("@/views/WordSet.vue");
-const WordDay = () => import("@/views/WordDay.vue");
 const Play = () => import('@/views/Play.vue');
 const Schools = () => import('@/views/Schools.vue');
 const Profile = () => import("@/views/Profile.vue");
@@ -39,8 +37,6 @@ const router = createRouter({
       }
     },
     { path: '/ex/:exid', component: Quiz },
-    { path: "/words", component: WordSet },
-
     // 用户信息
     {
       path: "/user/:userId", component: UserLand,
@@ -80,7 +76,6 @@ const router = createRouter({
       path: '/schools', component: Schools,
     },
 
-    { path: "/words/:setid", component: WordDay },
     { path: "/play", component: Play },
   ]
 });

@@ -3,7 +3,7 @@ import { onMounted, ref } from 'vue';
 import Layout from '@/components/chat/Layout.vue';
 import OneItem from '@/components/chat/OneItem.vue';
 import OneMsg from '@/components/chat/OneMsg.vue';
-import { ChatEditor } from 'xiaui';
+import { OneChatEditor } from 'xiaui';
 import type { OneChat, OneMessage } from '@/types';
 
 // vars
@@ -80,6 +80,10 @@ function loadMessages() {
   ]
 }
 
+function handleSend(msg: string) {
+  alert(msg);
+}
+
 // life cicles
 onMounted(async () => {
   loadOneChats();
@@ -102,7 +106,7 @@ onMounted(async () => {
         <div class="chat-list">
           <OneMsg v-for="msg in messages" :msg="msg" :right="me === msg.userid"></OneMsg>
         </div>
-        <ChatEditor></ChatEditor>
+        <OneChatEditor @send="handleSend"></OneChatEditor>
       </div>
     </template>
   </Layout>

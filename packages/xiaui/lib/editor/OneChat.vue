@@ -1,14 +1,28 @@
 <script  lang="ts" setup>
 import { ref } from 'vue';
 import Emoji from './Emoji.vue';
-import Mention from './Mention.vue';
+
+//vars
+const emit = defineEmits<{
+  (e: "send", mode: string): void,
+}>();
 
 // states
 const text = ref<string>('');
 
 // methods
 function handleSend() {
-  alert("发送完成");
+  if (text.value.length > 1000) {
+    alert("消息长度不能超过 1000字");
+    return;
+  }
+
+  if (text.value.length < 1) {
+    return;
+  }
+
+  emit("send", text.value);
+  text.value = '';
 }
 
 function addEmoji(mode: string) {
@@ -20,7 +34,6 @@ function addEmoji(mode: string) {
   <div class="chat-editor">
     <div class="tools">
       <Emoji class="tool" @add="addEmoji"></Emoji>
-      <Mention class="tool"></Mention>
     </div>
     <div class="input">
       <textarea rows="3" v-model="text"></textarea>

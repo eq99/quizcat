@@ -1,6 +1,6 @@
 <script  lang="ts" setup>
 import type { UserBar } from '@/types';
-import Avatar from '@/components/Avatar.vue';
+import { Avatar } from 'xiaui';
 import { computed } from '@vue/reactivity';
 const props = defineProps<{
   userbar: UserBar,
