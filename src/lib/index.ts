@@ -93,3 +93,32 @@ export function getImageColor(img: HTMLImageElement) {
 
     console.log(colors)
 }
+
+export function getTimeDiff(dateStr: string): string {
+    const publishTime = Date.parse(dateStr) - 8 * 3600000, // timezone
+        timeNow = new Date(),
+        d = timeNow / 1000 - publishTime / 1000,
+        d_year = Math.floor(d / 31536000),
+        d_month = Math.floor((d % 31536000) / 2592000),
+        d_days = Math.floor((d % 2592000) / 86400),
+        d_hours = Math.floor((d % 86400) / 3600),
+        d_minutes = Math.floor((d % 3600) / 60);
+
+    if (d_year > 0 || d_month > 0) {
+        if (d_month > 0) {
+            return `${d_year}年前`;
+        } else {
+            return `${d_year}年 ${d_month}月前`
+        }
+    } else {
+        if (d_days > 0) {
+            return `${d_days}天前`;
+        } else if (d_hours > 0) {
+            return `${d_hours}小时前`;
+        } else if (d_minutes > 0) {
+            return `${d_minutes}分钟前`;
+        } else {
+            return '刚刚';
+        }
+    }
+}

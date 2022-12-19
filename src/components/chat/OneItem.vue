@@ -6,7 +6,7 @@ import type { OneChat } from '@/types';
 export interface Props {
   onechat: OneChat
 }
-
+  
 // vars
 const props = defineProps<Props>();
 </script>
@@ -15,7 +15,7 @@ const props = defineProps<Props>();
   <div class="useritem">
     <Avatar :link="onechat.avatar" class="avatar" size="32"></Avatar>
     <div class="detail">
-      <div class="username s1">{{ onechat.username }}</div>
+      <div class="username s1">{{ onechat.name }}</div>
       <div class="lastmsg s1">{{ onechat.last }}</div>
     </div>
   </div>

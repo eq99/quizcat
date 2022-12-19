@@ -65,17 +65,19 @@ export interface Comment {
 // chat
 export interface OneChat {
     id: number,
-    friendId: number,
     avatar: string,
-    username: string,
+    name: string,
     last: string,
 }
 
 export interface OneMessage {
-    userid: number,
-    avatar: string,
-    createdAt: string,
+    id: number,
     content: string
+    fromId: number,
+    toId: number,
+    avatar: string,
+    username: string,
+    createdAt: string,
 }
 
 // exercise -------------------

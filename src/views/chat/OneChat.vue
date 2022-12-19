@@ -5,9 +5,16 @@ import OneItem from '@/components/chat/OneItem.vue';
 import OneMsg from '@/components/chat/OneMsg.vue';
 import { OneChatEditor } from 'xiaui';
 import type { OneChat, OneMessage } from '@/types';
+import { useTokenStore } from "@/stores/token";
+import { storeToRefs } from 'pinia';
+import { getActiveFriends, getOneMessages, sendOneMessage } from '@/apis/chat';
+import { getTimeDiff } from "@/lib/";
+import { useUserStore } from '@/stores/user';
 
 // vars
-let me = 1;
+const { token } = storeToRefs(useTokenStore());
+const { user } = storeToRefs(useUserStore());
+const WS_API = import.meta.env.VITE_ONECHAT_WS_API;
 
 // states
 const onechats = ref<OneChat[]>([]);
@@ -15,79 +22,81 @@ const messages = ref<OneMessage[]>([]);
 const currentChat = ref(0);
 
 //methods
-function loadOneChats() {
-  onechats.value = [
-    {
-      id: 1,
-      friendId: 1,
-      avatar: "https://api.multiavatar.com/f2d853835.png",
-      username: "甜心菜",
-      last: "中午吃什么比较好呢"
-    },
-    {
-      id: 2,
-      friendId: 2,
-      avatar: "https://api.multiavatar.com/f2s853835.png",
-      username: "卷心白",
-      last: "明天去看电影吧"
-    },
-  ]
+async function loadOneChats() {
+  onechats.value = await getActiveFriends(token.value?.value || "");
+
+  onechats.value = onechats.value.map(one => {
+    return {
+      id: one.id,
+      avatar: one.avatar,
+      name: one.name.length > 15 ? one.name.split("-")[0] : one.name,
+      last: "一起来蹦迪"
+    };
+  });
 }
 
 function loadCurrentChat(idx: number) {
   currentChat.value = idx;
-  loadMessages();
+  loadMessages(idx);
 }
 
-function loadMessages() {
-  messages.value = [
-    {
-      userid: 1,
-      avatar: "https://api.multiavatar.com/f2d853835.png",
-      content: "在吗",
-      createdAt: "3小时前"
-    },
-    {
-      userid: 2,
-      avatar: "https://api.multiavatar.com/f2d853836.png",
-      content: "干嘛",
-      createdAt: "3小时前"
-    },
-    {
-      userid: 1,
-      avatar: "https://api.multiavatar.com/f2d853835.png",
-      content: "我喜欢你好久了",
-      createdAt: "3小时前"
-    },
-    {
-      userid: 2,
-      avatar: "https://api.multiavatar.com/f2d853836.png",
-      content: "你喜欢我哪里",
-      createdAt: "3小时前"
-    },
-    {
-      userid: 2,
-      avatar: "https://api.multiavatar.com/f2d853836.png",
-      content: "我改",
-      createdAt: "3小时前"
-    },
-    {
-      userid: 2,
-      avatar: "https://api.multiavatar.com/f2d853836.png",
-      content: "你是个好人，我不想伤害你",
-      createdAt: "3小时前"
-    },
-  ]
+async function loadMessages(idx: number) {
+  const friend = onechats.value[idx];
+  messages.value = await getOneMessages(token.value?.value || "", friend.id);
+  messages.value = messages.value.map(m => {
+    return m.fromId === user.value!.id ?
+      {
+        id: m.id,
+        content: m.content,
+        fromId: m.fromId,
+        toId: m.toId,
+        avatar: user.value!.avatar,
+        username: user.value!.name,
+        createdAt: getTimeDiff(m.createdAt)
+      }
+      :
+      {
+        id: m.id,
+        content: m.content,
+        fromId: m.fromId,
+        toId: m.toId,
+        avatar: friend.avatar,
+        username: friend.name,
+        createdAt: getTimeDiff(m.createdAt)
+      };
+  })
 }
 
-function handleSend(msg: string) {
-  alert(msg);
+function addMyMessage(msg: string, toId: number) {
+  messages.value.unshift({
+    id: 0,
+    content: msg,
+    fromId: user.value!.id,
+    toId: toId,
+    avatar: user.value!.avatar,
+    username: user.value!.name,
+    createdAt: getTimeDiff(Date.parse((Date() + 8 * 3600000)).toString())
+  })
+}
+
+async function handleSend(msg: string) {
+  const friend = onechats.value[currentChat.value];
+  addMyMessage(msg, friend.id);
+  await sendOneMessage(token.value?.value || "", friend.id, msg);
 }
 
 // life cicles
 onMounted(async () => {
-  loadOneChats();
-  loadMessages();
+  await loadOneChats();
+  await loadMessages(0);
+
+  let connection = new WebSocket(WS_API);
+  connection.onmessage = (event) => {
+    // Vue data binding means you don't need any extra work to
+    // update your UI. Just set the `time` and Vue will automatically
+    // update the `<h2>`.
+    console.log("ws:", event.data);
+  }
 })
 </script>
 
@@ -102,9 +111,9 @@ onMounted(async () => {
     </template>
     <template #right>
       <div class="window">
-        <div class="title">{{ "站长" }}</div>
+        <div class="title">{{ onechats[currentChat]?.name }}</div>
         <div class="chat-list">
-          <OneMsg v-for="msg in messages" :msg="msg" :right="me === msg.userid"></OneMsg>
+          <OneMsg v-for="msg in messages" :msg="msg" :right="user?.id === msg.fromId"></OneMsg>
         </div>
         <OneChatEditor @send="handleSend"></OneChatEditor>
       </div>
@@ -124,6 +133,10 @@ onMounted(async () => {
     height: 330px;
     background-color: var(--bg-base1);
     overflow-y: scroll;
+    // auto scroll to bottom
+    // see: https://stackoverflow.com/a/44051405
+    display: flex;
+    flex-direction: column-reverse;
 
     &::-webkit-scrollbar {
       width: 4px;

@@ -3,6 +3,8 @@ import { createRouter, createWebHistory } from 'vue-router';
 const Home = () => import("@/views/site/Home.vue");
 const Chat = () => import('@/views/chat/Chat.vue');
 const OneChat = () => import('@/views/chat/OneChat.vue');
+const Friends = () => import("@/views/chat/Friends.vue");
+const GroupChat = () => import("@/views/chat/GroupChat.vue");
 const Tmp = () => import('@/views/AAA.vue');
 const Quiz = () => import("@/views/Quiz.vue");
 const Exercises = () => import('@/views/Exercises.vue');
@@ -26,7 +28,13 @@ const router = createRouter({
       path: '/chat', component: Chat,
       children: [
         {
-          path: "", component: OneChat
+          path: "", component: OneChat,
+        },
+        {
+          path: "friends", component: Friends,
+        },
+        {
+          path: "groups", component: GroupChat,
         }
       ]
     },
