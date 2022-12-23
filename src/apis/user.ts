@@ -2,7 +2,7 @@ const API_BASE = import.meta.env.VITE_API_BASE;
 import type { AuthToken } from "@/types";
 
 export async function sendCaptcha<T>(email: string): Promise<T> {
-    const resp = await fetch(`${API_BASE}/captcha`, {
+    const resp = await fetch(`${API_BASE}/auth/captcha/email`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
@@ -21,7 +21,7 @@ export async function sendCaptcha<T>(email: string): Promise<T> {
 
 
 export async function signin(email: string, captcha: string): Promise<AuthToken> {
-    const resp = await fetch(`${API_BASE}/signin`, {
+    const resp = await fetch(`${API_BASE}/auth/signup/email`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'

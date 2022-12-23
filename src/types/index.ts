@@ -5,10 +5,18 @@ export interface Notification {
     detail: string,
 }
 
-// token
+//////////////////////////////// token
 export interface Token {
     value: string,
-    updatedAt: string,
+    expiredAt: string,
+}
+
+export interface AuthToken {
+    id: number,
+    avatar: string,
+    name: string,
+    token: string,
+    expiredAt: string,
 }
 
 // user
@@ -16,28 +24,9 @@ export interface User {
     id: number,
     name: string,
     avatar: string,
-    email: string,
-    isAdmin: boolean,
-    status: number,
-    createdAt: string,
-    updatedAt: string,
 }
 
-export interface UserBar {
-    id: number,
-    name: string,
-    avatar: string,
-}
-
-export interface AuthToken {
-    id: number,
-    value: string,
-    client: string,
-    userId: number,
-    user: User,
-    createdAt: string,
-    updatedAt: string
-}
+////////////////////////////////
 
 // 评论与动态
 export interface Reply {

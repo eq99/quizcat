@@ -14,7 +14,8 @@ const { openSignin } = useSigninStore();
 <template>
   <Dropdown position="bottom-right">
     <template #head>
-      <Avatar :link="user?.avatar"></Avatar>
+      <Avatar :link="user?.avatar" v-if="user"></Avatar>
+      <div v-else class="avatar-text">登录</div>
     </template>
     <template #body>
       <div class="content">
@@ -31,12 +32,22 @@ const { openSignin } = useSigninStore();
 </template>
 
 <style lang="scss" scoped>
+.avatar-text {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .content {
   width: 300px;
   padding: 20px 16px;
   border-radius: 8px;
   border: 1px solid #eee;
-  background-color: var(--bg-base1);
+  background-color: #fff;
 
   .login-box {
     text-align: center;

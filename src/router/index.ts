@@ -1,52 +1,30 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-const Home = () => import("@/views/site/Home.vue");
-
-// chat app
-const Chat = () => import('@/views/chat/Chat.vue');
-const OneChat = () => import('@/views/chat/OneChat.vue');
-const Friends = () => import("@/views/chat/Friends.vue");
-const GroupChat = () => import("@/views/chat/GroupChat.vue");
-
-// kown app
-const KnowLayout = () => import("@/views/know/Layout.vue");
-const KnowHome = () => import("@/views/know/Home.vue");
-const Major = () => import("@/views/know/Major.vue");
-
-// 
-const Tmp = () => import('@/views/AAA.vue');
-const Quiz = () => import("@/views/Quiz.vue");
-const Exercises = () => import('@/views/Exercises.vue');
-const InterViewApp = () => import('@/views/InterviewApp.vue');
-const InterViewBooks = () => import('@/views/InterviewBooks.vue');
-const InterViewNav = () => import('@/views/InterviewNav.vue');
-const InterViewLand = () => import('@/views/InterviewLand.vue');
-const InterView = () => import('@/views/Interview.vue');
-const Play = () => import('@/views/Play.vue');
-const Schools = () => import('@/views/Schools.vue');
-const Profile = () => import("@/views/Profile.vue");
-const UserLand = () => import("@/views/UserLand.vue");
-const Posts = () => import("@/views/Posts.vue");
-const Collect = () => import("@/views/Collection.vue");
+// tmp
+const Tmp = () => import('@/views/ATmp.vue');
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    { path: '/', component: Home },
+    // site home
+    { path: '/', component: () => import("@/views/site/Home.vue") },
+
+    // chat app
     {
-      path: '/chat', component: Chat,
+      path: '/chat', component: () => import('@/views/chat/Chat.vue'),
       children: [
-        { path: "", component: OneChat },
-        { path: "friends", component: Friends },
-        { path: "groups", component: GroupChat }
+        { path: "", component: () => import('@/views/chat/OneChat.vue') },
+        { path: "friends", component: () => import("@/views/chat/Friends.vue") },
+        { path: "groups", component: () => import("@/views/chat/GroupChat.vue") }
       ]
     },
 
+    // konw app
     {
-      path: "/know", component: KnowLayout,
+      path: "/know", component: () => import("@/views/know/Layout.vue"),
       children: [
-        { path: "", component: KnowHome },
-        { path: ":subject", component: Major },
+        { path: "", component: () => import("@/views/know/Home.vue") },
+        { path: ":subject", component: () => import("@/views/know/Major.vue") },
       ]
     },
     {
@@ -60,55 +38,19 @@ const router = createRouter({
       path: "/book/:bookId/chapters/:chapterId", component: () => import("@/views/know/Chapter.vue"),
     },
     { path: "/book/:bookId/exs/:exId", component: () => import("@/views/know/Exercise.vue") },
-
+    // end kown app
 
     { path: '/tmp', component: Tmp },
+
+    // user app
     {
-      path: "/exs", component: Exercises, meta: {
-        title: '练习喵',
-      }
-    },
-    { path: '/ex/:exid', component: Quiz },
-    // 用户信息
-    {
-      path: "/user/:userId", component: UserLand,
+      path: "/user/:userId", component: () => import("@/views/user/UserLand.vue"),
       children: [
-        {
-          path: "", component: Posts,
-        },
-        {
-          path: "collect", component: Collect
-        }
+        { path: "", component: () => import("@/views/user/Posts.vue") },
+        { path: "collect", component: () => import("@/views/user/Collection.vue") }
       ]
     },
-    // 我的信息
-    {
-      path: "/profile", component: Profile
-    },
-
-    // 面试喵
-    {
-      path: "/interviews", component: InterViewApp, meta: {
-        title: '面试喵',
-      },
-      children: [
-        { path: "", component: InterViewBooks },
-        {
-          path: ":bookId", component: InterViewNav,
-          children: [
-            { path: "", component: InterViewLand },
-            { path: ":questionId", component: InterView }
-          ]
-        },
-      ]
-    },
-
-    // 学院
-    {
-      path: '/schools', component: Schools,
-    },
-
-    { path: "/play", component: Play },
+    { path: "/profile", component: () => import("@/views/user/Profile.vue") },
   ]
 });
 

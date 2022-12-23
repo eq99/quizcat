@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import Star from '@/components/site/Star.vue';
-import Galaxy from '@/components/Galaxy.vue';
 import Header from "@/components/site/Header.vue"
 
 const stars = [
@@ -9,13 +8,6 @@ const stars = [
     name: "知识宇宙",
     imgUrl: 'https://pic.imgdb.cn/item/639338d5b1fccdcd362fecc2.png',
     link: '/know',
-    bgColor: ''
-  },
-  {
-    id: 1,
-    name: "时尚达人",
-    imgUrl: 'https://pic.imgdb.cn/item/63933d7fb1fccdcd363898e3.png',
-    link: "/",
     bgColor: ''
   },
 ]

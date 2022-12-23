@@ -68,7 +68,7 @@ function handleSendCaptcha() {
     return;
   }
 
-  sendCaptcha(email.value).then(data => {
+  sendCaptcha(email.value).then((data) => {
     pushNoti({
       title: '获取验证码成功',
       detail: '验证码已成功发送到邮箱'
@@ -103,12 +103,16 @@ function handleSubmit() {
 
   signin(email.value, captcha.value).then((data) => {
     const token: Token = {
-      value: data.value,
-      updatedAt: data.updatedAt
+      value: data.token,
+      expiredAt: data.expiredAt
     }
 
     saveToken(token);
-    saveUser(data.user);
+    saveUser({
+      id: data.id,
+      name: data.name,
+      avatar: data.avatar
+    });
 
     pushNoti({
       title: "登录成功",

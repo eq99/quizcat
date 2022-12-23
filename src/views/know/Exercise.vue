@@ -17,7 +17,6 @@ import { getICommentsByUserId, getIQuestionsByBookId } from '@/apis/interviews'
 
 import type { InterviewBook } from '@/types';
 
-
 // states
 const isHidden = ref(true);
 const iQuestion = ref<IQuestion>();
