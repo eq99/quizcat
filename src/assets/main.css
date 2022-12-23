@@ -1,6 +1,7 @@
 @import "./variables.css";
 @import "./utils.css";
 @import "./line-number.css";
+@import "./markdown.css";
 
 body {
   min-height: 100vh;

@@ -17,5 +17,15 @@ const htmlContent = computed(() => {
 </template>
 
 <style lang="scss" scoped>
+.markdown {
+  ul {
+    list-style-type: disc;
 
+    li {
+      display: list-item;
+      padding-left: 4px;
+      text-align: -webkit-match-parent;
+    }
+  }
+}
 </style>

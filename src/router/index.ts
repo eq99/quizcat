@@ -59,6 +59,9 @@ const router = createRouter({
     {
       path: "/book/:bookId/chapters/:chapterId", component: () => import("@/views/know/Chapter.vue"),
     },
+    { path: "/book/:bookId/exs/:exId", component: () => import("@/views/know/Exercise.vue") },
+
+
     { path: '/tmp', component: Tmp },
     {
       path: "/exs", component: Exercises, meta: {
