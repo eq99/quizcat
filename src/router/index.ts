@@ -1,10 +1,19 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 const Home = () => import("@/views/site/Home.vue");
+
+// chat app
 const Chat = () => import('@/views/chat/Chat.vue');
 const OneChat = () => import('@/views/chat/OneChat.vue');
 const Friends = () => import("@/views/chat/Friends.vue");
 const GroupChat = () => import("@/views/chat/GroupChat.vue");
+
+// kown app
+const KnowLayout = () => import("@/views/know/Layout.vue");
+const KnowHome = () => import("@/views/know/Home.vue");
+const Major = () => import("@/views/know/Major.vue");
+
+// 
 const Tmp = () => import('@/views/AAA.vue');
 const Quiz = () => import("@/views/Quiz.vue");
 const Exercises = () => import('@/views/Exercises.vue');
@@ -27,16 +36,28 @@ const router = createRouter({
     {
       path: '/chat', component: Chat,
       children: [
-        {
-          path: "", component: OneChat,
-        },
-        {
-          path: "friends", component: Friends,
-        },
-        {
-          path: "groups", component: GroupChat,
-        }
+        { path: "", component: OneChat },
+        { path: "friends", component: Friends },
+        { path: "groups", component: GroupChat }
       ]
+    },
+
+    {
+      path: "/know", component: KnowLayout,
+      children: [
+        { path: "", component: KnowHome },
+        { path: ":subject", component: Major },
+      ]
+    },
+    {
+      path: "/book/:bookId", component: () => import("@/views/know/Book.vue"),
+      children: [
+        { path: "", component: () => import("@/views/know/Intro.vue") },
+        { path: "exs", component: () => import("@/views/know/ExerciseList.vue") },
+      ],
+    },
+    {
+      path: "/book/:bookId/chapters/:chapterId", component: () => import("@/views/know/Chapter.vue"),
     },
     { path: '/tmp', component: Tmp },
     {

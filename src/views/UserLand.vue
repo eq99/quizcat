@@ -4,7 +4,7 @@ import PostsVue from './Posts.vue';
 </script>
 
 <template>
-  <Header name="喵喵" homenav="/"></Header>
+  <Header title="喵喵的主页"></Header>
   <div class="land">
     <div class="main">
       <div class="info-card">

@@ -6,9 +6,9 @@ import Header from "@/components/site/Header.vue"
 const stars = [
   {
     id: 1,
-    name: "算法王国",
+    name: "知识宇宙",
     imgUrl: 'https://pic.imgdb.cn/item/639338d5b1fccdcd362fecc2.png',
-    link: '/',
+    link: '/know',
     bgColor: ''
   },
   {
@@ -24,7 +24,7 @@ const stars = [
 <template>
   <Header title="我的桌面"></Header>
   <div class="container space">
-    <Star v-for="star in stars" :icon="star.imgUrl" :name="star.name" bgColor="bg-grey" href="/exs"></Star>
+    <Star v-for="star in stars" :icon="star.imgUrl" :name="star.name" bgColor="bg-grey" :href="star.link"></Star>
   </div>
 </template>
 

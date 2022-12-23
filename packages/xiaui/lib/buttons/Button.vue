@@ -31,6 +31,7 @@ const buttonKind = computed(() => {
   padding: 8px 12px;
   margin-right: 8px;
   border-radius: 4px;
+  text-align: center;
 
   &.primary {
     background-color: var(--bg-primary);

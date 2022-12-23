@@ -11,6 +11,9 @@ import OneChatEditor from './editor/OneChat.vue';
 import Button from './buttons/Button.vue';
 import Tooltip from './box/Tootip.vue';
 import Icon from './Icon.vue';
+import Tabs from './tabs/Tabs.vue';
+import TabItem from './tabs/TabItem.vue';
+
 
 const components = [
     Carousel,
@@ -25,6 +28,8 @@ const components = [
     Button,
     Tooltip,
     Icon,
+    Tabs,
+    TabItem
 ];
 
 const install = (app: App) => {
@@ -48,6 +53,8 @@ export {
     Button,
     Tooltip,
     Icon,
+    Tabs,
+    TabItem
 }
 
 export default install;
