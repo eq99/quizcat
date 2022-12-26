@@ -1,56 +1,34 @@
 <script  lang="ts" setup>
+import { onMounted, ref } from 'vue';
+import { onBeforeRouteUpdate, useRoute } from 'vue-router';
+
 import SubjectVue from '@/components/know/Subject.vue';
+import type { Book } from "@/types";
+import { getBooksByCategory } from "@/apis/book";
+import { groupBooksBySubCategory } from "@/lib"
+// vars 
+const route = useRoute();
 
-const subjects = [
-  {
-    id: 1,
-    name: '算法设计初级',
-    cover: 'https://cdn.pixabay.com/photo/2022/06/21/16/18/orange-7276122_640.jpg'
-  },
-  {
-    id: 2,
-    name: '算法设计初级',
-    cover: 'https://cdn.pixabay.com/photo/2022/06/21/16/18/orange-7276122_640.jpg'
-  },
-  {
-    id: 3,
-    name: '算法设计初级',
-    cover: 'https://cdn.pixabay.com/photo/2022/06/21/16/18/orange-7276122_640.jpg'
-  },
-  {
-    id: 4,
-    name: '算法设计初级',
-    cover: 'https://cdn.pixabay.com/photo/2022/06/21/16/18/orange-7276122_640.jpg'
-  },
-  {
-    id: 5,
-    name: '算法设计初级',
-    cover: 'https://cdn.pixabay.com/photo/2022/12/14/13/43/snow-7655439_640.png'
-  },
-  {
-    id: 6,
-    name: '算法设计初级',
-    cover: 'https://cdn.pixabay.com/photo/2022/06/21/16/18/orange-7276122_640.jpg'
-  },
+// states
+const books = ref<Map<string, Book[]>>(new Map());
 
-]
+onMounted(async () => {
+  books.value = groupBooksBySubCategory(await getBooksByCategory(route.params.subject as string));
+});
+
+onBeforeRouteUpdate(async (to, from) => {
+  // set new question
+  if (to.params.subject !== from.params.subject) {
+    books.value = groupBooksBySubCategory(await getBooksByCategory(to.params.subject as string));
+  }
+});
 </script>
 
 <template>
-  <div class="subject-box">
-    <div class="hd"> <i class="iconfont icon-terminal"></i> <span>算法设计</span> </div>
+  <div class="subject-box" v-for="entry in books">
+    <div class="hd"> <i class="iconfont icon-terminal"></i> <span>{{ entry[0] }}</span> </div>
     <div class="subjects">
-      <SubjectVue v-for="subject in subjects" :subject="subject"></SubjectVue>
-    </div>
-  </div>
-  <div class="subject-box">
-    <div class="hd"> <i class="iconfont icon-terminal"></i> <span>算法设计</span> </div>
-    <div class="subjects">
-      <div class="subject" v-for="subject in subjects">
-        <div class="cover"><img :src="subject.cover" alt="">
-        </div>
-        <div class="name">{{ subject.name }}</div>
-      </div>
+      <SubjectVue v-for="subject in entry[1]" :subject="subject"></SubjectVue>
     </div>
   </div>
 </template>

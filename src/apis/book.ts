@@ -1,0 +1,22 @@
+const API_BASE = import.meta.env.VITE_API_BASE;
+
+
+export async function getNewBooks<T>(): Promise<T> {
+    const resp = await fetch(`${API_BASE}/books?new=1`);
+
+    if (resp.status >= 200 && resp.status < 300) {
+        return resp.json()
+    }
+
+    throw new Error(resp.statusText)
+}
+
+export async function getBooksByCategory<T>(cate: string): Promise<T> {
+    const resp = await fetch(`${API_BASE}/books?category=${cate}`);
+
+    if (resp.status >= 200 && resp.status < 300) {
+        return resp.json()
+    }
+
+    throw new Error(resp.statusText)
+}

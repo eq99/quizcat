@@ -14,14 +14,14 @@ import rehypeStringify from 'rehype-stringify'
 export function debounce(fn, wait) {
     let timer = null;
 
-    return function () {
+    return function (...args) {
         const context = this;
-        const args = [...arguments];
 
         if (timer) {
             clearTimeout(timer);
             timer = null;
         }
+
         timer = setTimeout(() => {
             fn.apply(context, args);
         }, wait);
@@ -121,4 +121,23 @@ export function getTimeDiff(dateStr: string): string {
             return '刚刚';
         }
     }
+}
+
+
+import type { Book } from "@/types";
+
+export function groupBooksBySubCategory(books: Book[]): Map<string, Book[]> {
+    let mp = new Map();
+
+    for (let book of books) {
+        let subCate = book.category.split(":")[1];
+
+        if (mp.has(subCate)) {
+            mp.get(subCate).push(book);
+        } else {
+            mp.set(subCate, [book]);
+        }
+    }
+
+    return mp;
 }

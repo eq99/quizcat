@@ -51,6 +51,16 @@ export interface Comment {
     avatar: string
 }
 
+// books
+export interface Book {
+    id: number,
+    name: string,
+    cover: string,
+    about: string,
+    hard: string,
+    category: string
+}
+
 // chat
 export interface OneChat {
     id: number,

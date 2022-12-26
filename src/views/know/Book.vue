@@ -1,11 +1,8 @@
 <script  lang="ts" setup>
 import { ref } from 'vue';
-import { TabItem, Tabs, Avatar } from 'xiaui';
+import { Avatar } from 'xiaui';
 import HeaderVue from '@/components/site/Header.vue';
 import BookHeaderVue from '@/components/know/BookHeader.vue';
-
-// vars
-const activeTab = ref('tab1');
 
 </script>
 
