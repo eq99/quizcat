@@ -1,25 +1,19 @@
 <script  lang="ts" setup>
 import MarkdownVue from '@/components/know/Markdown.vue';
+import { useBookStore } from '@/stores/book';
+import { storeToRefs } from 'pinia';
 
-const markdown = `在本教程中，我们将学习常用的算法，并使用多种编程语言实现它们。
+//vars
+const bookStore = useBookStore();
 
-我们将涵盖以下算法：
 
-- 排序算法（如快速排序、冒泡排序）
-- 搜索算法（如二分搜索、广度优先搜索）
-- 动态规划算法（如最长公共子序列、背包问题）
-
-阅读本教程前，建议先对算法基础有所了解。
-
-1. 排序算法（如快速排序、冒泡排序）
-1. 搜索算法（如二分搜索、广度优先搜索）
-1. 动态规划算法（如最长公共子序列、背包问题）
-`;
+// states
+const { book } = storeToRefs(bookStore);
 </script>
 
 <template>
   <div class="content">
-    <MarkdownVue :markdown="markdown"></MarkdownVue>
+    <MarkdownVue :markdown="book?.about || ''"></MarkdownVue>
   </div>
 </template>
 

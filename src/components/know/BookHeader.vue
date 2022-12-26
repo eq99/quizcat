@@ -1,11 +1,12 @@
 <script  lang="ts" setup>
 import { Button } from 'xiaui';
 
+import type { Book } from "@/types"
 
 // types
 export interface Props {
-  cover: string,
-  name: string,
+  book: Book | null,
+  chapterId: number
 };
 
 //vars
@@ -14,12 +15,12 @@ const props = defineProps<Props>();
 
 <template>
   <div class="box">
-    <div class="cover"><img :src="cover" alt=""></div>
+    <div class="cover"><img :src="book?.cover" alt=""></div>
     <div class="detail">
-      <div class="name">{{ name }}</div>
+      <div class="name">{{ book?.name }}</div>
       <div class="grow"></div>
       <Button>
-        <RouterLink to="/book/1/chapters/121421">开始</RouterLink>
+        <RouterLink :to="`/book/${book?.id}/chapters/${chapterId}`">开始</RouterLink>
       </Button>
     </div>
   </div>

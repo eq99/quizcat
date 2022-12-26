@@ -17,7 +17,7 @@ onMounted(async () => {
 });
 
 onBeforeRouteUpdate(async (to, from) => {
-  // set new question
+  console.log(to.params);
   if (to.params.subject !== from.params.subject) {
     books.value = groupBooksBySubCategory(await getBooksByCategory(to.params.subject as string));
   }

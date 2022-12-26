@@ -61,6 +61,13 @@ export interface Book {
     category: string
 }
 
+export interface Manager {
+    userId: number,
+    job: string,
+    name: string,
+    avatar: string
+}
+
 // chat
 export interface OneChat {
     id: number,

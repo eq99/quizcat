@@ -20,3 +20,23 @@ export async function getBooksByCategory<T>(cate: string): Promise<T> {
 
     throw new Error(resp.statusText)
 }
+
+export async function getBookById<T>(id: string | number): Promise<T> {
+    const resp = await fetch(`${API_BASE}/books/${id}`);
+
+    if (resp.status >= 200 && resp.status < 300) {
+        return resp.json()
+    }
+
+    throw new Error(resp.statusText)
+}
+
+export async function getManagers<T>(bookId: string | number): Promise<T> {
+    const resp = await fetch(`${API_BASE}/managers?bookId=${bookId}`);
+
+    if (resp.status >= 200 && resp.status < 300) {
+        return resp.json()
+    }
+
+    throw new Error(resp.statusText)
+}

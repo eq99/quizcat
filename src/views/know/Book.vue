@@ -1,22 +1,41 @@
 <script  lang="ts" setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
+import { useRoute } from 'vue-router';
 import { Avatar } from 'xiaui';
 import HeaderVue from '@/components/site/Header.vue';
 import BookHeaderVue from '@/components/know/BookHeader.vue';
+import { useBookStore } from "@/stores/book";
+import { storeToRefs } from 'pinia';
+import { getManagers } from '@/apis/book';
 
+import type { Manager } from "@/types";
+//vars 
+const route = useRoute();
+const bookStore = useBookStore();
+const { fetchBook } = bookStore;
+
+// states
+const { book } = storeToRefs(bookStore);
+const managers = ref<Manager[]>([]);
+
+// life cicles
+fetchBook(route.params.bookId as string);
+onMounted(async () => {
+  managers.value = await getManagers(route.params.bookId as string);
+})
 </script>
 
 <template>
-  <HeaderVue title="book name"></HeaderVue>
+  <HeaderVue title="Book"></HeaderVue>
 
   <div class="container wrapper">
     <div class="main">
-      <BookHeaderVue name="算法初级" cover="https://cdn.pixabay.com/photo/2022/06/21/16/18/orange-7276122_640.jpg">
+      <BookHeaderVue :book="book" :chapterId="1">
       </BookHeaderVue>
 
       <div class="nav">
-        <RouterLink class="nav-item" to="/book/1">简介</RouterLink>
-        <RouterLink class="nav-item" to="/book/1/exs">练习</RouterLink>
+        <RouterLink class="nav-item" :to="`/book/${book?.id}`">简介</RouterLink>
+        <RouterLink class="nav-item" :to="`/book/${book?.id}/exs`">练习</RouterLink>
       </div>
 
       <RouterView></RouterView>
@@ -26,7 +45,7 @@ import BookHeaderVue from '@/components/know/BookHeader.vue';
       <div class="card">
         <div class="hd">成员</div>
         <div class="bd">
-          <Avatar link="https://api.multiavatar.com/f2d85385.png"></Avatar>
+          <Avatar :link="manager.avatar" v-for="manager in managers"></Avatar>
         </div>
       </div>
       <div class="card">
