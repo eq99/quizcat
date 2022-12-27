@@ -52,3 +52,16 @@
   text-indent: 2em;
   margin-bottom: 12px;
 }
+
+.markdown img {
+  max-width: 640px;
+}
+
+.markdown a {
+  text-decoration: underline;
+}
+
+.markdown pre {
+  max-width: 720px;
+  overflow: scroll;
+}

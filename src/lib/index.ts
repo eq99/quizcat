@@ -141,3 +141,37 @@ export function groupBooksBySubCategory(books: Book[]): Map<string, Book[]> {
 
     return mp;
 }
+
+import type { Chapter } from "@/types";
+
+/**
+ * sortChaptersByNextId
+ * 
+ * 1 2
+ * 2 5
+ * 5 7
+ * 7 null
+ */
+export function sortChaptersByNextId(chapters: Chapter[]): Chapter[] {
+    if (chapters.length === 0) return chapters;
+
+    let first = chapters[0];
+    for (let i = 1; i < chapters.length; i++) {
+        if (chapters[i].id < first.id) {
+            first = chapters[i];
+        }
+    }
+
+    let sorted = [first];
+    let nextId = first.nextId;
+    for (let j = 0; j < chapters.length; j++) {
+        for (let i = 0; i < chapters.length; i++) {
+            if (nextId === chapters[i].id) {
+                sorted.push(chapters[i]);
+                nextId = chapters[i].nextId;
+            }
+        }
+    }
+
+    return sorted;
+}

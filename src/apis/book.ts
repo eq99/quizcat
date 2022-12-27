@@ -40,3 +40,23 @@ export async function getManagers<T>(bookId: string | number): Promise<T> {
 
     throw new Error(resp.statusText)
 }
+
+export async function getChapters<T>(bookId: string | number): Promise<T> {
+    const resp = await fetch(`${API_BASE}/chapters?bookId=${bookId}`);
+
+    if (resp.status >= 200 && resp.status < 300) {
+        return resp.json()
+    }
+
+    throw new Error(resp.statusText)
+}
+
+export async function getChapterContent<T>(chapterId: string | number): Promise<T> {
+    const resp = await fetch(`${API_BASE}/chapters/${chapterId}/content`);
+
+    if (resp.status >= 200 && resp.status < 300) {
+        return resp.json()
+    }
+
+    throw new Error(resp.statusText)
+}

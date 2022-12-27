@@ -1,10 +1,10 @@
 <script  lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { Avatar } from 'xiaui';
 import HeaderVue from '@/components/site/Header.vue';
 import BookHeaderVue from '@/components/know/BookHeader.vue';
-import { useBookStore } from "@/stores/book";
+import { useBookStore, useChapterStore } from "@/stores/book";
 import { storeToRefs } from 'pinia';
 import { getManagers } from '@/apis/book';
 
@@ -12,14 +12,25 @@ import type { Manager } from "@/types";
 //vars 
 const route = useRoute();
 const bookStore = useBookStore();
+const chapterStore = useChapterStore();
 const { fetchBook } = bookStore;
+const { fetchChapters } = chapterStore;
+
 
 // states
 const { book } = storeToRefs(bookStore);
+const { chapters } = storeToRefs(chapterStore);
 const managers = ref<Manager[]>([]);
+
+// computed
+const firstChapter = computed(() => {
+  return chapters.value.length > 0 ? chapters.value[0].id : 0;
+})
 
 // life cicles
 fetchBook(route.params.bookId as string);
+fetchChapters(route.params.bookId as string);
+
 onMounted(async () => {
   managers.value = await getManagers(route.params.bookId as string);
 })
@@ -30,7 +41,7 @@ onMounted(async () => {
 
   <div class="container wrapper">
     <div class="main">
-      <BookHeaderVue :book="book" :chapterId="1">
+      <BookHeaderVue :book="book" :chapterId="firstChapter">
       </BookHeaderVue>
 
       <div class="nav">

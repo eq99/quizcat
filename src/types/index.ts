@@ -68,6 +68,16 @@ export interface Manager {
     avatar: string
 }
 
+export interface Chapter {
+    id: number,
+    bookId: number,
+    name: string,
+    part: string,
+    nextId: null | number,
+    status: number,
+    updatedAt: string
+}
+
 // chat
 export interface OneChat {
     id: number,
