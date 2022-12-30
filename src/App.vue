@@ -5,8 +5,10 @@ import Fab from '@/components/Fab.vue';
 </script>
 
 <template>
-  <Notification></Notification>
-  <RouterView></RouterView>
-  <Fab></Fab>
-  <LoginModal></LoginModal>
+  <n-message-provider>
+    <Notification></Notification>
+    <RouterView></RouterView>
+    <Fab></Fab>
+    <LoginModal></LoginModal>
+  </n-message-provider>
 </template>

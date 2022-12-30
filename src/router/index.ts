@@ -6,6 +6,15 @@ const Tmp = () => import('@/views/ATmp.vue');
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    // admin
+
+    {
+      path: "/admin", component: () => import("@/views/admin/Layout.vue"),
+      children: [
+        { path: "", component: () => import("@/views/admin/DashBoard.vue") },
+        { path: "book", component: () => import("@/views/admin/Book.vue") },
+      ]
+    },
     // site home
     { path: '/', component: () => import("@/views/site/Home.vue") },
 

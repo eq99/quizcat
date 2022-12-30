@@ -59,9 +59,17 @@
 
 .markdown a {
   text-decoration: underline;
+  color: blue;
 }
 
 .markdown pre {
+  margin-left: 2em;
   max-width: 720px;
   overflow: scroll;
+}
+
+.markdown p code {
+  color: #d63384;
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
 }

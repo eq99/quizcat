@@ -57,8 +57,16 @@ export interface Book {
     name: string,
     cover: string,
     about: string,
-    hard: string,
+    hard: number,
     category: string
+}
+
+export interface BookForm {
+    name: string,
+    about: string,
+    category: string
+    hard: number,
+    cover: string,
 }
 
 export interface Manager {
@@ -76,6 +84,15 @@ export interface Chapter {
     nextId: null | number,
     status: number,
     updatedAt: string
+}
+
+export interface Exercise {
+    id: number,
+    title: string,
+    tags: string,
+    hard: number,
+    bookId: number,
+    updatedAt: string,
 }
 
 // chat

@@ -2,7 +2,7 @@
 import HeaderVue from '@/components/site/Header.vue';
 import MarkdownVue from '@/components/know/Markdown.vue';
 import { useBookStore, useChapterStore } from "@/stores/book";
-import { onBeforeRouteUpdate, useRoute } from 'vue-router';
+import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router';
 import { computed, onMounted, ref } from 'vue';
 import { getChapterContent } from "@/apis/book";
 
@@ -15,7 +15,7 @@ interface ChapterContent {
 const route = useRoute();
 const bookStore = useBookStore();
 const chapterStore = useChapterStore();
-const { getChapterById, chapters } = chapterStore;
+const { chapters } = chapterStore;
 const { book } = bookStore;
 
 // states
@@ -56,7 +56,6 @@ onBeforeRouteUpdate(async (to, from) => {
         <div class="title">
           <RouterLink :to="`/book/${book?.id}`">{{ book?.name }}</RouterLink>
         </div>
-``
         <div class="toc-item" v-for="chapter in chapters">
           <RouterLink :to="`/book/${book?.id}/chapters/${chapter.id}`">{{ chapter.name }}</RouterLink>
         </div>

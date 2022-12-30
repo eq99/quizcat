@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
-import type { Book, Chapter } from "@/types";
-import { getBookById, getChapters } from '@/apis/book';
+import type { Book, Chapter, Exercise } from "@/types";
+import { getBookById, getChapters, getExercises } from '@/apis/book';
 import { sortChaptersByNextId } from '@/lib';
 
 export const useBookStore = defineStore("book", {
@@ -29,6 +29,17 @@ export const useChapterStore = defineStore("chapter", {
     actions: {
         async fetchChapters(bookId: number | string) {
             this.chapters = sortChaptersByNextId(await getChapters(bookId));
+        }
+    }
+})
+
+export const useExerciseStore = defineStore("exercise", {
+    state: () => ({
+        exercises: [] as Exercise[]
+    }),
+    actions: {
+        async fetchExercises(bookId: number | string) {
+            this.exercises = await getExercises(bookId);
         }
     }
 })
