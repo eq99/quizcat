@@ -1,8 +1,8 @@
 <script  lang="ts" setup>
 import HeaderVue from '@/components/site/Header.vue';
 import MarkdownVue from '@/components/know/Markdown.vue';
-import { useBookStore, useChapterEditStore, useChapterStore } from "@/stores/book";
-import { onBeforeRouteLeave, onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router';
+import { useBookStore, useChapterEditStore, useChapterStore, useManagerStore } from "@/stores/book";
+import { onBeforeRouteLeave, onBeforeRouteUpdate, useRoute } from 'vue-router';
 import { computed, onMounted, ref } from 'vue';
 import { getChapterContent } from "@/apis/book";
 import { storeToRefs } from 'pinia';
@@ -17,6 +17,8 @@ const route = useRoute();
 const bookStore = useBookStore();
 const chapterStore = useChapterStore();
 const chapterEditStore = useChapterEditStore();
+const managerStore = useManagerStore();
+const { isManager } = managerStore;
 const { chapters } = storeToRefs(chapterStore);
 const { book } = storeToRefs(bookStore);
 const { fetchBook } = bookStore;
@@ -106,13 +108,14 @@ onBeforeRouteUpdate(async (to, from) => {
     </div>
 
     <div class="tools">
-      <div class="tool">
+
+      <div class="tool" v-if="isManager(bookId)">
         <RouterLink :to="`/book/${bookId}/chapters/${chapterId}/edit?type=create`">
           <i class="iconfont icon-createtask"></i>
           <div class="name">新建</div>
         </RouterLink>
       </div>
-      <div class="tool">
+      <div class="tool" v-if="isManager(bookId)">
         <RouterLink :to="`/book/${bookId}/chapters/${chapterId}/edit?type=update`">
           <i class="iconfont icon-edit"></i>
           <div class="name">修改</div>

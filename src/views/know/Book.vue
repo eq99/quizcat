@@ -1,39 +1,40 @@
 <script  lang="ts" setup>
-import { computed, onMounted, ref } from 'vue';
+import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { Avatar } from 'xiaui';
 import HeaderVue from '@/components/site/Header.vue';
 import BookHeaderVue from '@/components/know/BookHeader.vue';
-import { useBookStore, useChapterStore } from "@/stores/book";
+import { useBookStore, useChapterStore, useManagerStore } from "@/stores/book";
 import { storeToRefs } from 'pinia';
-import { getManagers } from '@/apis/book';
 
-import type { Manager } from "@/types";
+
 //vars 
 const route = useRoute();
 const bookStore = useBookStore();
 const chapterStore = useChapterStore();
+const managerStore = useManagerStore();
 const { fetchBook } = bookStore;
 const { fetchChapters } = chapterStore;
-
+const { isManager, fetchManagers } = managerStore;
 
 // states
 const { book } = storeToRefs(bookStore);
 const { chapters } = storeToRefs(chapterStore);
-const managers = ref<Manager[]>([]);
+const { managers } = storeToRefs(managerStore);
 
 // computed
+const bookId = computed(() => {
+  return Number(route.params.bookId as string);
+});
+
 const firstChapter = computed(() => {
   return chapters.value.length > 0 ? chapters.value[0].id : 0;
-})
+});
 
 // life cicles
-fetchBook(route.params.bookId as string);
-fetchChapters(route.params.bookId as string);
-
-onMounted(async () => {
-  managers.value = await getManagers(route.params.bookId as string);
-})
+fetchBook(bookId.value);
+fetchChapters(bookId.value);
+fetchManagers(bookId.value);
 </script>
 
 <template>
@@ -47,6 +48,7 @@ onMounted(async () => {
       <div class="nav">
         <RouterLink class="nav-item" :to="`/book/${book?.id}`">简介</RouterLink>
         <RouterLink class="nav-item" :to="`/book/${book?.id}/exs`">练习</RouterLink>
+        <RouterLink class="nav-item" :to="`/book/${book?.id}/manage`" v-if="isManager(bookId)">管理</RouterLink>
       </div>
 
       <RouterView></RouterView>
