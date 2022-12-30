@@ -1,6 +1,6 @@
 const API_BASE = import.meta.env.VITE_API_BASE;
 
-import type { BookForm, Book } from '@/types';
+import type { BookForm, Book, ChapterForm, Chapter } from '@/types';
 import { useTokenStore } from '@/stores/token';
 const { token } = useTokenStore();
 
@@ -53,6 +53,23 @@ export async function getBookById<T>(id: string | number): Promise<T> {
 
 export async function getManagers<T>(bookId: string | number): Promise<T> {
     const resp = await fetch(`${API_BASE}/managers?bookId=${bookId}`);
+
+    if (resp.status >= 200 && resp.status < 300) {
+        return resp.json()
+    }
+
+    throw new Error(resp.statusText)
+}
+
+export async function createChapter(chapter: ChapterForm): Promise<Chapter> {
+    const resp = await fetch(`${API_BASE}/chapters`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token?.value}`,
+        },
+        body: JSON.stringify(chapter)
+    });
 
     if (resp.status >= 200 && resp.status < 300) {
         return resp.json()

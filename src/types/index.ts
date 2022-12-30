@@ -86,6 +86,14 @@ export interface Chapter {
     updatedAt: string
 }
 
+export interface ChapterForm {
+    name: string,
+    part: string,
+    content: string,
+    bookId: number,
+    currentId: number | null,
+}
+
 export interface Exercise {
     id: number,
     title: string,

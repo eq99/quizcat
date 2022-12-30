@@ -27,6 +27,7 @@
     "remark-parse": "^10.0.1",
     "remark-rehype": "^10.1.0",
     "unified": "^10.1.2",
+    "vditor": "^3.8.18",
     "vue": "^3.2.38",
     "vue-router": "^4.1.5",
     "xiaui": "^0.0.0"

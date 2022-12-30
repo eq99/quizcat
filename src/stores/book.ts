@@ -33,6 +33,22 @@ export const useChapterStore = defineStore("chapter", {
     }
 })
 
+export const useChapterEditStore = defineStore("chapter-edit", {
+    state: () => ({
+        content: "",
+        name: "",
+        part: "",
+    }),
+    actions: {
+        setChapterData(name: string, part: string, content: string,) {
+            this.name = name;
+            this.part = part;
+            this.content = content;
+        },
+    }
+});
+
+
 export const useExerciseStore = defineStore("exercise", {
     state: () => ({
         exercises: [] as Exercise[]
