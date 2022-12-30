@@ -4,9 +4,9 @@ import { useRoute } from 'vue-router';
 import Vditor from 'vditor';
 import 'vditor/dist/index.css';
 import { storeToRefs } from 'pinia';
-import { useChapterEditStore } from '@/stores/book';
+import { useChapterEditStore, useChapterStore } from '@/stores/book';
 import { useMessage } from 'naive-ui';
-import { createChapter } from "@/apis/book";
+import { createChapter, updateChapter } from "@/apis/book";
 
 import type {
   FormItemRule,
@@ -20,11 +20,13 @@ import router from '@/router';
 interface ModelType {
   name: string,
   part: string,
+  content: string
 }
 
 // vars
 const route = useRoute();
 const chapterEditStore = useChapterEditStore();
+const { storeUpdateChapter } = useChapterStore();
 
 const chapterId = Number(route.params.chapterId as string);
 const bookId = Number(route.params.bookId as string);
@@ -66,6 +68,7 @@ const form = ref<FormInst | null>(null);
 const model = ref<ModelType>({
   name: name.value,
   part: part.value,
+  content: content.value,
 });
 
 // methods
@@ -80,7 +83,7 @@ function handleSubmit(e: MouseEvent) {
 
         if (editType === "create") {
           createChapter({
-            content: content.value,
+            content: model.value.content,
             name: model.value.name,
             part: model.value.part,
             bookId: bookId,
@@ -94,7 +97,21 @@ function handleSubmit(e: MouseEvent) {
             message.error(`error: ${e}`);
           })
         } else {
-          alert("update");
+          const form = {
+            id: chapterId,
+            name: name.value === model.value.name ? null : model.value.name,
+            part: part.value === model.value.part ? null : model.value.part,
+            content: content.value === model.value.content ? null : model.value.content,
+          };
+          updateChapter(form).then(data => {
+            message.info("update success, will go back");
+            storeUpdateChapter(form);
+            setTimeout(() => {
+              router.push(`/book/${bookId}/chapters/${chapterId}`);
+            }, 2000);
+          }).catch(e => {
+            message.error(`error: ${e}`);
+          })
         }
       } else {
         message.error('Invalid fields');
@@ -110,7 +127,7 @@ onMounted(() => {
       vditor.value!.setValue(content.value);
     },
     input(md) {
-      content.value = md;
+      model.value.content = md;
     },
   });
 });

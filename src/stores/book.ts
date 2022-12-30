@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import type { Book, Chapter, Exercise } from "@/types";
 import { getBookById, getChapters, getExercises } from '@/apis/book';
 import { sortChaptersByNextId } from '@/lib';
+import type { UpdateChapterForm } from '@/types';
 
 export const useBookStore = defineStore("book", {
     state: () => ({
@@ -29,6 +30,16 @@ export const useChapterStore = defineStore("chapter", {
     actions: {
         async fetchChapters(bookId: number | string) {
             this.chapters = sortChaptersByNextId(await getChapters(bookId));
+        },
+        storeUpdateChapter(form: UpdateChapterForm) {
+            const chapter = this.chapters.find(c => c.id = form.id);
+            if (chapter) {
+                for (const [key, value] of Object.entries(form)) {
+                    if (value) {
+                        chapter[key] = value;
+                    }
+                }
+            }
         }
     }
 })

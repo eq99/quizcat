@@ -94,6 +94,13 @@ export interface ChapterForm {
     currentId: number | null,
 }
 
+export interface UpdateChapterForm {
+    id: number,
+    name: string | null,
+    part: string | null,
+    content: string | null,
+}
+
 export interface Exercise {
     id: number,
     title: string,
