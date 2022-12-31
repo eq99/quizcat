@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import type { Book, Chapter, Exercise, UpdateChapterForm, Manager } from "@/types";
+import type { Book, Chapter, Exercise, UpdateChapterForm, Manager, UpdateBookForm } from "@/types";
 import { getBookById, getChapters, getExercises, getManagers } from '@/apis/book';
 import { sortChaptersByNextId } from '@/lib';
 import { useUserStore } from "@/stores/user";
@@ -8,12 +8,19 @@ export const useBookStore = defineStore("book", {
     state: () => ({
         book: null as (Book | null)
     }),
-    getters: {
-
-    },
     actions: {
         async fetchBook(id: number | string) {
             this.book = await getBookById(id);
+        },
+        storeUpdateBook(form: UpdateBookForm) {
+            if (this.book) {
+                for (const [k, v] of Object.entries(form)) {
+                    if (v) {
+                        (this.book[k as keyof Book] as string) = (v as string);
+                    }
+                }
+            }
+
         }
     }
 });

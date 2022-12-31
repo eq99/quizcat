@@ -71,6 +71,15 @@ export interface BookForm {
     cover: string,
 }
 
+export interface UpdateBookForm {
+    id: number,
+    name: string | null,
+    about: string | null,
+    category: string | null,
+    hard: number | null,
+    cover: string | null,
+}
+
 export interface Manager {
     userId: number,
     job: string,

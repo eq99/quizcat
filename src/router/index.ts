@@ -7,7 +7,6 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     // admin
-
     {
       path: "/admin", component: () => import("@/views/admin/Layout.vue"),
       children: [
@@ -42,6 +41,12 @@ const router = createRouter({
         { path: "", component: () => import("@/views/know/Intro.vue") },
         { path: "exs", component: () => import("@/views/know/ExerciseList.vue") },
       ],
+    },
+    {
+      path: "/book/:bookId/manage", component: () => import("@/views/know/ManageLayout.vue"),
+      children: [
+        { path: "", component: () => import("@/views/know/ManageHome.vue") },
+      ]
     },
     {
       path: "/book/:bookId/chapters/:chapterId", component: () => import("@/views/know/Chapter.vue"),
