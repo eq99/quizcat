@@ -46,7 +46,6 @@ const exercise = computed(() => {
   return exercises.value.find(e => e.id === exerciseId.value);
 });
 
-
 // methods
 function showSolution() {
   isHidden.value = !isHidden.value;

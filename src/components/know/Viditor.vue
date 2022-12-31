@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, toRef } from 'vue';
+import { ref, onMounted, toRef, onUnmounted } from 'vue';
 import Vditor from 'vditor';
 
 // vars
@@ -17,6 +17,7 @@ const emit = defineEmits<{
 const vditor = ref<Vditor | null>(null);
 const modelValue = toRef(props, 'modelValue');
 
+// lifes
 onMounted(() => {
   vditor.value = new Vditor(randomId, {
     after: () => {
@@ -27,6 +28,11 @@ onMounted(() => {
     }
   });
 });
+
+onUnmounted(() => {
+  // fix storage
+  localStorage.removeItem(`vditor${randomId}`);
+})
 </script>
 
 <template>
