@@ -1,10 +1,14 @@
 <script  lang="ts" setup>
-import Header from '@/components/site/Header.vue';
-import PostsVue from './Posts.vue';
+import { useTitleStore } from '@/stores/site';
+
+// vars
+const { setTitle } = useTitleStore();
+
+// lifes
+setTitle("喵喵的主页");
 </script>
 
 <template>
-  <Header title="喵喵的主页"></Header>
   <div class="land">
     <div class="main">
       <div class="info-card">

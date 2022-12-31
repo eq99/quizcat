@@ -6,9 +6,10 @@ import { onMounted, ref } from 'vue';
 
 const newBooks = ref<Book[]>([]);
 
+// lifes
 onMounted(async () => {
   newBooks.value = await getNewBooks();
-})
+});
 </script>
 
 <template>

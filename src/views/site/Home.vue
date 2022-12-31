@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import Star from '@/components/site/Star.vue';
-import Header from "@/components/site/Header.vue"
+import { useTitleStore } from '@/stores/site';
 
+// vars
 const stars = [
   {
     id: 1,
@@ -11,10 +12,12 @@ const stars = [
     bgColor: ''
   },
 ]
+
+const { setTitle } = useTitleStore();
+setTitle("我的桌面");
 </script>
 
 <template>
-  <Header title="我的桌面"></Header>
   <div class="container space">
     <Star v-for="star in stars" :icon="star.imgUrl" :name="star.name" bgColor="bg-grey" :href="star.link"></Star>
   </div>

@@ -1,5 +1,5 @@
 <script  lang="ts" setup>
-import HeaderVue from '@/components/site/Header.vue';
+import { useTitleStore } from '@/stores/site';
 
 
 // vars
@@ -25,11 +25,12 @@ const navs = [
     link: "/know/cs",
   },
 ]
+
+const { setTitle } = useTitleStore();
+setTitle("知识宇宙");
 </script>
 
 <template>
-  <HeaderVue title="知识宇宙" />
-
   <div class="container wrapper">
     <div class="nav">
       <div class="nav-item" v-for="nav in navs">

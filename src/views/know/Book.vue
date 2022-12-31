@@ -1,11 +1,11 @@
 <script  lang="ts" setup>
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
+import { storeToRefs } from 'pinia';
 import { Avatar } from 'xiaui';
-import HeaderVue from '@/components/site/Header.vue';
 import BookHeaderVue from '@/components/know/BookHeader.vue';
 import { useBookStore, useChapterStore, useManagerStore } from "@/stores/book";
-import { storeToRefs } from 'pinia';
+import { useTitleStore } from '@/stores/site';
 
 
 //vars 
@@ -16,6 +16,7 @@ const managerStore = useManagerStore();
 const { fetchBook } = bookStore;
 const { fetchChapters } = chapterStore;
 const { isManager, fetchManagers } = managerStore;
+const { setTitle } = useTitleStore();
 
 // states
 const { book } = storeToRefs(bookStore);
@@ -35,11 +36,10 @@ const firstChapter = computed(() => {
 fetchBook(bookId.value);
 fetchChapters(bookId.value);
 fetchManagers(bookId.value);
+setTitle("Book");
 </script>
 
 <template>
-  <HeaderVue title="Book"></HeaderVue>
-
   <div class="container wrapper">
     <div class="main">
       <BookHeaderVue :book="book" :chapterId="firstChapter">

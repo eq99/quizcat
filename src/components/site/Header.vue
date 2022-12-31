@@ -2,11 +2,10 @@
 import Logo from '@/components/site/Logo.vue';
 import UserCut from '../user/UserDrop.vue';
 import ChatBadge from '@/components/chat/Badge.vue';
-
+import { useTitleStore } from '@/stores/site';
+import { storeToRefs } from 'pinia';
 // vars
-const props = defineProps<{
-  title: string,
-}>();
+const { title } = storeToRefs(useTitleStore());
 </script>
 
 <template>

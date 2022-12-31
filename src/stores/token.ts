@@ -9,25 +9,29 @@ export const useTokenStore = defineStore('token', {
     }),
 
     getters: {
-        token(): Token | null {
+        token(state): Token | null {
             // get from local
-            if (this._token === null) {
+            if (state._token === null) {
                 const localToken = localStorage.getItem('token');
                 if (localToken) {
-                    this._token = JSON.parse(localToken);
+                    state._token = JSON.parse(localToken);
                 }
             }
 
-            if (this._token) {
+            if (state._token) {
                 const now = new Date().getTime();
-                const expiredAt = new Date(this._token?.expiredAt).getTime();
+                const expiredAt = new Date(state._token?.expiredAt).getTime();
                 const timeDiff = expiredAt - now;
                 const userStore = useUserStore();
+                const { clearUser } = userStore;
 
                 // remove expired token
                 if (timeDiff <= 0) {
-                    this.clearToken();
-                    userStore.actions.clearUser();
+                    // clear token
+                    state._token = null;
+                    localStorage.removeItem('token')
+                    // clear user
+                    clearUser();
                     return null;
                 }
 
@@ -35,9 +39,9 @@ export const useTokenStore = defineStore('token', {
                 if (expiredAt - now < 7 * 24 * 3600000) {
                     fetch(`${API_BASE}/auth/refresh/token`, {
                         headers: {
-                            'Authorization': `Bearer ${this._token.value}`,
+                            'Authorization': `Bearer ${state._token.value}`,
                         },
-                    }).then((res) => {
+                    }).then((resp) => {
                         if (resp.status >= 200 && resp.status < 300) {
                             return resp.json()
                         } else {
@@ -47,16 +51,18 @@ export const useTokenStore = defineStore('token', {
                         const token = {
                             value: data.token,
                             expiredAt: data.expiredAt,
-                            is_admin: data.is_admin,
+                            isAdmin: data.isAdmin,
                         }
-                        this.saveToken(token);
+                        // save new token
+                        state._token = token;
+                        localStorage.setItem('token', JSON.stringify(token))
                     }).catch(e => {
                         console.error(e);
                     });
                 }
             }
 
-            return this._token;
+            return state._token;
         },
     },
 

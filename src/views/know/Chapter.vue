@@ -1,11 +1,11 @@
 <script  lang="ts" setup>
-import HeaderVue from '@/components/site/Header.vue';
 import MarkdownVue from '@/components/know/Markdown.vue';
 import { useBookStore, useChapterEditStore, useChapterStore, useManagerStore } from "@/stores/book";
 import { onBeforeRouteLeave, onBeforeRouteUpdate, useRoute } from 'vue-router';
 import { computed, onMounted, ref } from 'vue';
 import { getChapterContent } from "@/apis/book";
 import { storeToRefs } from 'pinia';
+import { useTitleStore } from '@/stores/site';
 
 // types
 interface ChapterContent {
@@ -24,6 +24,7 @@ const { book } = storeToRefs(bookStore);
 const { fetchBook } = bookStore;
 const { fetchChapters } = chapterStore;
 const { setChapterData } = chapterEditStore;
+const { setTitle } = useTitleStore();
 
 // states
 const content = ref("");
@@ -47,6 +48,8 @@ const chapter = computed(() => {
 });
 
 // life cicles
+setTitle("章节");
+
 if (chapters.value.length < 1) {
   fetchChapters(bookId.value);
 }
@@ -83,7 +86,6 @@ onBeforeRouteUpdate(async (to, from) => {
 </script>
 
 <template>
-  <HeaderVue :title="chapter?.name || '章节'"></HeaderVue>
   <div class="c-layout">
     <div class="side">
       <div class="toc">
