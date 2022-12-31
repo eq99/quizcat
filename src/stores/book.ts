@@ -28,17 +28,14 @@ export const useManagerStore = defineStore("manager", {
         },
         isManager(bookId: number): boolean {
             const { user } = useUserStore();
-            console.log("store", user);
 
             if (!user) {
                 return false;
             }
 
-
             if (this.managers.length < 1) {
                 this.fetchManagers(bookId).then(() => {
-                    console.log("store managers:", this.managers, bookId);
-                    return this.managers.find((m) => m.userId === user.id) !== undefined
+                    // pass
                 }).catch(e => {
                     return false
                 });

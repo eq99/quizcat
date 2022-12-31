@@ -62,7 +62,7 @@ const rules: FormRules = {
       validator(_rule: FormItemRule, value: string) {
         if (!value) {
           return new Error('introduction is required')
-        } else if (value.length < 100 || value.length > 3000) {
+        } else if (value.length < 10 || value.length > 3000) {
           return new Error('introduction length should be 100~3000 words.')
         }
         return true

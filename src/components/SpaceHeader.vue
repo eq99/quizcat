@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import UserCut from './UserDrop.vue';
+import UserCut from './user/UserDrop.vue';
 </script>
 
 <template>

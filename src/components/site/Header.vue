@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Logo from '@/components/site/Logo.vue';
-import UserCut from '../UserDrop.vue';
+import UserCut from '../user/UserDrop.vue';
 import ChatBadge from '@/components/chat/Badge.vue';
 
 // vars

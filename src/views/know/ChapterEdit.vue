@@ -59,6 +59,17 @@ const rules: FormRules = {
       trigger: ['input', 'blur']
     }
   ],
+  content: [
+    {
+      required: true,
+      validator(_rule: FormItemRule, value: string) {
+        if (value.length<100 || value.length > 15000) {
+          return new Error('chapter length should be 100~15000 words.')
+        }
+        return true
+      },
+    }
+  ],
 };
 
 // states
@@ -76,11 +87,6 @@ function handleSubmit(e: MouseEvent) {
   form.value?.validate(
     (errors: Array<FormValidationError> | undefined) => {
       if (!errors) {
-        if (content.value.length < 100 || content.value.length > 15000) {
-          message.error("chapter content length should be 100~15k words");
-          return;
-        }
-
         if (editType === "create") {
           createChapter({
             content: model.value.content,

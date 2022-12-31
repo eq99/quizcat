@@ -1,5 +1,6 @@
 const API_BASE = import.meta.env.VITE_API_BASE;
-import type { AuthToken } from "@/types";
+import type { SigninRes } from "@/types";
+import { useTokenStore } from '@/stores/token';
 
 export async function sendCaptcha<T>(email: string): Promise<T> {
     const resp = await fetch(`${API_BASE}/auth/captcha/email`, {
@@ -20,7 +21,7 @@ export async function sendCaptcha<T>(email: string): Promise<T> {
 }
 
 
-export async function signin(email: string, captcha: string): Promise<AuthToken> {
+export async function signin(email: string, captcha: string): Promise<SigninRes> {
     const resp = await fetch(`${API_BASE}/auth/signup/email`, {
         method: "POST",
         headers: {
@@ -40,10 +41,11 @@ export async function signin(email: string, captcha: string): Promise<AuthToken>
 }
 
 
-export async function signout<T>(token: string): Promise<T> {
-    const resp = await fetch(`${API_BASE}/signout`, {
+export async function signout<T>(): Promise<T> {
+    const { token } = useTokenStore();
+    const resp = await fetch(`${API_BASE}/auth/signout`, {
         headers: {
-            'Authorization': token,
+            'Authorization': `Bearer ${token?.value}`,
         },
     });
 

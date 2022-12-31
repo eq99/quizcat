@@ -9,14 +9,16 @@ export interface Notification {
 export interface Token {
     value: string,
     expiredAt: string,
+    isAdmin: boolean,
 }
 
-export interface AuthToken {
+export interface SigninRes {
     id: number,
     avatar: string,
     name: string,
     token: string,
     expiredAt: string,
+    isAdmin: boolean,
 }
 
 // user
