@@ -1,5 +1,14 @@
 import { defineStore } from 'pinia';
-import type { Book, Chapter, Exercise, UpdateChapterForm, Manager, UpdateBookForm } from "@/types";
+import type {
+    Book,
+    Chapter,
+    Exercise,
+    UpdateChapterForm,
+    Manager,
+    UpdateBookForm,
+    UpdateExerciseForm
+} from "@/types";
+
 import { getBookById, getChapters, getExercises, getManagers } from '@/apis/book';
 import { sortChaptersByNextId } from '@/lib';
 import { useUserStore } from "@/stores/user";
@@ -102,6 +111,41 @@ export const useExerciseStore = defineStore("exercise", {
     actions: {
         async fetchExercises(bookId: number | string) {
             this.exercises = await getExercises(bookId);
+        },
+        storeUpdateExercise(form: UpdateExerciseForm) {
+            const exercise = this.exercises.find(c => c.id = form.id);
+            if (exercise) {
+                for (const [k, v] of Object.entries(form)) {
+                    if (v) {
+                        (exercise[k as keyof Exercise] as string) = (v as string);
+                    }
+                }
+            }
         }
     }
 })
+
+export const useExerciseEditStore = defineStore("exercise-edit", {
+    state: () => ({
+        title: "",
+        content: "",
+        solution: "",
+        tags: "",
+        hard: 1
+    }),
+    actions: {
+        setExerciseData(
+            title: string,
+            content: string,
+            solution: string,
+            tags: string,
+            hard: number
+        ) {
+            this.title = title;
+            this.content = content;
+            this.solution = solution;
+            this.tags = tags;
+            this.hard = hard;
+        },
+    }
+});

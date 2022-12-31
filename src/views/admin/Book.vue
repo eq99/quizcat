@@ -157,7 +157,7 @@ function handleSubmit(e: MouseEvent) {
       <n-form-item path="hard" label="Hard">
         <n-rate v-model:value="model.hard" allow-half />
       </n-form-item>
-      <n-form-item path="hard" label="Cover Link">
+      <n-form-item path="cover" label="Cover Link">
         <n-input v-model:value="model.cover" type="text" placeholder="封面链接" />
       </n-form-item>
       <n-image width="100" :src="model.cover" />

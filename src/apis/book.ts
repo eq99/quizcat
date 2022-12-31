@@ -1,6 +1,18 @@
 const API_BASE = import.meta.env.VITE_API_BASE;
 
-import type { BookForm, UpdateBookForm, Book, ChapterForm, Chapter, UpdateChapterForm, Manager } from '@/types';
+import type {
+    BookForm,
+    UpdateBookForm,
+    Book,
+    ChapterForm,
+    Chapter,
+    UpdateChapterForm,
+    Manager,
+    Exercise,
+    ExerciseForm,
+    UpdateExerciseForm
+} from '@/types';
+
 import { useTokenStore } from '@/stores/token';
 
 
@@ -98,9 +110,9 @@ export async function createChapter(chapter: ChapterForm): Promise<Chapter> {
     throw new Error(resp.statusText)
 }
 
-export async function updateChapter<T>(form: UpdateChapterForm): Promise<T> {
+export async function updateChapter<T>(form: UpdateChapterForm, bookId: number): Promise<T> {
     const { token } = useTokenStore();
-    const resp = await fetch(`${API_BASE}/chapters/${form.id}`, {
+    const resp = await fetch(`${API_BASE}/chapters/${form.id}?bookId=${bookId}`, {
         method: "PUT",
         headers: {
             'Content-Type': 'application/json',
@@ -129,6 +141,42 @@ export async function getChapters<T>(bookId: string | number): Promise<T> {
 
 export async function getChapterContent<T>(chapterId: string | number): Promise<T> {
     const resp = await fetch(`${API_BASE}/chapters/${chapterId}/content`);
+
+    if (resp.status >= 200 && resp.status < 300) {
+        return resp.json()
+    }
+
+    throw new Error(resp.statusText)
+}
+
+export async function createExercise(exercise: ExerciseForm): Promise<Exercise> {
+    const { token } = useTokenStore();
+    const resp = await fetch(`${API_BASE}/exercises`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token?.value}`,
+        },
+        body: JSON.stringify(exercise)
+    });
+
+    if (resp.status >= 200 && resp.status < 300) {
+        return resp.json()
+    }
+
+    throw new Error(resp.statusText)
+}
+
+export async function updateExercise<T>(form: UpdateExerciseForm, bookId: number): Promise<T> {
+    const { token } = useTokenStore();
+    const resp = await fetch(`${API_BASE}/exercises/${form.id}?bookId=${bookId}`, {
+        method: "PUT",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token?.value}`,
+        },
+        body: JSON.stringify(form)
+    });
 
     if (resp.status >= 200 && resp.status < 300) {
         return resp.json()

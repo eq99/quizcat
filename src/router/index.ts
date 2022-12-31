@@ -54,7 +54,8 @@ const router = createRouter({
     {
       path: "/book/:bookId/chapters/:chapterId/edit", component: () => import("@/views/know/ChapterEdit.vue"),
     },
-    { path: "/book/:bookId/exs/:exId", component: () => import("@/views/know/Exercise.vue") },
+    { path: "/book/:bookId/exs/:exerciseId", component: () => import("@/views/know/Exercise.vue") },
+    { path: "/book/:bookId/exs/:exerciseId/edit", component: () => import("@/views/know/ExerciseEdit.vue"), },
     // end kown app
 
     { path: '/tmp', component: Tmp },

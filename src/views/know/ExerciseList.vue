@@ -1,13 +1,22 @@
 <script  lang="ts" setup>
-import { useExerciseStore } from '@/stores/book';
+import { useExerciseStore, useManagerStore } from '@/stores/book';
 import { storeToRefs } from 'pinia';
+import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 
 // vars
 const route = useRoute();
 const exerciseStore = useExerciseStore();
 const { fetchExercises } = exerciseStore;
+const managerStore = useManagerStore();
 const { exercises } = storeToRefs(exerciseStore);
+const { isManager } = managerStore;
+
+
+// computed
+const bookId = computed(() => {
+  return Number(route.params.bookId);
+})
 
 // life cicles
 fetchExercises(route.params.bookId as string);
@@ -15,12 +24,15 @@ fetchExercises(route.params.bookId as string);
 
 <template>
   <div class="exs">
+    <RouterLink :to="`/book/${bookId}/exs/0/edit?type=create`" v-if="exercises.length===0 && isManager(bookId)">
+      <n-button>添加练习</n-button>
+    </RouterLink>
+
     <div class="ex-item" v-for="(ex, idx) in exercises">
       <div class="left">
         {{ idx + 1 }}
       </div>
       <div class="right">
-
         <div class="hd">
           <RouterLink :to="`/book/1/exs/${ex.id}`" class="name">{{ ex.title }}</RouterLink>
         </div>
@@ -28,7 +40,6 @@ fetchExercises(route.params.bookId as string);
           <div class="tags">
             <div class="tag" v-for="tag in ex.tags.split(':')">{{ tag }}</div>
           </div>
-          <!-- <div class="meta">难度{{ ex.hard }}</div> -->
         </div>
       </div>
     </div>

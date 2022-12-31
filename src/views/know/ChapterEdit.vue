@@ -1,6 +1,6 @@
 <script  lang="ts" setup>
 import { ref, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import Vditor from 'vditor';
 import 'vditor/dist/index.css';
 import { storeToRefs } from 'pinia';
@@ -14,7 +14,7 @@ import type {
   FormRules,
   FormInst
 } from 'naive-ui';
-import router from '@/router';
+
 
 // types
 interface ModelType {
@@ -25,6 +25,7 @@ interface ModelType {
 
 // vars
 const route = useRoute();
+const router = useRouter();
 const chapterEditStore = useChapterEditStore();
 const { storeUpdateChapter } = useChapterStore();
 
@@ -63,7 +64,7 @@ const rules: FormRules = {
     {
       required: true,
       validator(_rule: FormItemRule, value: string) {
-        if (value.length<100 || value.length > 15000) {
+        if (value.length < 100 || value.length > 15000) {
           return new Error('chapter length should be 100~15000 words.')
         }
         return true
@@ -109,7 +110,7 @@ function handleSubmit(e: MouseEvent) {
             part: part.value === model.value.part ? null : model.value.part,
             content: content.value === model.value.content ? null : model.value.content,
           };
-          updateChapter(form).then(data => {
+          updateChapter(form, bookId).then(data => {
             message.info("update success, will go back");
             storeUpdateChapter(form);
             setTimeout(() => {

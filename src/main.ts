@@ -3,6 +3,7 @@ import { createPinia } from 'pinia'
 
 import './assets/reset.css'
 import './assets/main.css'
+import 'vditor/dist/index.css';
 
 import App from './App.vue'
 import router from './router'

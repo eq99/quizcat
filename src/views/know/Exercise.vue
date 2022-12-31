@@ -33,9 +33,8 @@ const bookId = computed(() => {
 })
 
 const exerciseId = computed(() => {
-  return Number(route.params.exId as string);
+  return Number(route.params.exerciseId as string);
 });
-
 
 const exercise = computed(() => {
   return exercises.value.find(e => e.id === exerciseId.value);
@@ -57,8 +56,8 @@ onMounted(async () => {
 });
 
 onBeforeRouteUpdate(async (to, from) => {
-  if (to.params.exId !== from.params.exId) {
-    content.value = (await getExerciseContent(to.params.exId as string) as ExerciseContent).content;
+  if (to.params.exerciseId !== from.params.exerciseId) {
+    content.value = (await getExerciseContent(to.params.exerciseId as string) as ExerciseContent).content;
     window.scrollTo(0, 0);
   }
 });

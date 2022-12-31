@@ -121,6 +121,24 @@ export interface Exercise {
     updatedAt: string,
 }
 
+export interface ExerciseForm {
+    bookId: number,
+    title: string,
+    content: string,
+    solution: string,
+    tags: string,
+    hard: number
+}
+
+export interface UpdateExerciseForm {
+    id: number,
+    title: string | null,
+    content: string | null,
+    solution: string | null,
+    tags: string | null,
+    hard: number | null
+}
+
 // chat
 export interface OneChat {
     id: number,
