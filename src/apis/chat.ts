@@ -1,8 +1,7 @@
-const CHAT_API_BASE = import.meta.env.VITE_CHAT_API_BASE;
-import type { AuthToken } from "@/types";
+const API_BASE = import.meta.env.VITE_API_BASE;
 
 export async function getActiveFriends<T>(token: string): Promise<T> {
-    const resp = await fetch(`${CHAT_API_BASE}/friends/active`, {
+    const resp = await fetch(`${API_BASE}/friends/active`, {
         headers: {
             'Authorization': `Bearer ${token}`,
         },
@@ -16,7 +15,7 @@ export async function getActiveFriends<T>(token: string): Promise<T> {
 }
 
 export async function getOneMessages<T>(token: string, friendId: number): Promise<T> {
-    const resp = await fetch(`${CHAT_API_BASE}/one?friendId=${friendId}`, {
+    const resp = await fetch(`${API_BASE}/one?friendId=${friendId}`, {
         headers: {
             'Authorization': `Bearer ${token}`,
         },
@@ -30,7 +29,7 @@ export async function getOneMessages<T>(token: string, friendId: number): Promis
 }
 
 export async function sendOneMessage<T>(token: string, toId: number, content: string): Promise<T> {
-    const resp = await fetch(`${CHAT_API_BASE}/one`, {
+    const resp = await fetch(`${API_BASE}/one`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Notification from '@/components/Notification.vue';
-import LoginModal from '@/components/user/LoginModal.vue';
+import LoginModal from '@/components/user/Login.vue';
 import Fab from '@/components/Fab.vue';
 import HeaderVue from '@/components/site/Header.vue';
 </script>

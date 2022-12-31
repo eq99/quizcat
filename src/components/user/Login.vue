@@ -1,28 +1,27 @@
 <script  lang="ts" setup>
 import { storeToRefs } from 'pinia';
 import { computed, ref } from 'vue';
+import { useMessage } from "naive-ui";
 
 import Modal from '@/components/Modal.vue';
 
-import { useNotificationStore } from '@/stores/notification';
 import { useUserStore } from '@/stores/user';
 import { useSigninStore } from '@/stores/token';
 import { useTokenStore } from '@/stores/token';
 
 import { sendCaptcha, signin } from '@/apis/user';
 import { validateEmail } from '@/lib'
-import type { Token } from '@/types';
 
 //vars
 const modalEle = ref<InstanceType<typeof Modal>>();
 
 const signinStore = useSigninStore();
 const tokenStore = useTokenStore();
-const { pushNoti } = useNotificationStore();
 const { saveUser } = useUserStore();
 const { closeSignin } = signinStore;
 const { token } = storeToRefs(tokenStore);
 const { saveToken } = tokenStore;
+const message = useMessage();
 
 const MAX_SECOND = 61;
 
@@ -59,26 +58,14 @@ function handleSendCaptcha() {
   const msg = validateEmail(email.value);
 
   if (msg) {
-    pushNoti({
-      title: '邮箱验证错误',
-      detail: msg,
-      type: 'error',
-    });
-
+    message.error(msg);
     return;
   }
 
   sendCaptcha(email.value).then((data) => {
-    pushNoti({
-      title: '获取验证码成功',
-      detail: '验证码已成功发送到邮箱'
-    });
+    message.success("验证码已成功发送到邮箱");
   }).catch(err => {
-    pushNoti({
-      title: '验证码发送失败',
-      detail: '验证码发送失败, 请稍后重试',
-      type: 'error',
-    });
+    message.error(`验证码发送失败: ${err}`);
   });
 
   intervalId.value = window.setInterval(() => {
@@ -92,42 +79,27 @@ function handleSendCaptcha() {
 
 function handleSubmit() {
   if (captcha.value.length !== 4) {
-    pushNoti({
-      title: '验证码格式错误',
-      detail: '验证码格式错误，请输入正确的四位验证码',
-      type: 'error',
-    });
-
+    message.error(`验证码格式错误，请输入正确的四位验证码`);
     return;
   }
 
   signin(email.value, captcha.value).then((data) => {
-    const token: Token = {
+    saveToken({
       value: data.token,
       expiredAt: data.expiredAt,
       isAdmin: data.isAdmin,
-    }
+    });
 
-    saveToken(token);
     saveUser({
       id: data.id,
       name: data.name,
       avatar: data.avatar
     });
-
-    pushNoti({
-      title: "登录成功",
-      detail: "登录成功，开启喵喵之家",
-    });
-
+    message.success(`登录成功，开启喵喵之旅`);
     //close modal
     closeSignin();
   }).catch(err => {
-    pushNoti({
-      title: '登录失败',
-      detail: '登录失败，请联系管理员',
-      type: 'error',
-    });
+    message.error(`登录失败，请联系管理员: ${err}`);
   });
 }
 </script>
@@ -135,20 +107,17 @@ function handleSubmit() {
 <template>
   <Modal ref="modalEle">
     <div class="login-card">
-      <div class="logo">学习喵</div>
+      <div class="logo">森喵喵</div>
       <div class="close" @click="closeSignin"><i class="iconfont icon-close-bold"></i> </div>
-      <fieldset>
-        <label>请使用邮箱注册</label>
-        <div class="input-wrapper">
-          <input type="text" placeholder="miao@miao.com" v-model="email">
-        </div>
-      </fieldset>
+      <n-form-item label="请使用邮箱注册" path="email">
+        <n-input v-model:value="email" placeholder="please enter email" />
+      </n-form-item>
       <fieldset>
         <label for="">请填写邮箱验证码</label>
         <div class="input-wrapper">
           <input type="text" placeholder="1234" class="cpat-input" v-model="captcha">
-          <button class="capt-btn" :class="{ disabled }" @click="handleSendCaptcha" :disabled="disabled">{{ captText
-}}</button>
+          <button class="capt-btn" :class="{ disabled }" @click="handleSendCaptcha" :disabled="disabled">
+            {{ captText }}</button>
         </div>
       </fieldset>
       <button class="submit-btn" @click="handleSubmit">登录/注册</button>
