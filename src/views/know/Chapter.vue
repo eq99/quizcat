@@ -6,6 +6,7 @@ import { computed, onMounted, ref } from 'vue';
 import { getChapterContent } from "@/apis/book";
 import { storeToRefs } from 'pinia';
 import { useTitleStore } from '@/stores/site';
+import { formatTime } from '@/lib';
 
 // types
 interface ChapterContent {
@@ -98,6 +99,10 @@ onBeforeRouteUpdate(async (to, from) => {
       </div>
     </div>
     <div class="main">
+      <div class="detail">
+        <h1>{{ chapter?.name }}</h1>
+        <div class="updated">更新于: {{ formatTime(chapter?.updatedAt || "") }}</div>
+      </div>
       <MarkdownVue :markdown="content"></MarkdownVue>
       <div class="foot">
         <div class="prev">
@@ -110,7 +115,6 @@ onBeforeRouteUpdate(async (to, from) => {
     </div>
 
     <div class="tools">
-
       <div class="tool" v-if="isManager(bookId)">
         <RouterLink :to="`/book/${bookId}/chapters/${chapterId}/edit?type=create`">
           <i class="iconfont icon-createtask"></i>
@@ -121,6 +125,12 @@ onBeforeRouteUpdate(async (to, from) => {
         <RouterLink :to="`/book/${bookId}/chapters/${chapterId}/edit?type=update`">
           <i class="iconfont icon-edit"></i>
           <div class="name">修改</div>
+        </RouterLink>
+      </div>
+      <div class="tool">
+        <RouterLink :to="`/book/${bookId}/exs`">
+          <i class="iconfont icon-quiz_line"></i>
+          <div class="name">练习</div>
         </RouterLink>
       </div>
     </div>
@@ -159,7 +169,6 @@ onBeforeRouteUpdate(async (to, from) => {
       font-size: 14px;
       margin-bottom: 4px;
     }
-
   }
 
   .main {
@@ -167,6 +176,20 @@ onBeforeRouteUpdate(async (to, from) => {
     padding: 12px 20px;
     margin-left: 16px;
     flex: 0 0 694px;
+
+    .detail {
+      margin-bottom: 32px;
+      text-align: center;
+
+      h1 {
+        font-size: 36px;
+        padding: 24px 0 8px;
+      }
+
+      .updated {
+        font-size: 12px;
+      }
+    }
 
     .foot {
       display: flex;

@@ -1,13 +1,40 @@
+.markdown {
+  counter-reset: h1cnt;
+}
+
 .markdown h1 {
   border-bottom: 1px solid #ccc;
   margin: 16px 0;
   padding-bottom: 8px;
+  counter-reset: h2cnt;
+}
+
+.markdown h1:before {
+  content: counter(h1cnt) ". ";
+  counter-increment: h1cnt;
 }
 
 .markdown h2 {
   border-bottom: 1px solid #ccc;
   margin: 16px 0;
   padding-bottom: 8px;
+  counter-reset: h3cnt;
+}
+
+.markdown h2:before {
+  content: counter(h1cnt) ". " counter(h2cnt) ". ";
+  counter-increment: h2cnt;
+}
+
+.markdown h3 {
+  border-bottom: 1px solid #ccc;
+  margin: 16px 0;
+  padding-bottom: 8px;
+}
+
+.markdown h3:before {
+  counter-increment: h3cnt;
+  content:  counter(h1cnt) ". " counter(h2cnt) ". " counter(h3cnt) ". ";
 }
 
 .markdown ul {
@@ -49,7 +76,7 @@
 
 .markdown p {
   line-height: 1.5;
-  text-indent: 2em;
+  /* text-indent: 2em; */
   margin-bottom: 12px;
 }
 
