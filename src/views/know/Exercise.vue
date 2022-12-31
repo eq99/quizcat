@@ -1,28 +1,34 @@
 <script  lang="ts" setup>
 import { computed, onMounted, ref } from 'vue';
 import { storeToRefs } from 'pinia';
-import { onBeforeRouteUpdate, useRoute } from 'vue-router';
+import { onBeforeRouteLeave, onBeforeRouteUpdate, useRoute } from 'vue-router';
 import MarkdownVue from '@/components/know/Markdown.vue';
 import { Button } from 'xiaui';
-import { useBookStore, useExerciseStore } from '@/stores/book';
+import { useBookStore, useExerciseEditStore, useExerciseStore, useManagerStore } from '@/stores/book';
 import { getExerciseContent } from "@/apis/book";
 
 // types
-interface ExerciseContent {
-  content: string
+interface ExerciseDetail {
+  content: string,
+  solution: string,
 }
 
 // vars
 const route = useRoute();
 const bookStore = useBookStore();
 const exerciseStore = useExerciseStore();
+const managerStore = useManagerStore();
+const exerciseEditStore = useExerciseEditStore();
+const { isManager } = managerStore;
 const { fetchExercises } = exerciseStore;
 const { exercises } = storeToRefs(exerciseStore);
 const { fetchBook } = bookStore;
 const { book } = storeToRefs(bookStore);
+const { setExerciseData } = exerciseEditStore;
+
 
 // states
-const content = ref("");
+const detail = ref<ExerciseDetail>();
 const isHidden = ref(true);
 
 const answer = ref("");
@@ -51,17 +57,6 @@ function handleSave() {
 }
 
 // life cicles
-onMounted(async () => {
-  content.value = (await getExerciseContent(exerciseId.value) as ExerciseContent).content;
-});
-
-onBeforeRouteUpdate(async (to, from) => {
-  if (to.params.exerciseId !== from.params.exerciseId) {
-    content.value = (await getExerciseContent(to.params.exerciseId as string) as ExerciseContent).content;
-    window.scrollTo(0, 0);
-  }
-});
-
 if (exercises.value.length < 1) {
   fetchExercises(bookId.value);
 }
@@ -69,6 +64,33 @@ if (exercises.value.length < 1) {
 if (!book.value) {
   fetchBook(bookId.value);
 }
+
+onMounted(async () => {
+  detail.value = await getExerciseContent(exerciseId.value);
+});
+
+onBeforeRouteLeave(async (to, from) => {
+  if (to.path.includes("edit")) {
+    if (to.query.type === "update") {
+      setExerciseData(
+        exercise.value?.title || "",
+        detail.value?.content || "",
+        detail.value?.solution || "",
+        exercise.value?.tags || "",
+        exercise.value?.hard || 1,
+      );
+    } else {
+      setExerciseData("", "", "", "", 1);
+    }
+  }
+});
+
+onBeforeRouteUpdate(async (to, from) => {
+  if (to.params.exerciseId !== from.params.exerciseId) {
+    detail.value = await getExerciseContent(to.params.exerciseId as string);
+    window.scrollTo(0, 0);
+  }
+});
 </script>
 
 <template>
@@ -93,7 +115,7 @@ if (!book.value) {
       </div>
 
       <div class="content">
-        <MarkdownVue :markdown="content"></MarkdownVue>
+        <MarkdownVue :markdown="detail?.content || ``"></MarkdownVue>
       </div>
 
       <div class="write">
@@ -103,11 +125,13 @@ if (!book.value) {
       <div class="actions">
         <Button @click="showSolution">查看解析</Button>
         <Button @click="handleSave">保存答案</Button>
+        <Button v-if="isManager(bookId)">
+          <RouterLink :to="`/book/${bookId}/exs/${exerciseId}/edit?type=update`">修改题目</RouterLink>
+        </Button>
       </div>
     </div>
   </div>
 </template>
-
 
 <style lang="scss" scoped>
 .ex-layout {
