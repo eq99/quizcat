@@ -8,9 +8,19 @@ import HeaderVue from '@/components/site/Header.vue';
 <template>
   <n-message-provider>
     <Notification></Notification>
-    <HeaderVue></HeaderVue>
-    <RouterView></RouterView>
+    <div class="site-layout">
+      <HeaderVue></HeaderVue>
+      <RouterView class="site-main"></RouterView>
+    </div>
     <Fab></Fab>
     <LoginModal></LoginModal>
   </n-message-provider>
 </template>
+
+<style lang="scss">
+.site-layout {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+</style>

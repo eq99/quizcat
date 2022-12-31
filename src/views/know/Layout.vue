@@ -31,7 +31,7 @@ setTitle("知识宇宙");
 </script>
 
 <template>
-  <div class="container wrapper">
+  <div class="container">
     <div class="nav">
       <div class="nav-item" v-for="nav in navs">
         <RouterLink :to="nav.link">
@@ -46,13 +46,13 @@ setTitle("知识宇宙");
 </template>
 
 <style lang="scss" scoped>
-.wrapper {
+.container {
   display: flex;
+  margin: 0;
 
   .nav {
     flex-shrink: 0;
     flex-basis: 172px;
-    height: 700px;
     padding-top: 20px;
     background-color: lightblue;
 

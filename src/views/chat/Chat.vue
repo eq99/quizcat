@@ -1,10 +1,12 @@
 <script  lang="ts" setup>
 import { Avatar, Tooltip, Icon } from 'xiaui';
-import Header from '@/components/site/Header.vue';
+import { useTitleStore } from '@/stores/site';
+
+const { setTitle } = useTitleStore();
+setTitle("我的消息");
 </script>
 
 <template>
-  <Header title="我的消息"></Header>
   <div class="chat container">
     <div class="board">
       <div class="chat-aside">
