@@ -3,7 +3,6 @@ import type { SigninRes } from "@/types";
 import { useTokenStore } from '@/stores/token';
 
 export async function sendCaptcha<T>(email: string): Promise<T> {
-    console.log("send captcha: ", email);
     const resp = await fetch(`${API_BASE}/auth/captcha/email`, {
         method: "POST",
         headers: {
@@ -40,7 +39,6 @@ export async function signin(email: string, captcha: string): Promise<SigninRes>
 
     throw new Error(resp.statusText)
 }
-
 
 export async function signout<T>(): Promise<T> {
     const { token } = useTokenStore();

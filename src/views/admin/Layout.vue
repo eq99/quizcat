@@ -1,9 +1,14 @@
 <script  lang="ts" setup>
-import HeaderVue from '@/components/site/Header.vue';
+import { useTitleStore } from '@/stores/site';
+
+// vars
+const { setTitle } = useTitleStore();
+
+// lifes
+setTitle("管理");
 </script>
 
 <template>
-  <HeaderVue title="管理"></HeaderVue>
   <div class="layout">
     <div class="left">
       <RouterLink to="/admin" class="nav-item">DashBorad</RouterLink>
