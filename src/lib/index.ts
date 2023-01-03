@@ -47,24 +47,6 @@ export function formatTime(utcTime: string): string {
     return utcTime.split("T")[0];
 }
 
-const allowedDomains = ["@qq.com", "@163.com", "@gmail.com", "@sina.com", "@outlook.com"];
-export function validateEmail(email: string): string {
-    let isAllowed = false;
-    for (let i = 0; i < allowedDomains.length; i++) {
-        if (email.endsWith(allowedDomains[i])) {
-            isAllowed = true;
-            break;
-        }
-    }
-
-    if (!isAllowed) {
-        return `允许的邮箱域名：${allowedDomains.join(', ')}`;
-    }
-
-    return '';
-}
-
-
 export function getImageColor(img: HTMLImageElement) {
     const canvas = document.createElement('canvas')
     canvas.width = img.width;

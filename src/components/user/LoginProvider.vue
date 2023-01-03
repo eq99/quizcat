@@ -7,7 +7,6 @@ import { useUserStore } from '@/stores/user';
 import { useTokenStore } from '@/stores/token';
 
 import { sendCaptcha, signin } from '@/services/user';
-import { validateEmail } from '@/lib'
 
 //types
 export interface LoginApiInjection {
@@ -28,9 +27,33 @@ const MAX_SECOND = 61;
 // states
 const countDown = ref(MAX_SECOND);
 let intervalId = ref(0);
-const email = ref('');
+const emailName = ref('');
+const domain = ref("");
 const captcha = ref('');
 const showRef = ref(false);
+const allowedDomains = ref([
+  {
+    label: 'qq',
+    value: '@qq.com'
+  },
+  {
+    label: '163',
+    value: '@163.com'
+  },
+  {
+    label: 'gmail',
+    value: '@gmail.com'
+  },
+  {
+    label: 'sina',
+    value: '@sina.com'
+  },
+  {
+    label: 'outlook',
+    value: '@outlook.com'
+  },
+
+]);
 
 // computed
 const captText = computed(() => {
@@ -39,6 +62,10 @@ const captText = computed(() => {
 
 const disabled = computed(() => {
   return countDown.value < MAX_SECOND
+});
+
+const email = computed(() => {
+  return emailName.value + domain.value;
 });
 
 // methods
@@ -51,10 +78,25 @@ const api: LoginApiInjection = {
   }
 }
 
-function handleSendCaptcha() {
-  const msg = validateEmail(email.value);
+function validateEmail(): string {
+  if (emailName.value.length < 1) {
+    return "请填写邮箱";
+  }
 
-  if (msg) {
+  if (emailName.value.includes("@")) {
+    return "邮箱域名只支持可选的";
+  }
+
+  if (domain.value.length < 1) {
+    return "请选择邮箱域名";
+  }
+
+  return ""
+}
+
+function handleSendCaptcha() {
+  const msg = validateEmail();
+  if (msg.length !== 0) {
     message.error(msg);
     return;
   }
@@ -76,7 +118,7 @@ function handleSendCaptcha() {
 
 function handleSubmit() {
   if (captcha.value.length !== 4) {
-    message.error(`验证码格式错误，请输入正确的四位验证码`);
+    message.error(`验证码的长度为 4, 请检查`);
     return;
   }
 
@@ -111,16 +153,19 @@ provide('login-api', api);
       <div class="logo">森喵喵</div>
       <div class="close" @click="api.close"><i class="iconfont icon-close-bold"></i> </div>
       <n-form-item label="请使用邮箱注册" path="email">
-        <n-input v-model:value="email" placeholder="please enter email" />
+        <n-input-group>
+          <n-input v-model:value="emailName" placeholder="请输入邮箱" :style="{ width: '70%' }" />
+          <n-select v-model:value="domain" :style="{ width: '30%' }" :options="allowedDomains" placeholder="选择邮箱" />
+        </n-input-group>
       </n-form-item>
-      <fieldset>
-        <label for="">请填写邮箱验证码</label>
-        <div class="input-wrapper">
-          <input type="text" placeholder="1234" class="cpat-input" v-model="captcha">
-          <button class="capt-btn" :class="{ disabled }" @click="handleSendCaptcha" :disabled="disabled">
-            {{ captText }}</button>
-        </div>
-      </fieldset>
+      <n-form-item label="请填写邮箱验证码" path="captcha">
+        <n-input-group>
+          <n-input v-model:value="captcha" placeholder="1 2 3 4" />
+          <n-button type="primary" :disabled="disabled" @click="handleSendCaptcha">
+            {{ captText }}
+          </n-button>
+        </n-input-group>
+      </n-form-item>
       <button class="submit-btn" @click="handleSubmit">登录/注册</button>
     </div>
   </n-modal>
@@ -130,7 +175,6 @@ provide('login-api', api);
 .login-card {
   background-color: #fff;
   width: 375px;
-  border-radius: 12px;
   padding: 20px 20px 60px;
 
   position: relative;
@@ -149,45 +193,6 @@ provide('login-api', api);
 
     .iconfont {
       font-size: 32px;
-    }
-  }
-
-  fieldset {
-    margin-bottom: 16px;
-
-    label {
-      display: block;
-      margin-bottom: 12px;
-    }
-  }
-
-  .input-wrapper {
-    padding: 8px;
-    border: 1px solid #eee;
-    border-radius: 4px;
-    display: flex;
-
-    input {
-      flex: 1;
-      font-size: 20px;
-    }
-  }
-
-  .cpat-input {
-    letter-spacing: 8px;
-  }
-
-  .capt-btn {
-    margin-left: 8px;
-    cursor: pointer;
-
-    &:hover {
-      color: var(--fg-primary);
-    }
-
-    &.disabled {
-      color: #999;
-      cursor: not-allowed;
     }
   }
 
