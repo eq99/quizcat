@@ -84,7 +84,6 @@ function handleSubmit() {
   }
 
   signin(email.value, captcha.value).then(({ data }) => {
-    console.log('login', data)
     saveToken({
       value: data.token,
       expiredAt: data.expiredAt,
@@ -96,7 +95,7 @@ function handleSubmit() {
       name: data.name,
       avatar: data.avatar
     });
-    message.success(`登录成功，开启喵喵之旅`);
+    message.success(`登录成功，马上开启喵喵之旅`);
     //close modal
     closeSignin();
   }).catch(err => {
