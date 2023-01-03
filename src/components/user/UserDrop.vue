@@ -4,11 +4,11 @@ import UserInfo from '@/components/user/UserInfo.vue';
 
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '@/stores/user';
-import { useSigninStore } from '@/stores/token';
+import { useLogin } from './use-login';
 
 // vars
 const { user } = storeToRefs(useUserStore());
-const { openSignin } = useSigninStore();
+const login = useLogin();
 </script>
 
 <template>
@@ -24,7 +24,7 @@ const { openSignin } = useSigninStore();
         </div>
         <div class="login-box" v-else>
           <div class="note">登录发现新天地</div>
-          <div class="login-btn" @click="openSignin">立即登录</div>
+          <div class="login-btn" @click="login.open">立即登录</div>
         </div>
       </div>
     </template>

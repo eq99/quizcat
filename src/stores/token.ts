@@ -78,20 +78,3 @@ export const useTokenStore = defineStore('token', {
         }
     },
 });
-
-
-export const useSigninStore = defineStore('signin', {
-    state: () => ({
-        isOpen: false
-    }),
-
-    actions: {
-        openSignin() {
-            this.isOpen = true;
-        },
-
-        closeSignin() {
-            this.isOpen = false;
-        }
-    }
-})

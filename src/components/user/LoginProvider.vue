@@ -1,48 +1,36 @@
 <script  lang="ts" setup>
 import { storeToRefs } from 'pinia';
-import { computed, ref } from 'vue';
+import { computed, provide, ref } from 'vue';
 import { useMessage } from "naive-ui";
 
-import Modal from '@/components/Modal.vue';
-
 import { useUserStore } from '@/stores/user';
-import { useSigninStore } from '@/stores/token';
 import { useTokenStore } from '@/stores/token';
 
 import { sendCaptcha, signin } from '@/services/user';
 import { validateEmail } from '@/lib'
 
-//vars
-const modalEle = ref<InstanceType<typeof Modal>>();
+//types
+export interface LoginApiInjection {
+  open: () => void
+  close: () => void
+}
 
-const signinStore = useSigninStore();
+//vars
 const tokenStore = useTokenStore();
 const { saveUser } = useUserStore();
-const { closeSignin } = signinStore;
+
 const { token } = storeToRefs(tokenStore);
 const { saveToken } = tokenStore;
 const message = useMessage();
 
 const MAX_SECOND = 61;
 
-// subscribs
-signinStore.$subscribe((mutation, state) => {
-  // 未登录并且收到登录请求时打开
-  if (state.isOpen && !token.value) {
-    modalEle.value?.show();
-  }
-
-  // 收到关闭请求时关闭
-  if (!state.isOpen) {
-    modalEle.value?.hide();
-  }
-})
-
 // states
 const countDown = ref(MAX_SECOND);
 let intervalId = ref(0);
 const email = ref('');
 const captcha = ref('');
+const showRef = ref(false);
 
 // computed
 const captText = computed(() => {
@@ -54,6 +42,15 @@ const disabled = computed(() => {
 });
 
 // methods
+const api: LoginApiInjection = {
+  open() {
+    showRef.value = true;
+  },
+  close() {
+    showRef.value = false;
+  }
+}
+
 function handleSendCaptcha() {
   const msg = validateEmail(email.value);
 
@@ -96,19 +93,23 @@ function handleSubmit() {
       avatar: data.avatar
     });
     message.success(`登录成功，马上开启喵喵之旅`);
-    //close modal
-    closeSignin();
+
+    api.close();
   }).catch(err => {
     message.error(`登录失败，请联系管理员: ${err}`);
   });
 }
+
+// provides
+provide('login-api', api);
 </script>
 
 <template>
-  <Modal ref="modalEle">
+  <slot></slot>
+  <n-modal v-model:show="showRef">
     <div class="login-card">
       <div class="logo">森喵喵</div>
-      <div class="close" @click="closeSignin"><i class="iconfont icon-close-bold"></i> </div>
+      <div class="close" @click="api.close"><i class="iconfont icon-close-bold"></i> </div>
       <n-form-item label="请使用邮箱注册" path="email">
         <n-input v-model:value="email" placeholder="please enter email" />
       </n-form-item>
@@ -122,14 +123,14 @@ function handleSubmit() {
       </fieldset>
       <button class="submit-btn" @click="handleSubmit">登录/注册</button>
     </div>
-  </Modal>
+  </n-modal>
 </template>
 
 <style lang="scss" scoped>
 .login-card {
   background-color: #fff;
   width: 375px;
-  border-radius: 20px;
+  border-radius: 12px;
   padding: 20px 20px 60px;
 
   position: relative;
