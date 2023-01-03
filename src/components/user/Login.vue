@@ -9,7 +9,7 @@ import { useUserStore } from '@/stores/user';
 import { useSigninStore } from '@/stores/token';
 import { useTokenStore } from '@/stores/token';
 
-import { sendCaptcha, signin } from '@/apis/user';
+import { sendCaptcha, signin } from '@/services/user';
 import { validateEmail } from '@/lib'
 
 //vars
@@ -83,7 +83,8 @@ function handleSubmit() {
     return;
   }
 
-  signin(email.value, captcha.value).then((data) => {
+  signin(email.value, captcha.value).then(({ data }) => {
+    console.log('login', data)
     saveToken({
       value: data.token,
       expiredAt: data.expiredAt,
