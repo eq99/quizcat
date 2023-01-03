@@ -1,8 +1,62 @@
 <script  lang="ts" setup>
 import { useTitleStore } from '@/stores/site';
+import { h } from 'vue'
+import { RouterLink } from 'vue-router'
+import type { MenuOption } from 'naive-ui'
+import { Icon } from 'xiaui';
+
+// methods
+function renderIcon(iconName: string) {
+  return () => h(Icon, { name: iconName });
+}
 
 // vars
 const { setTitle } = useTitleStore();
+const menuOptions: MenuOption[] = [
+  {
+    label: () =>
+      h(
+        RouterLink,
+        {
+          to: "/admin"
+        },
+        { default: () => 'DashBoard' }
+      ),
+    key: 'go-dashboard',
+    icon: renderIcon('icon-homefill')
+  },
+  {
+    label: 'Book',
+    key: 'book',
+    icon: renderIcon('icon-homefill'),
+    children: [
+      {
+        label: () =>
+          h(
+            RouterLink,
+            {
+              to: "/admin/book/list"
+            },
+            { default: () => 'Book List' }
+          ),
+        key: 'book-list',
+        icon: renderIcon('icon-homefill')
+      },
+      {
+        label: () =>
+          h(
+            RouterLink,
+            {
+              to: "/admin/book"
+            },
+            { default: () => 'Create Book' }
+          ),
+        key: 'sheep-man',
+        icon: renderIcon('icon-homefill')
+      }
+    ]
+  }
+]
 
 // lifes
 setTitle("管理");
@@ -11,8 +65,7 @@ setTitle("管理");
 <template>
   <div class="layout">
     <div class="left">
-      <RouterLink to="/admin" class="nav-item">DashBorad</RouterLink>
-      <RouterLink to="/admin/book" class="nav-item">Book</RouterLink>
+      <n-menu :options="menuOptions" :indent="12" />
     </div>
     <div class="main">
       <RouterView></RouterView>
@@ -30,15 +83,6 @@ setTitle("管理");
     display: flex;
     flex-direction: column;
     border-right: 1px solid #ccc;
-
-    .nav-item {
-      line-height: 40px;
-      padding: 0 20px;
-    }
-
-    .router-link-exact-active {
-      color: var(--fg-primary);
-    }
   }
 
   .main {
