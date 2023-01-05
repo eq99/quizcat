@@ -139,23 +139,6 @@ export interface UpdateExerciseForm {
     hard: number | null
 }
 
-// chat
-export interface OneChat {
-    id: number,
-    avatar: string,
-    name: string,
-    last: string,
-}
-
-export interface OneMessage {
-    id: number,
-    content: string
-    fromId: number,
-    toId: number,
-    avatar: string,
-    username: string,
-    createdAt: string,
-}
 
 // exercise -------------------
 export interface Exercise {

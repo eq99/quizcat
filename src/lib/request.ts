@@ -1,5 +1,6 @@
 import axios, { type AxiosRequestConfig, AxiosHeaders } from 'axios';
 const API_BASE = import.meta.env.VITE_API_BASE;
+const WS_API = import.meta.env.VITE_CHAT_WS_API;
 import { useTokenStore } from '@/stores/token';
 
 const request = axios.create({
@@ -19,5 +20,11 @@ request.interceptors.request.use((config: AxiosRequestConfig) => {
     (config.headers as Headers).Authorization = `Bearer ${token?.value}`
     return config
 })
+
+export function getWebSocket() {
+    const { token } = useTokenStore();
+    return new WebSocket(`${WS_API}?token=${token?.value}`);
+}
+
 
 export default request;

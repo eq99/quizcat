@@ -23,7 +23,7 @@ const router = createRouter({
     {
       path: '/chat', component: () => import('@/views/chat/Chat.vue'),
       children: [
-        { path: "", component: () => import('@/views/chat/OneChat.vue') },
+        { path: "", component: () => import('@/views/chat/DirectChat.vue') },
         { path: "friends", component: () => import("@/views/chat/Friends.vue") },
         { path: "groups", component: () => import("@/views/chat/GroupChat.vue") }
       ]

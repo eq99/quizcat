@@ -4,26 +4,27 @@ import Layout from '@/components/chat/Layout.vue';
 import OneItem from '@/components/chat/OneItem.vue';
 import OneMsg from '@/components/chat/OneMsg.vue';
 import { OneChatEditor } from 'xiaui';
-import type { OneChat, OneMessage } from '@/types';
-import { useTokenStore } from "@/stores/token";
+import type { DirectChat, DirectMessage } from '@/types/chat';
 import { storeToRefs } from 'pinia';
-import { getActiveFriends, getOneMessages, sendOneMessage } from '@/apis/chat';
+import { getActiveFriends, getDirectMessages } from '@/services/chat';
 import { getTimeDiff } from "@/lib/";
 import { useUserStore } from '@/stores/user';
+import { getWebSocket } from "@/lib/request";
+import { MSGType } from "@/lib/constants";
 
 // vars
-const { token } = storeToRefs(useTokenStore());
 const { user } = storeToRefs(useUserStore());
-const WS_API = import.meta.env.VITE_ONECHAT_WS_API;
+
 
 // states
-const onechats = ref<OneChat[]>([]);
-const messages = ref<OneMessage[]>([]);
+const onechats = ref<DirectChat[]>([]);
+const messages = ref<DirectMessage[]>([]);
 const currentChat = ref(0);
+const ws = ref<WebSocket>();
 
 //methods
 async function loadOneChats() {
-  onechats.value = await getActiveFriends(token.value?.value || "");
+  onechats.value = (await getActiveFriends()).data;
 
   onechats.value = onechats.value.map(one => {
     return {
@@ -42,7 +43,7 @@ function loadCurrentChat(idx: number) {
 
 async function loadMessages(idx: number) {
   const friend = onechats.value[idx];
-  messages.value = await getOneMessages(token.value?.value || "", friend.id);
+  messages.value = (await getDirectMessages(friend.id)).data;
   messages.value = messages.value.map(m => {
     return m.fromId === user.value!.id ?
       {
@@ -82,21 +83,22 @@ function addMyMessage(msg: string, toId: number) {
 async function handleSend(msg: string) {
   const friend = onechats.value[currentChat.value];
   addMyMessage(msg, friend.id);
-  await sendOneMessage(token.value?.value || "", friend.id, msg);
+  ws.value?.send(JSON.stringify({
+    "msgType": MSGType.DIRECT,
+    "toId": friend.id,
+    "content": msg
+  }));
 }
 
 // life cicles
 onMounted(async () => {
   await loadOneChats();
   await loadMessages(0);
+  ws.value = getWebSocket();
 
-  let connection = new WebSocket(WS_API);
-  connection.onmessage = (event) => {
-    // Vue data binding means you don't need any extra work to
-    // update your UI. Just set the `time` and Vue will automatically
-    // update the `<h2>`.
+  ws.value.addEventListener('message', function (event) {
     console.log("ws:", event.data);
-  }
+  });
 })
 </script>
 
