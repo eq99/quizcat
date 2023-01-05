@@ -15,7 +15,6 @@ import { MSGType } from "@/lib/constants";
 // vars
 const { user } = storeToRefs(useUserStore());
 
-
 // states
 const onechats = ref<DirectChat[]>([]);
 const messages = ref<DirectMessage[]>([]);
@@ -80,6 +79,19 @@ function addMyMessage(msg: string, toId: number) {
   })
 }
 
+function addRemoteMessage(msg: string, fromId: number, createdAt: string) {
+  const friend = onechats.value[currentChat.value];
+  messages.value.unshift({
+    id: 0,
+    content: msg,
+    fromId: fromId,
+    toId: user.value!.id,
+    avatar: friend.avatar,
+    username: friend.name,
+    createdAt: getTimeDiff(Date.parse(createdAt).toString())
+  })
+}
+
 async function handleSend(msg: string) {
   const friend = onechats.value[currentChat.value];
   addMyMessage(msg, friend.id);
@@ -96,8 +108,13 @@ onMounted(async () => {
   await loadMessages(0);
   ws.value = getWebSocket();
 
-  ws.value.addEventListener('message', function (event) {
-    console.log("ws:", event.data);
+  ws.value.addEventListener('message', function ({ data }) {
+    try {
+      const msg = JSON.parse(data);
+      addRemoteMessage(msg.content, msg.fromId, msg.createdAt);
+    } catch (err) {
+      console.log("err:", err);
+    }
   });
 })
 </script>
