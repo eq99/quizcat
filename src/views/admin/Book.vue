@@ -179,7 +179,5 @@ function handleSubmit(e: MouseEvent) {
   background-color: #fff;
   padding: 12px 24px;
   width: 720px;
-  margin-left: 12px;
-  margin-top: 32px;
 }
 </style>

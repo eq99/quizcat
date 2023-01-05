@@ -15,6 +15,7 @@ const router = createRouter({
       children: [
         { path: "", component: () => import("@/views/admin/DashBoard.vue") },
         { path: "book", component: () => import("@/views/admin/Book.vue") },
+        { path: "book/list", component: () => import("@/views/admin/BookList.vue") },
       ]
     },
 

@@ -1,6 +1,6 @@
 <script  lang="ts" setup>
 import SubjectVue from '@/components/know/Subject.vue';
-import { getNewBooks } from '@/apis/book';
+import { getNewBooks } from '@/services/book';
 import type { Book } from "@/types";
 import { onMounted, ref } from 'vue';
 
@@ -8,7 +8,7 @@ const newBooks = ref<Book[]>([]);
 
 // lifes
 onMounted(async () => {
-  newBooks.value = await getNewBooks();
+  newBooks.value = (await getNewBooks()).data;
 });
 </script>
 

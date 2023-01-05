@@ -4,7 +4,7 @@ import { onBeforeRouteUpdate, useRoute } from 'vue-router';
 
 import SubjectVue from '@/components/know/Subject.vue';
 import type { Book } from "@/types";
-import { getBooksByCategory } from "@/apis/book";
+import { getBooksByCategory } from "@/services/book";
 import { groupBooksBySubCategory } from "@/lib"
 // vars 
 const route = useRoute();
@@ -12,13 +12,20 @@ const route = useRoute();
 // states
 const books = ref<Map<string, Book[]>>(new Map());
 
+// methods
+async function fetchBooks(category: string) {
+  books.value = groupBooksBySubCategory((await getBooksByCategory(category)).data);
+
+}
+
+// lifes
 onMounted(async () => {
-  books.value = groupBooksBySubCategory(await getBooksByCategory(route.params.subject as string));
+  await fetchBooks(route.params.subject as string);
 });
 
 onBeforeRouteUpdate(async (to, from) => {
   if (to.params.subject !== from.params.subject) {
-    books.value = groupBooksBySubCategory(await getBooksByCategory(to.params.subject as string));
+    await fetchBooks(to.params.subject as string);
   }
 });
 </script>

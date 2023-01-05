@@ -87,6 +87,8 @@ setTitle("管理");
 
   .main {
     flex: 1;
+    margin-left: 12px;
+    margin-top: 32px;
   }
 }
 </style>
