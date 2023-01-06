@@ -10,7 +10,7 @@ import { getActiveFriends, getDirectMessages } from '@/services/chat';
 import { getTimeDiff } from "@/lib/";
 import { useUserStore } from '@/stores/user';
 import { getWebSocket } from "@/lib/request";
-import { MSGType } from "@/lib/constants";
+import { MSGType } from '@/lib/constants';
 
 // vars
 const { user } = storeToRefs(useUserStore());

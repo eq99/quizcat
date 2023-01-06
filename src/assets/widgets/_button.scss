@@ -1,0 +1,5 @@
+@use "../color/vars" as *;
+
+.button {
+    color: var(--#{$prefix}text-dark);
+}

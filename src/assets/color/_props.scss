@@ -1,0 +1,5 @@
+@use "vars" as *;
+
+:root{
+    --#{$prefix}text-dark: #{$black};
+}
