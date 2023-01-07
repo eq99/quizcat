@@ -1,12 +1,12 @@
 <script  lang="ts" setup>
 import { Avatar } from 'xiaui';
-import type { OneMessage } from '@/types';
+import type { DirectMessage } from '@/types/chat';
 
 
 //types
 export interface Props {
   right?: boolean,
-  msg: OneMessage
+  msg: DirectMessage
 }
 
 //vars

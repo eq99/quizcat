@@ -21,6 +21,10 @@ request.interceptors.request.use((config: AxiosRequestConfig) => {
     return config
 })
 
+// request.interceptors.response.use((response) => {
+//     return response;
+// })
+
 export function getWebSocket() {
     const { token } = useTokenStore();
     return new WebSocket(`${WS_API}?token=${token?.value}`);

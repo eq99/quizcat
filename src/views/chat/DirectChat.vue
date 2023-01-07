@@ -7,7 +7,7 @@ import { OneChatEditor } from 'xiaui';
 import type { DirectChat, DirectMessage } from '@/types/chat';
 import { storeToRefs } from 'pinia';
 import { getActiveFriends, getDirectMessages } from '@/services/chat';
-import { getTimeDiff } from "@/lib/";
+import { getTimeDiff } from "@/lib";
 import { useUserStore } from '@/stores/user';
 import { getWebSocket } from "@/lib/request";
 import { MSGType } from '@/lib/constants';
@@ -15,7 +15,7 @@ import { MSGType } from '@/lib/constants';
 // vars
 const { user } = storeToRefs(useUserStore());
 
-// states
+// data
 const onechats = ref<DirectChat[]>([]);
 const messages = ref<DirectMessage[]>([]);
 const currentChat = ref(0);
@@ -92,7 +92,7 @@ function addRemoteMessage(msg: string, fromId: number, createdAt: string) {
   })
 }
 
-async function handleSend(msg: string) {
+function handleSend(msg: string) {
   const friend = onechats.value[currentChat.value];
   addMyMessage(msg, friend.id);
   ws.value?.send(JSON.stringify({

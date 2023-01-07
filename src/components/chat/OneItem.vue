@@ -1,12 +1,12 @@
 <script  lang="ts" setup>
 import { Avatar } from 'xiaui';
-import type { OneChat } from '@/types';
+import type { DirectChat } from '@/types/chat';
 
 // types
 export interface Props {
-  onechat: OneChat
+  onechat: DirectChat
 }
-  
+
 // vars
 const props = defineProps<Props>();
 </script>

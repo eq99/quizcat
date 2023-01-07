@@ -1,9 +1,11 @@
 const API_BASE = import.meta.env.VITE_API_BASE;
+import { useTokenStore } from '@/stores/token';
 
-export async function getActiveFriends<T>(token: string): Promise<T> {
-    const resp = await fetch(`${API_BASE}/friends/active`, {
+export async function getActiveFriends() {
+    const { token } = useTokenStore();
+    const resp = await fetch(`${API_BASE}/chat/friends/active`, {
         headers: {
-            'Authorization': `Bearer ${token}`,
+            'Authorization': `Bearer ${token?.value}`,
         },
     });
 
@@ -14,35 +16,16 @@ export async function getActiveFriends<T>(token: string): Promise<T> {
     throw new Error(resp.statusText)
 }
 
-export async function getOneMessages<T>(token: string, friendId: number): Promise<T> {
-    const resp = await fetch(`${API_BASE}/one?friendId=${friendId}`, {
+export async function getDirectMessages(friendId: number) {
+    const { token } = useTokenStore();
+    const resp = await fetch(`${API_BASE}/chat/direct?friendId=${friendId}`, {
         headers: {
-            'Authorization': `Bearer ${token}`,
+            'Authorization': `Bearer ${token?.value}`,
         },
     });
 
     if (resp.status >= 200 && resp.status < 300) {
         return resp.json()
-    }
-
-    throw new Error(resp.statusText)
-}
-
-export async function sendOneMessage<T>(token: string, toId: number, content: string): Promise<T> {
-    const resp = await fetch(`${API_BASE}/one`, {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-            content,
-            toId,
-        })
-    });
-
-    if (resp.status >= 200 && resp.status < 300) {
-        return resp.json();
     }
 
     throw new Error(resp.statusText)
